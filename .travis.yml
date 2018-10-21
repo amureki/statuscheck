@@ -19,7 +19,7 @@ deploy:
   distributions: sdist bdist_wheel
   user: amureki
   password:
-    secure: PLEASE_REPLACE_ME
+    secure: "HWnANNOTKbdnMDO8JZfUA7MdXrnUB3/N9fYmY2wFnARqCoKBC+btGwMcegAsyOjc/JAU9TLkv9fsMgThng955tPeNCbd01VzBFsxwMdxRblnaD32sKbnWYcJ6b+5TwBmdH3Js2UivH/d+1/Ryb4k7FCCToggqlh4s0NOLCYGpt9jVD1VwulCIMl+bXcXNIG0vLh1FSBXP1iTkoIUkRykl9YMIriCf63bRsOZKz04NjoPv3lc8inKpcNCw5BXrdaMuznp1Nr9j5TJm3msLSmd8nBH9Jg+N+W7HfqRa5lxX6eI6tq9zrj52h56drka7CjQTuLKrTk8N1Kn+nfO8J38VUuy8igMbYhJqroOD6Z0biPK5GwCq+EH4eHT6IjAgxf7ULI1i+uQmuyFaraNN34r1frxfMq0ky0ZPYQpGh+pDAg0FtnMFyuR70tD/fhg6ovbFsG97QWcGxd2e2FO08ck+CkdwRsDILcGGF0SvEi96mtZFeXryuxLhWVb6Qk8PWbpiIvNbQUQV4tJ8tZwGD65+WeZN1gAleSbAtF0RP3Lgq0y+EcvPEtMkz+0n8+TFGt1WpyfwRzyCFjlsc5nm/ytgccReNkkEzp9EAOT/qdLTd5MiCMs/Cs/Q+1y5pTsUl9v9qDBySrKK8plC36Iq4mULg+lAD2s5Hrxg6lgrwFtz5s="
   on:
     tags: true
     repo: amureki/statuscheck
