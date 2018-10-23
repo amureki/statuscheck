@@ -16,6 +16,7 @@ script: tox
 # $ travis encrypt --add deploy.password
 deploy:
   provider: pypi
+  skip_existing: true
   distributions: sdist bdist_wheel
   user: amureki
   password:
