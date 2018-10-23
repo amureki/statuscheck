@@ -1,17 +1,18 @@
 import requests
 
 from statuscheck.services._base import BaseServiceAPI
+from statuscheck.status_types import TYPE_INCIDENT, TYPE_OUTAGE, TYPE_GOOD
 
 
 class ServiceAPI(BaseServiceAPI):
+    STATUSES = {
+        'green': TYPE_GOOD,
+        'yellow': TYPE_INCIDENT,
+        'red': TYPE_OUTAGE,
+    }
+
     api_name = 'heroku'
     base_url = 'https://status.heroku.com/api/v3/'
-
-    STATUSES = {
-        'green': 'good',
-        'yellow': 'minor',
-        'red': 'major',
-    }
 
     def _get_status_data(self):
         url = self.base_url + 'current-status'

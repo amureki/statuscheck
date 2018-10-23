@@ -1,17 +1,18 @@
 import requests
 
 from statuscheck.services._base import BaseServiceAPI
+from statuscheck.status_types import TYPE_GOOD, TYPE_INCIDENT, TYPE_OUTAGE
 
 
 class ServiceAPI(BaseServiceAPI):
+    STATUSES = {
+        'All servers operational': TYPE_GOOD,
+        'Minor incident': TYPE_INCIDENT,
+        'Major incident': TYPE_OUTAGE,
+    }
+
     api_name = 'salesforce'
     base_url = 'https://api.status.salesforce.com/v1/'
-
-    STATUSES = {
-        'All servers operational': 'good',
-        'Minor incident': 'minor',
-        'Major incident': 'major',
-    }
 
     def _get_status_data(self):
         url = self.base_url + 'instances/status'

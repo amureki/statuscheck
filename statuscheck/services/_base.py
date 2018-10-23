@@ -1,3 +1,8 @@
+import logging
+
+logger = logging.getLogger(__name__)
+
+
 class BaseServiceAPI:
     api_name = None
     data = {}
@@ -20,4 +25,4 @@ class BaseServiceAPI:
         if extra:
             message += f'. Data: {extra}'
 
-        self.stdout.write(message)
+        logger.warning(message)

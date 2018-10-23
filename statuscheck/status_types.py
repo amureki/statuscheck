@@ -1,0 +1,13 @@
+TYPE_GOOD = 'No issues'
+TYPE_MAINTENANCE = 'Maintenance'
+TYPE_INCIDENT = 'Incident'
+TYPE_OUTAGE = 'Outage'
+TYPE_UNKNOWN = ''
+
+STATUS_TYPES = (
+    TYPE_GOOD,
+    TYPE_MAINTENANCE,
+    TYPE_INCIDENT,
+    TYPE_OUTAGE,
+    TYPE_UNKNOWN
+)

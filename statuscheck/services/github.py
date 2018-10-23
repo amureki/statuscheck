@@ -1,9 +1,16 @@
 import requests
 
 from statuscheck.services._base import BaseServiceAPI
+from statuscheck.status_types import TYPE_OUTAGE, TYPE_INCIDENT, TYPE_GOOD
 
 
 class ServiceAPI(BaseServiceAPI):
+    STATUS_MAPPING = {
+        'good': TYPE_GOOD,
+        'minor': TYPE_INCIDENT,
+        'major': TYPE_OUTAGE,
+    }
+
     api_name = 'github'
     base_url = 'https://status.github.com/api/'
 
@@ -24,4 +31,8 @@ class ServiceAPI(BaseServiceAPI):
         return status
 
     def get_status_type(self):
-        return self.get_status()
+        status = self.get_status()
+        status_type = self.STATUS_MAPPING.get(status, '')
+        if not status_type:
+            self.capture_log(status)
+        return status_type

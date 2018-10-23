@@ -1,18 +1,19 @@
 import requests
 
 from statuscheck.services._base import BaseServiceAPI
+from statuscheck.status_types import TYPE_GOOD, TYPE_MAINTENANCE, TYPE_INCIDENT, TYPE_OUTAGE
 
 
 class BaseStatusPageAPI(BaseServiceAPI):
-    domain_key = None
-
-    STATUSES = {
-        'All Systems Operational': 'good',
-        'Partially Degraded Service': 'minor',
-        'Minor Service Outage': 'minor',
-        'Major Service Outage': 'major',
-        'Service Under Maintenance': 'maintenance',
+    STATUS_MAPPING = {
+        'All Systems Operational': TYPE_GOOD,
+        'Partially Degraded Service': TYPE_INCIDENT,
+        'Minor Service Outage': TYPE_INCIDENT,
+        'Major Service Outage': TYPE_OUTAGE,
+        'Service Under Maintenance': TYPE_MAINTENANCE,
     }
+
+    domain_key = None
 
     def _get_status_data(self):
         url = self._get_base_url() + 'summary.json'
@@ -32,7 +33,7 @@ class BaseStatusPageAPI(BaseServiceAPI):
 
     def get_status_type(self):
         status = self.get_status()
-        status_type = self.STATUSES.get(status, '')
+        status_type = self.STATUS_MAPPING.get(status, '')
         if not status_type:
             self.capture_log(status)
         return status_type
