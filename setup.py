@@ -15,9 +15,6 @@ about = {}
 with open(os.path.join(here, 'statuscheck', '__about__.py')) as f:
     exec(f.read(), about)
 
-with open('README.rst') as readme_file:
-    readme = readme_file.read()
-
 requirements = ['Click>=6.0', 'requests', 'requests_html']
 
 setup_requirements = ['pytest-runner', ]
@@ -44,7 +41,7 @@ setup(
     },
     install_requires=requirements,
     license="Apache Software License 2.0",
-    long_description=readme,
+    long_description=long_description,
     include_package_data=True,
     keywords='statuscheck',
     name='statuscheck',
