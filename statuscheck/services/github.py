@@ -5,7 +5,7 @@ from statuscheck.status_types import TYPE_OUTAGE, TYPE_INCIDENT, TYPE_GOOD
 
 
 class ServiceAPI(BaseServiceAPI):
-    STATUS_MAPPING = {
+    STATUS_TYPE_MAPPING = {
         'good': TYPE_GOOD,
         'minor': TYPE_INCIDENT,
         'major': TYPE_OUTAGE,
@@ -32,7 +32,7 @@ class ServiceAPI(BaseServiceAPI):
 
     def get_status_type(self):
         status = self.get_status()
-        status_type = self.STATUS_MAPPING.get(status, '')
+        status_type = self.STATUS_TYPE_MAPPING.get(status, '')
         if not status_type:
             self.capture_log(status)
         return status_type

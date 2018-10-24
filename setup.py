@@ -1,9 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-"""The setup script."""
+import codecs
+import os
 
 from setuptools import setup, find_packages
+
+here = os.path.abspath(os.path.dirname(__file__))
+
+with codecs.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = "\n" + f.read()
+
+about = {}
+
+with open(os.path.join(here, 'statuscheck', '__about__.py')) as f:
+    exec(f.read(), about)
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -15,8 +25,8 @@ setup_requirements = ['pytest-runner', ]
 test_requirements = ['pytest', ]
 
 setup(
-    author="Rustem Saiargaliev",
-    author_email='r.saiargaliev@gmail.com',
+    author=about['__author__'],
+    author_email=about['__email__'],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
@@ -42,7 +52,7 @@ setup(
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/amureki/statuscheck',
-    version='0.1.0',
+    url=about['__url__'],
+    version=about['__version__'],
     zip_safe=False,
 )
