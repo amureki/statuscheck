@@ -11,11 +11,10 @@ class ServiceAPI(BaseServiceAPI):
         'major': TYPE_OUTAGE,
     }
 
-    api_name = 'github'
     base_url = 'https://status.github.com/api/'
 
     def _get_status_data(self):
-        url = self.base_url + 'status.json'
+        url = self.base_url + 'last-message.json'
         response = requests.get(url)
         response.raise_for_status()
         return response.json()
@@ -23,14 +22,9 @@ class ServiceAPI(BaseServiceAPI):
     def get_status(self):
         if not self.data:
             self.data = self._get_status_data()
-        url = self.base_url + 'status.json'
-        response = requests.get(url)
-        response.raise_for_status()
-        data = response.json()
-        status = data['status']
-        return status
+        return self.data['status']
 
-    def get_status_type(self):
+    def get_type(self):
         status = self.get_status()
         status_type = self.STATUS_TYPE_MAPPING.get(status, '')
         if not status_type:

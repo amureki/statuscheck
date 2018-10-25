@@ -12,7 +12,6 @@ class ServiceAPI(BaseServiceAPI):
         'Maintenance': TYPE_MAINTENANCE,
     }
 
-    api_name = 'slack'
     base_url = 'https://status.slack.com/'
 
     def _get_status_data(self):
@@ -31,7 +30,7 @@ class ServiceAPI(BaseServiceAPI):
             self.data = self._get_status_data()
         return self.data.get('status')
 
-    def get_status_type(self):
+    def get_type(self):
         if not self.data:
             self.data = self._get_status_data()
 
