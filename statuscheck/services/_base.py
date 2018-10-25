@@ -4,12 +4,7 @@ logger = logging.getLogger(__name__)
 
 
 class BaseServiceAPI:
-    api_name = None
     data = {}
-
-    def __init__(self):
-        if not self.api_name:
-            raise NotImplementedError
 
     def _get_status_data(self):
         raise NotImplementedError
@@ -17,7 +12,7 @@ class BaseServiceAPI:
     def get_status(self):
         raise NotImplementedError
 
-    def get_status_type(self):
+    def get_type(self):
         raise NotImplementedError
 
     def capture_log(self, status, extra=None):

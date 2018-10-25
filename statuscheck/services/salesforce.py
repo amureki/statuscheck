@@ -11,7 +11,6 @@ class ServiceAPI(BaseServiceAPI):
         'Major incident': TYPE_OUTAGE,
     }
 
-    api_name = 'salesforce'
     base_url = 'https://api.status.salesforce.com/v1/'
 
     def _get_status_data(self):
@@ -50,7 +49,7 @@ class ServiceAPI(BaseServiceAPI):
         status = f'{status}. Affected servers: {affected_servers_str}'
         return status
 
-    def get_status_type(self):
+    def get_type(self):
         status = self._get_main_status_message()
         status_type = self.STATUS_TYPE_MAPPING.get(status, '')
         if not status_type:

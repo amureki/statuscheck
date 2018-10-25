@@ -11,7 +11,6 @@ class ServiceAPI(BaseServiceAPI):
         'red': TYPE_OUTAGE,
     }
 
-    api_name = 'heroku'
     base_url = 'https://status.heroku.com/api/v3/'
 
     def _get_status_data(self):
@@ -25,7 +24,7 @@ class ServiceAPI(BaseServiceAPI):
             self.data = self._get_status_data()
         return self.data['status']['Production']
 
-    def get_status_type(self):
+    def get_type(self):
         status = self.get_status()
         status_type = self.STATUS_TYPE_MAPPING.get(status, '')
         if not status_type:

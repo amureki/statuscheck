@@ -30,7 +30,7 @@ def main(service):
         click.echo(f'"{service}" is not implemented, leave a note at {__url__}')
         return 0
     status = service_api.get_status()
-    status_type = service_api.get_status_type()
+    status_type = service_api.get_type()
     status_color = STATUSES_COLORS_MAPPING.get(status_type, '')
     if status_type:
         click.echo(f'{status_color}{status_type}')

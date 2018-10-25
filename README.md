@@ -25,7 +25,7 @@ from statuscheck.check import get_statuscheck_api
 
 api = get_statuscheck_api('github')
 status = api.get_status()
-status_type = api.get_status_type()
+status_type = api.get_type()
 ```
 
 Currently, all services that we support are defined [here](statuscheck/services/__init__.py).
