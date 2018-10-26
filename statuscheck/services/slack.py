@@ -13,6 +13,7 @@ class ServiceAPI(BaseServiceAPI):
     }
 
     base_url = 'https://status.slack.com/'
+    status_url = base_url
 
     def _get_status_data(self):
         url = self.base_url
@@ -36,3 +37,9 @@ class ServiceAPI(BaseServiceAPI):
 
         status_type = self.STATUS_TYPE_MAPPING.get(self.data.get('status_icon_type'), '')
         return status_type
+
+    def get_active_incident(self):
+        status_type = self.get_type()
+        if status_type == TYPE_GOOD:
+            return ''
+        return self.data.get('status')

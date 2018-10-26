@@ -32,11 +32,13 @@ def main(service):
     status = service_api.get_status()
     status_type = service_api.get_type()
     status_color = STATUSES_COLORS_MAPPING.get(status_type, '')
-    if status_type:
-        click.echo(f'{status_color}{status_type}')
-    else:
-        click.echo(f'{status_color}{status}')
+    incident = service_api.get_active_incident()
 
+    if incident:
+        click.echo(f'{status_color}{status_type or status}: {incident}')
+        click.echo(f'More: {service_api.status_url}')
+    else:
+        click.echo(f'{status_color}{status_type or status}')
     return 0
 
 

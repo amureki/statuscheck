@@ -12,6 +12,7 @@ class ServiceAPI(BaseServiceAPI):
     }
 
     base_url = 'https://status.github.com/api/'
+    status_url = 'https://status.github.com'
 
     def _get_status_data(self):
         url = self.base_url + 'last-message.json'
@@ -30,3 +31,9 @@ class ServiceAPI(BaseServiceAPI):
         if not status_type:
             self.capture_log(status)
         return status_type
+
+    def get_active_incident(self):
+        status_type = self.get_type()
+        if status_type == TYPE_GOOD:
+            return ''
+        return self.data['body']

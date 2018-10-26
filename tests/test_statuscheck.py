@@ -22,3 +22,4 @@ def test_get_available_services():
 def test_get_statuscheck_api(service):
     api = get_statuscheck_api(service)
     assert api.data == {}
+    assert api.status_url

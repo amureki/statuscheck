@@ -37,3 +37,10 @@ class BaseStatusPageAPI(BaseServiceAPI):
         if not status_type:
             self.capture_log(status)
         return status_type
+
+    def get_active_incident(self):
+        status_type = self.get_type()
+        if status_type == TYPE_GOOD:
+            return ''
+        incidents = self.data['incidents']
+        return incidents[0]['name']

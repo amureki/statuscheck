@@ -12,6 +12,7 @@ class ServiceAPI(BaseServiceAPI):
     }
 
     base_url = 'https://api.status.salesforce.com/v1/'
+    status_url = 'https://status.salesforce.com'
 
     def _get_status_data(self):
         url = self.base_url + 'instances/status'
@@ -55,3 +56,9 @@ class ServiceAPI(BaseServiceAPI):
         if not status_type:
             self.capture_log(status, extra=self._get_affected_servers())
         return status_type
+
+    def get_active_incident(self):
+        status_type = self.get_type()
+        if status_type == TYPE_GOOD:
+            return ''
+        return self.get_status()

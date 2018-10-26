@@ -12,6 +12,7 @@ class ServiceAPI(BaseServiceAPI):
     }
 
     base_url = 'https://status.heroku.com/api/v3/'
+    status_url = 'https://status.heroku.com'
 
     def _get_status_data(self):
         url = self.base_url + 'current-status'
@@ -30,3 +31,10 @@ class ServiceAPI(BaseServiceAPI):
         if not status_type:
             self.capture_log(status)
         return status_type
+
+    def get_active_incident(self):
+        status_type = self.get_type()
+        if status_type == TYPE_GOOD:
+            return ''
+        incidents = self.data['issues']
+        return incidents[0]['title']
