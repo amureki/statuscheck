@@ -1,14 +1,39 @@
 import requests
 
 from statuscheck.services._base import BaseServiceAPI
-from statuscheck.status_types import TYPE_GOOD, TYPE_INCIDENT, TYPE_OUTAGE
+from statuscheck.status_types import TYPE_GOOD, TYPE_INCIDENT, TYPE_OUTAGE, TYPE_MAINTENANCE, \
+    TYPE_UNKNOWN
 
 
 class ServiceAPI(BaseServiceAPI):
+    STATUS_OK = 'OK'
+    STATUS_UNKNOWN = 'UNKNOWN'
+    STATUS_CORE_OUTAGE = 'MAJOR_INCIDENT_CORE'
+    STATUS_NONCORE_OUTAGE = 'MAJOR_INCIDENT_NONCORE'
+    STATUS_CORE_INCIDENT = 'MINOR_INCIDENT_CORE'
+    STATUS_NONCORE_INCIDENT = 'MINOR_INCIDENT_NONCORE'
+    STATUS_CORE_MAINTENANCE = 'MAINTENANCE_CORE'
+    STATUS_NONCORE_MAINTENANCE = 'MAINTENANCE_NONCORE'
+
+    # sorted by severity
+    NOT_GOOD_STATUSES = [
+        STATUS_CORE_OUTAGE,
+        STATUS_NONCORE_OUTAGE,
+        STATUS_CORE_INCIDENT,
+        STATUS_NONCORE_INCIDENT,
+        STATUS_CORE_MAINTENANCE,
+        STATUS_NONCORE_MAINTENANCE
+    ]
+
     STATUS_TYPE_MAPPING = {
-        'All servers operational': TYPE_GOOD,
-        'Minor incident': TYPE_INCIDENT,
-        'Major incident': TYPE_OUTAGE,
+        STATUS_OK: TYPE_GOOD,
+        STATUS_CORE_INCIDENT: TYPE_INCIDENT,
+        STATUS_NONCORE_INCIDENT: TYPE_INCIDENT,
+        STATUS_CORE_OUTAGE: TYPE_OUTAGE,
+        STATUS_NONCORE_OUTAGE: TYPE_OUTAGE,
+        STATUS_CORE_MAINTENANCE: TYPE_MAINTENANCE,
+        STATUS_NONCORE_MAINTENANCE: TYPE_MAINTENANCE,
+        STATUS_UNKNOWN: TYPE_UNKNOWN
     }
 
     base_url = 'https://api.status.salesforce.com/v1/'
@@ -30,13 +55,13 @@ class ServiceAPI(BaseServiceAPI):
     def _get_main_status_message(self):
         affected_servers = self._get_affected_servers()
         if not affected_servers:
-            return 'All servers operational'
+            return self.STATUS_OK
         issues = set([s.get('status').upper() for s in affected_servers])
-        if 'MINOR_INCIDENT_CORE' in issues:
-            return 'Minor incident'
-        if 'MAJOR_INCIDENT_CORE' in issues:
-            return 'Major incident'
-        return ''
+
+        # return the most severe status
+        for status in self.NOT_GOOD_STATUSES:
+            if status in issues:
+                return status
 
     def get_status(self):
         if not self.data:
