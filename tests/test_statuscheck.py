@@ -21,5 +21,6 @@ def test_get_available_services():
 @pytest.mark.parametrize('service', SERVICES)
 def test_get_statuscheck_api(service):
     api = get_statuscheck_api(service)
+    assert api._module_name == service
     assert api.data == {}
     assert api.status_url
