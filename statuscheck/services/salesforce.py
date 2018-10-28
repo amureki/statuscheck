@@ -53,6 +53,8 @@ class ServiceAPI(BaseServiceAPI):
         return servers
 
     def _get_main_status_message(self):
+        if not self.data:
+            self.data = self._get_status_data()
         affected_servers = self._get_affected_servers()
         if not affected_servers:
             return self.STATUS_OK
