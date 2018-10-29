@@ -36,4 +36,4 @@ class ServiceAPI(BaseServiceAPI):
         status_type = self.get_type()
         if status_type == TYPE_GOOD:
             return ''
-        return self.data['body']
+        return self.data.get('body') or self.get_status()

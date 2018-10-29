@@ -43,4 +43,6 @@ class BaseStatusPageAPI(BaseServiceAPI):
         if status_type == TYPE_GOOD:
             return ''
         incidents = self.data['incidents']
-        return incidents[0]['name']
+        if incidents:
+            return incidents[0]['name']
+        return self.get_status()

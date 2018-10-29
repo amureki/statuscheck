@@ -37,4 +37,6 @@ class ServiceAPI(BaseServiceAPI):
         if status_type == TYPE_GOOD:
             return ''
         incidents = self.data['issues']
-        return incidents[0]['title']
+        if incidents:
+            return incidents[0]['title']
+        return self.get_status()
