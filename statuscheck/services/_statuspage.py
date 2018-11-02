@@ -8,6 +8,7 @@ class BaseStatusPageAPI(BaseServiceAPI):
     STATUS_TYPE_MAPPING = {
         'All Systems Operational': TYPE_GOOD,
         'Partially Degraded Service': TYPE_INCIDENT,
+        'Partial System Outage': TYPE_INCIDENT,
         'Minor Service Outage': TYPE_INCIDENT,
         'Major Service Outage': TYPE_OUTAGE,
         'Service Under Maintenance': TYPE_MAINTENANCE,
