@@ -7,7 +7,7 @@
 
 ## Usage
 
-Install the latest release:
+Install the latest release via `pip` or `pipenv`:
 
     $ pipenv install statuscheck
 
@@ -16,16 +16,22 @@ Then just use it in your shell:
 ```bash
 $ statuscheck github
 No issues
+
+$ statuscheck slack
+Incident: We're having issues with some features including the Events API, notifications, unfurls, and threads
+More: https://status.slack.com/
 ```
 
 There is also an API available:
 
 ```python
-from statuscheck.check import get_statuscheck_api
+>>> from statuscheck.check import get_statuscheck_api
 
-api = get_statuscheck_api('github')
-status = api.get_status()
-status_type = api.get_type()
+>>> api = get_statuscheck_api('slack')
+>>> api.get_status()
+"We're having issues with some features including the Events API, notifications, unfurls, and threads"
+>>> api.get_type()
+'Incident'
 ```
 
 Currently, all services that we support are defined [here](statuscheck/services/__init__.py).
