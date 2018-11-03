@@ -1,17 +1,12 @@
 import requests
 
 from statuscheck.services._base import BaseServiceAPI
-from statuscheck.status_types import TYPE_GOOD, TYPE_MAINTENANCE, TYPE_INCIDENT, TYPE_OUTAGE
+from statuscheck.status_types import TYPE_GOOD
 
 
-class BaseStatusPageAPI(BaseServiceAPI):
+class BaseStatusioAPI(BaseServiceAPI):
     STATUS_TYPE_MAPPING = {
-        'All Systems Operational': TYPE_GOOD,
-        'Partially Degraded Service': TYPE_INCIDENT,
-        'Partial System Outage': TYPE_INCIDENT,
-        'Minor Service Outage': TYPE_INCIDENT,
-        'Major Service Outage': TYPE_OUTAGE,
-        'Service Under Maintenance': TYPE_MAINTENANCE,
+        'Operational': TYPE_GOOD,
     }
 
     domain_key = None
@@ -19,18 +14,17 @@ class BaseStatusPageAPI(BaseServiceAPI):
     def _get_base_url(self):
         if not self.domain_key:
             raise NotImplementedError('Please, add domain key')
-        return f'https://{self.domain_key}.statuspage.io/api/v2/'
+        return f'https://api.status.io/1.0/status/{self.domain_key}'
 
     def _get_status_data(self):
-        url = self._get_base_url() + 'summary.json'
-        response = requests.get(url)
+        response = requests.get(self._get_base_url())
         response.raise_for_status()
-        return response.json()
+        return response.json()['result']
 
     def get_status(self):
         if not self.data:
             self.data = self._get_status_data()
-        return self.data['status']['description']
+        return self.data['status_overall']['status']
 
     def get_type(self):
         status = self.get_status()
@@ -45,5 +39,7 @@ class BaseStatusPageAPI(BaseServiceAPI):
             return ''
         incidents = self.data['incidents']
         if incidents:
-            return incidents[0]['name']
+            self.capture_log('NOT_OK', extra=self.data)
+            # TODO: clarify data format
+            return str(incidents[0])
         return self.get_status()
