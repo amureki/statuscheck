@@ -6,6 +6,7 @@ SERVICES = [
     'docker',
     'github',
     'gitlab',
+    'invision',
     'heroku',
     'npm',
     'pagerduty',
