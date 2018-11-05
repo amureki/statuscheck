@@ -15,6 +15,7 @@ SERVICES = [
     'sentry',
     'servicemax',
     'slack',
+    'sparkpost',
     'travis',
     'twilio',
 ]
