@@ -1,10 +1,8 @@
-from requests_html import HTMLSession
-
-from statuscheck.services._base import BaseServiceAPI
+from statuscheck.services._custompage import BaseCustomStatusPageAPI
 from statuscheck.status_types import TYPE_INCIDENT, TYPE_GOOD, TYPE_MAINTENANCE, TYPE_OUTAGE
 
 
-class ServiceAPI(BaseServiceAPI):
+class ServiceAPI(BaseCustomStatusPageAPI):
     STATUS_TYPE_MAPPING = {
         'Ok': TYPE_GOOD,
         'Incident': TYPE_INCIDENT,
@@ -16,11 +14,8 @@ class ServiceAPI(BaseServiceAPI):
     status_url = base_url
 
     def _get_status_data(self):
-        url = self.base_url
-        session = HTMLSession()
-        response = session.get(url)
-        response.raise_for_status()
-        html_container = response.html.find('.container', first=True)
+        html = self._get_html_response()
+        html_container = html.find('.container', first=True)
         status = html_container.find('h1', first=True).text
         status_icon = html_container.find('img', first=True).attrs.get('src')
         status_icon_type = status_icon.rsplit('.')[0].split('/')[-1]

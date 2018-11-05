@@ -13,7 +13,14 @@ def test_get_available_services():
     assert services
 
     service_files = os.listdir(os.path.join(BASE_DIR, 'statuscheck', 'services'))
-    excluded_files = ('__pycache__', '__init__.py', '_base.py', '_statuspage.py', '_statusio.py')
+    excluded_files = (
+        '__pycache__',
+        '__init__.py',
+        '_base.py',
+        '_custompage.py',
+        '_statuspage.py',
+        '_statusio.py'
+    )
     service_files = [f[:-3] for f in service_files if
                      f not in excluded_files]
     assert set(services) == set(service_files)
