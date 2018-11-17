@@ -1,5 +1,6 @@
 SERVICES = [
     'atlassian',
+    'aws',
     'closeio',
     'cloudamqp',
     'discord',

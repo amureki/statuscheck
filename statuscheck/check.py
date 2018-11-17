@@ -7,9 +7,9 @@ def _import_module(service):
     return importlib.import_module(f'statuscheck.services.{service}')
 
 
-def get_statuscheck_api(service):
+def get_statuscheck_api(service, extra_args=None):
     module = _import_module(service)
-    return module.ServiceAPI()
+    return module.ServiceAPI(extra_args)
 
 
 def get_available_services():
