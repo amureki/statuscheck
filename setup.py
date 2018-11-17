@@ -15,7 +15,7 @@ about = {}
 with open(os.path.join(here, 'statuscheck', '__about__.py')) as f:
     exec(f.read(), about)
 
-requirements = ['Click>=6.0', 'requests', 'requests_html']
+requirements = ['Click>=6.0', 'requests', 'requests_html', 'feedparser']
 
 setup_requirements = ['pytest-runner', ]
 
