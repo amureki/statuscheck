@@ -11,6 +11,7 @@ SERVICES = [
     'heroku',
     'npm',
     'pagerduty',
+    'personio',
     'pypi',
     'redislabs',
     'salesforce',
