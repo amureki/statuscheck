@@ -1,26 +1,15 @@
-# Config file for automatic testing at travis-ci.org
-
 language: python
 python:
-  - 3.6
-
-# Command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+- 3.6
 install: pip install -U tox-travis
-
-# Command to run tests, e.g. python setup.py test
 script: tox
-
-# Assuming you have installed the travis-ci CLI tool, after you
-# create the Github repo and add it to Travis, run the
-# following command to finish PyPI deployment setup:
-# $ travis encrypt --add deploy.password
 deploy:
   provider: pypi
   skip_existing: true
   distributions: sdist bdist_wheel
   user: amureki
   password:
-    secure: "HWnANNOTKbdnMDO8JZfUA7MdXrnUB3/N9fYmY2wFnARqCoKBC+btGwMcegAsyOjc/JAU9TLkv9fsMgThng955tPeNCbd01VzBFsxwMdxRblnaD32sKbnWYcJ6b+5TwBmdH3Js2UivH/d+1/Ryb4k7FCCToggqlh4s0NOLCYGpt9jVD1VwulCIMl+bXcXNIG0vLh1FSBXP1iTkoIUkRykl9YMIriCf63bRsOZKz04NjoPv3lc8inKpcNCw5BXrdaMuznp1Nr9j5TJm3msLSmd8nBH9Jg+N+W7HfqRa5lxX6eI6tq9zrj52h56drka7CjQTuLKrTk8N1Kn+nfO8J38VUuy8igMbYhJqroOD6Z0biPK5GwCq+EH4eHT6IjAgxf7ULI1i+uQmuyFaraNN34r1frxfMq0ky0ZPYQpGh+pDAg0FtnMFyuR70tD/fhg6ovbFsG97QWcGxd2e2FO08ck+CkdwRsDILcGGF0SvEi96mtZFeXryuxLhWVb6Qk8PWbpiIvNbQUQV4tJ8tZwGD65+WeZN1gAleSbAtF0RP3Lgq0y+EcvPEtMkz+0n8+TFGt1WpyfwRzyCFjlsc5nm/ytgccReNkkEzp9EAOT/qdLTd5MiCMs/Cs/Q+1y5pTsUl9v9qDBySrKK8plC36Iq4mULg+lAD2s5Hrxg6lgrwFtz5s="
+    secure: Ltt9DplFIYqsTY6f7xE5iIsd1mnygMSjiatyr1vD5ajqxCYGOBcr8ABebrli/Y0Jx1nYrM45MGfcTKvYvNsfMJwPbQkMWrlaLjIPmXRCydt+Cx/zHgFKYYuypfOh7mRhTjQb0/lw1+Vwm6joM6lvv5k4gLzTBCMubc+bMJu0KTT2fKxhr5IGn2E7GI6DIcbMg6GTzeL9n/6EFNUscEDLl693VSWZh1Q2IfmOHeOxg3HYXv+sjTR5bNiCCk3w24KxO7L5zv6naZgvg49fwdrsNzxstPOjgGAqaFqH5ro8w/F93SfIMWExQ1QeIY3mE0+kkwILABp1oE2i4Yirb24toGYHYpj2McF6y1o/jwTY917ABDtCMfw7wwMWiPun+IoJ8c4JbZ56dnTAC5hsc7inyHpduRHYzFl1ZHlD+NolKj7BOjRuAnPCMNka03sH76TWIPrBa3MZAk0RysD1Q3xrInky7gULwPNezV8eRus0X+rMq6LD0JwbHdSvikR0KD0qcohcu3NKD4m/dmzBMR5Zw3805n/UpndTs6RQgckystSEni0AMEnG5sa+tgKb1TsCAkvKYNqAGt2eAjHpl6uzS28IMItenIgv4odTSFLPJhS6YGTKG0jAsJlhcGUoeBWQh0fv8jwZU8TUcLlet/GBWubkL5deAGCNDXIkRjkS+3k=
   on:
     tags: true
     repo: amureki/statuscheck
