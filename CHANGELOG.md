@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [1.0.2] - 2019-01-15
+### Changed
+- Fix Travis credentials mess caused by .org and .com domains
+
 ## [1.0.1] - 2019-01-15
 ### Changed
 - Cleanup Travis config
@@ -23,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update GitHub service code, since they moved to statuspage.io
 - Update dependencies
 
-[Unreleased]: https://github.com/amureki/statuscheck/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/amureki/statuscheck/compare/v1.0.2...HEAD
+[1.0.1]: https://github.com/amureki/statuscheck/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/amureki/statuscheck/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/amureki/statuscheck/compare/v.0.1.0...v1.0.0
