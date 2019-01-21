@@ -5,6 +5,7 @@ SERVICES = [
     'closeio',
     'cloudamqp',
     'cloudflare',
+    'codecov',
     'digitalocean',
     'discord',
     'docker',
