@@ -12,8 +12,8 @@ class StatusIOSummary(NamedTuple):
     components: list
 
     @classmethod
-    def _get_components(cls, summary):
-        all_components = summary['status']
+    def _get_components(cls, data):
+        all_components = data['status']
         damaged_components = [c for c in all_components
                               if c['status'] != 'Operational']
         filtered_data = []
@@ -25,17 +25,16 @@ class StatusIOSummary(NamedTuple):
         return filtered_data
 
     @classmethod
-    def _get_incidents(cls, summary):
-        incidents = summary['incidents']
-        return incidents
+    def _get_incidents(cls, data):
+        return data['incidents']
 
     @classmethod
-    def from_summary(cls, summary):
-        status = summary['status_overall']['status']
+    def from_data(cls, data):
+        status = data['status_overall']['status']
         return cls(
             status=status,
-            incidents=cls._get_incidents(summary),
-            components=cls._get_components(summary)
+            incidents=cls._get_incidents(data),
+            components=cls._get_components(data)
         )
 
 
@@ -60,6 +59,6 @@ class BaseStatusioAPI(BaseServiceAPI):
     def get_summary(self):
         response = requests.get(self._get_base_url())
         response.raise_for_status()
-        return StatusIOSummary.from_summary(
-            summary=response.json()['result']
+        return StatusIOSummary.from_data(
+            data=response.json()['result']
         )

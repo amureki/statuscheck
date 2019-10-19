@@ -16,10 +16,3 @@ class BaseServiceAPI:
 
     def get_summary(self):
         raise NotImplementedError
-
-    def capture_log(self, status, extra=None):
-        message = f'Failed to assign status type for {status} [{self._module_name}]'
-        if extra:
-            message += f'. Data: {extra}'
-
-        logger.warning(message)

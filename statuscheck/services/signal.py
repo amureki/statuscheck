@@ -9,10 +9,10 @@ class SignalSummary(NamedTuple):
     incidents: list
 
     @classmethod
-    def from_summary(cls, summary):
+    def from_data(cls, data):
         return cls(
-            status=summary['status'],
-            incidents=summary['incidents'],
+            status=data['status'],
+            incidents=data['incidents'],
         )
 
 
@@ -34,6 +34,6 @@ class ServiceAPI(BaseCustomStatusPageAPI):
         incidents = []
         if status_type != TYPE_GOOD:
             incidents.append({'name': status_text})
-        return SignalSummary.from_summary(
-            summary={'status': status_type, 'incidents': incidents}
+        return SignalSummary.from_data(
+            data={'status': status_type, 'incidents': incidents}
         )

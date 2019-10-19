@@ -9,10 +9,10 @@ class SlackSummary(NamedTuple):
     incidents: list
 
     @classmethod
-    def from_summary(cls, summary):
+    def from_data(cls, data):
         return cls(
-            status=summary['status'],
-            incidents=summary['incidents'],
+            status=data['status'],
+            incidents=data['incidents'],
         )
 
 
@@ -41,6 +41,6 @@ class ServiceAPI(BaseCustomStatusPageAPI):
         incidents = []
         if status != TYPE_GOOD:
             incidents.append({'name': description})
-        return SlackSummary.from_summary(
-            summary={'status': status, 'incidents': incidents}
+        return SlackSummary.from_data(
+            data={'status': status, 'incidents': incidents}
         )
