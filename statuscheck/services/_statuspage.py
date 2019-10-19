@@ -49,7 +49,6 @@ class StatusPageIOSummary(NamedTuple):
 
 class BaseStatusPageAPI(BaseServiceAPI):
     domain_id: str = None
-
     summary = None
 
     def __init__(self):
