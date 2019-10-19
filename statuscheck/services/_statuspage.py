@@ -1,49 +1,68 @@
+from typing import NamedTuple
+
 import requests
 
 from statuscheck.services._base import BaseServiceAPI
-from statuscheck.status_types import TYPE_GOOD, TYPE_MAINTENANCE, TYPE_INCIDENT, TYPE_OUTAGE
+from statuscheck.status_types import SPIO_INDICATORS, SPIO_COMPONENT_OPERATIONAL
+
+
+class StatusPageSummary(NamedTuple):
+    status: str
+    incidents: list
+    components: list
+
+    @classmethod
+    def _get_components(cls, summary):
+        all_components = summary['components']
+        damaged_components = [c for c in all_components
+                              if c['status'] != SPIO_COMPONENT_OPERATIONAL]
+        filtered_data = []
+        important_keys = ('name', 'status', 'description')
+        for component in damaged_components:
+            filtered_data.append(
+                {k: component.get(k, None) for k in important_keys}
+            )
+        return filtered_data
+
+    @classmethod
+    def _get_incidents(cls, summary):
+        incidents = summary['incidents']
+        filtered_data = []
+        important_keys = ('name', 'status', 'impact')
+        for component in incidents:
+            filtered_data.append(
+                {k: component.get(k, None) for k in important_keys}
+            )
+        return filtered_data
+
+    @classmethod
+    def from_summary(cls, summary):
+        status = summary['status']
+        status_type = SPIO_INDICATORS[status['indicator']]
+        return cls(
+            status=status_type,
+            incidents=cls._get_incidents(summary),
+            components=cls._get_components(summary)
+        )
 
 
 class BaseStatusPageAPI(BaseServiceAPI):
-    STATUS_TYPE_MAPPING = {
-        'All Systems Operational': TYPE_GOOD,
-        'Partially Degraded Service': TYPE_INCIDENT,
-        'Partial System Outage': TYPE_INCIDENT,
-        'Minor Service Outage': TYPE_INCIDENT,
-        'Major Service Outage': TYPE_OUTAGE,
-        'Service Under Maintenance': TYPE_MAINTENANCE,
-    }
+    domain_id: str = None
 
-    domain_key = None
+    summary = None
+
+    def __init__(self):
+        self.summary = self.get_summary()
 
     def _get_base_url(self):
-        if not self.domain_key:
-            raise NotImplementedError('Please, add domain key')
-        return f'https://{self.domain_key}.statuspage.io/api/v2/'
+        """Statuspage.io API URL for given service."""
+        if not self.domain_id:
+            raise NotImplementedError('Please, add domain id')
+        return f'https://{self.domain_id}.statuspage.io/api/v2/'
 
-    def _get_status_data(self):
+    def get_summary(self):
         url = self._get_base_url() + 'summary.json'
         response = requests.get(url)
         response.raise_for_status()
-        return response.json()
-
-    def get_status(self):
-        if not self.data:
-            self.data = self._get_status_data()
-        return self.data['status']['description']
-
-    def get_type(self):
-        status = self.get_status()
-        status_type = self.STATUS_TYPE_MAPPING.get(status, '')
-        if not status_type:
-            self.capture_log(status)
-        return status_type
-
-    def get_active_incident(self):
-        status_type = self.get_type()
-        if status_type == TYPE_GOOD:
-            return ''
-        incidents = self.data['incidents']
-        if incidents:
-            return incidents[0]['name']
-        return self.get_status()
+        self.summary = StatusPageSummary.from_summary(summary=response.json())
+        return self.summary

@@ -3,52 +3,42 @@ import click
 
 from .__about__ import __url__
 from statuscheck.check import get_statuscheck_api
-from statuscheck.exceptions import StatusCheckMissingArgumentsError, StatusCheckParsingError
-from statuscheck.status_types import TYPE_GOOD, TYPE_UNKNOWN, TYPE_INCIDENT, TYPE_OUTAGE, \
-    TYPE_MAINTENANCE
-
-COLOR_GREEN = '\033[92m'
-COLOR_YELLOW = '\033[93m'
-COLOR_RED = '\033[91m'
-COLOR_DEFAULT = '\033[99m'
-
-STATUSES_COLORS_MAPPING = {
-    TYPE_UNKNOWN: COLOR_DEFAULT,
-    TYPE_GOOD: COLOR_GREEN,
-    TYPE_INCIDENT: COLOR_YELLOW,
-    TYPE_OUTAGE: COLOR_RED,
-    TYPE_MAINTENANCE: COLOR_DEFAULT,
-}
+from statuscheck.exceptions import StatusCheckParsingError
 
 
 @click.command()
 @click.argument('service')
-@click.option('--extra', '-e', nargs=2, help='Extra arguments, required by certain services')
-def main(service, extra):
+def main(service):
     """Console script for statuscheck."""
     try:
-        service_api = get_statuscheck_api(service, extra_args=extra)
+        service_api = get_statuscheck_api(service)
     except ModuleNotFoundError:
         click.echo(f'"{service}" is not implemented, leave a note at {__url__}')
         return 1
-    except StatusCheckMissingArgumentsError as e:
-        click.echo(str(e))
-        return 1
     try:
-        status = service_api.get_status()
+        summary = service_api.get_summary()
     except StatusCheckParsingError as e:
         click.echo(str(e))
         return 1
 
-    status_type = service_api.get_type()
-    status_color = STATUSES_COLORS_MAPPING.get(status_type, '')
-    incident = service_api.get_active_incident()
+    status = summary.status
+    incidents = summary.incidents
+    components = summary.components
 
-    if incident:
-        click.echo(f'{status_color}{status_type or status}: {incident}')
-        click.echo(f'More: {service_api.status_url}')
+    click.echo(f'{service_api._module_name}')
+    if incidents:
+        incident = incidents[0]['name']
+        click.echo(f'{status}: {incident}')
     else:
-        click.echo(f'{status_color}{status_type or status}')
+        click.echo(f'{status}')
+    if components:
+        click.echo(f'Affected components:')
+        for component in components:
+            name = component['name']
+            status = component['status']
+            click.echo(f'{name}: {status}')
+    if incidents or components:
+        click.echo(f'More: {service_api.status_url}')
     return 0
 
 

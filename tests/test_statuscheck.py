@@ -31,7 +31,7 @@ def test_get_statuscheck_api(service):
     extra = None
     if service == 'aws':
         extra = ('s3', 'eu-west-1')
-    api = get_statuscheck_api(service, extra_args=extra)
+    api = get_statuscheck_api(service)
     assert api._module_name == service
     assert api.data == {}
     assert api.status_url
