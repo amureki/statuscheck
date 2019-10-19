@@ -41,7 +41,6 @@ class ServiceAPI(BaseCustomStatusPageAPI):
         incidents = []
         if status != TYPE_GOOD:
             incidents.append({'name': description})
-        self.summary = SlackSummary.from_summary(
+        return SlackSummary.from_summary(
             summary={'status': status, 'incidents': incidents}
         )
-        return self.summary

@@ -52,8 +52,6 @@ class BaseStatusioAPI(BaseServiceAPI):
 
     domain_id: str = None
 
-    summary = None
-
     def _get_base_url(self):
         if not self.domain_id:
             raise NotImplementedError('Please, add domain key')
@@ -62,36 +60,6 @@ class BaseStatusioAPI(BaseServiceAPI):
     def get_summary(self):
         response = requests.get(self._get_base_url())
         response.raise_for_status()
-        # return response.json()['result']
-        self.summary = StatusIOSummary.from_summary(
+        return StatusIOSummary.from_summary(
             summary=response.json()['result']
         )
-        return self.summary
-
-    # def _get_status_data(self):
-    #     response = requests.get(self._get_base_url())
-    #     response.raise_for_status()
-    #     return response.json()['result']
-    #
-    # def get_status(self):
-    #     if not self.data:
-    #         self.data = self._get_status_data()
-    #     return self.data['status_overall']['status']
-    #
-    # def get_type(self):
-    #     status = self.get_status()
-    #     status_type = self.STATUS_TYPE_MAPPING.get(status, '')
-    #     if not status_type:
-    #         self.capture_log(status)
-    #     return status_type
-    #
-    # def get_active_incident(self):
-    #     status_type = self.get_type()
-    #     if status_type == TYPE_GOOD:
-    #         return ''
-    #     incidents = self.data['incidents']
-    #     if incidents:
-    #         self.capture_log('NOT_OK', extra=self.data)
-    #         # TODO: clarify data format
-    #         return str(incidents[0])
-    #     return self.get_status()

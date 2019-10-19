@@ -58,5 +58,4 @@ class ServiceAPI(BaseServiceAPI):
         url = self.base_url + 'current-status'
         response = requests.get(url)
         response.raise_for_status()
-        self.summary = ServiceSummary.from_summary(summary=response.json())
-        return self.summary
+        return ServiceSummary.from_summary(summary=response.json())

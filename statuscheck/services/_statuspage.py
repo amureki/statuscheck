@@ -49,10 +49,6 @@ class StatusPageIOSummary(NamedTuple):
 
 class BaseStatusPageAPI(BaseServiceAPI):
     domain_id: str = None
-    summary = None
-
-    def __init__(self):
-        self.summary = self.get_summary()
 
     def _get_base_url(self):
         """Statuspage.io API URL for given service."""
@@ -64,5 +60,4 @@ class BaseStatusPageAPI(BaseServiceAPI):
         url = self._get_base_url() + 'summary.json'
         response = requests.get(url)
         response.raise_for_status()
-        self.summary = StatusPageIOSummary.from_summary(summary=response.json())
-        return self.summary
+        return StatusPageIOSummary.from_summary(summary=response.json())

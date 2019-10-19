@@ -34,7 +34,6 @@ class ServiceAPI(BaseCustomStatusPageAPI):
         incidents = []
         if status_type != TYPE_GOOD:
             incidents.append({'name': status_text})
-        self.summary = SignalSummary.from_summary(
+        return SignalSummary.from_summary(
             summary={'status': status_type, 'incidents': incidents}
         )
-        return self.summary

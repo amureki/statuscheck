@@ -62,14 +62,13 @@ class ServiceAPI(BaseServiceAPI):
 
     def get_summary(self):
         self.data = self._get_status_data()
-        self.summary = SalesforceSummary.from_summary(
+        return SalesforceSummary.from_summary(
             summary={
                 'status': self.get_general_status(),
                 'incidents': self._get_incidents(),
                 'components': self._get_affected_servers()
             }
         )
-        return self.summary
 
     def _get_status_data(self):
         url = self.base_url + 'instances/status/preview'
