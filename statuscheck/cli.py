@@ -3,7 +3,6 @@ import click
 
 from .__about__ import __url__
 from statuscheck.check import get_statuscheck_api
-from statuscheck.exceptions import StatusCheckParsingError
 
 
 @click.command()
@@ -15,11 +14,8 @@ def main(service):
     except ModuleNotFoundError:
         click.echo(f'"{service}" is not implemented, leave a note at {__url__}')
         return 1
-    try:
-        summary = service_api.get_summary()
-    except StatusCheckParsingError as e:
-        click.echo(str(e))
-        return 1
+
+    summary = service_api.get_summary()
 
     status = summary.status
     incidents = summary.incidents
