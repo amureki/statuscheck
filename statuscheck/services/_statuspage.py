@@ -3,10 +3,11 @@ from typing import NamedTuple
 import requests
 
 from statuscheck.services._base import BaseServiceAPI
-from statuscheck.status_types import SPIO_INDICATORS, SPIO_COMPONENT_OPERATIONAL
+from statuscheck.status_types import SPIO_INDICATORS, SPIO_COMPONENT_OPERATIONAL, \
+    SPIO_COMPONENTS_STATUSES, SPIO_INCIDENTS_STATUSES
 
 
-class StatusPageSummary(NamedTuple):
+class StatusPageIOSummary(NamedTuple):
     status: str
     incidents: list
     components: list
@@ -19,9 +20,9 @@ class StatusPageSummary(NamedTuple):
         filtered_data = []
         important_keys = ('name', 'status', 'description')
         for component in damaged_components:
-            filtered_data.append(
-                {k: component.get(k, None) for k in important_keys}
-            )
+            data = {k: component.get(k, None) for k in important_keys}
+            data['status'] = SPIO_COMPONENTS_STATUSES[data['status']]
+            filtered_data.append(data)
         return filtered_data
 
     @classmethod
@@ -30,9 +31,9 @@ class StatusPageSummary(NamedTuple):
         filtered_data = []
         important_keys = ('name', 'status', 'impact')
         for component in incidents:
-            filtered_data.append(
-                {k: component.get(k, None) for k in important_keys}
-            )
+            data = {k: component.get(k, None) for k in important_keys}
+            data['status'] = SPIO_INCIDENTS_STATUSES[data['status']]
+            filtered_data.append(data)
         return filtered_data
 
     @classmethod
@@ -64,5 +65,5 @@ class BaseStatusPageAPI(BaseServiceAPI):
         url = self._get_base_url() + 'summary.json'
         response = requests.get(url)
         response.raise_for_status()
-        self.summary = StatusPageSummary.from_summary(summary=response.json())
+        self.summary = StatusPageIOSummary.from_summary(summary=response.json())
         return self.summary

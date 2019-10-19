@@ -6,7 +6,7 @@ from statuscheck.services._base import BaseServiceAPI
 from statuscheck.status_types import TYPE_GOOD
 
 
-class StatusioSummary(NamedTuple):
+class StatusIOSummary(NamedTuple):
     status: str
     incidents: list
     components: list
@@ -63,7 +63,7 @@ class BaseStatusioAPI(BaseServiceAPI):
         response = requests.get(self._get_base_url())
         response.raise_for_status()
         # return response.json()['result']
-        self.summary = StatusioSummary.from_summary(
+        self.summary = StatusIOSummary.from_summary(
             summary=response.json()['result']
         )
         return self.summary

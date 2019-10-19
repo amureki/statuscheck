@@ -3,7 +3,7 @@ SERVICES = [
     'atlassian',
     'bitbucket',
     'circleci',
-    'closeio',
+    'close',
     'cloudamqp',
     'cloudflare',
     'codecov',

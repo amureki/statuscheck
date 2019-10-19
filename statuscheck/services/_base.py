@@ -3,6 +3,24 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+# class BaseSummary(NamedTuple):
+#     status: str
+#     incidents: list
+#     components: list
+#
+#     @classmethod
+#     def _get_components(cls, summary):
+#         raise NotImplementedError
+#
+#     @classmethod
+#     def _get_incidents(cls, summary):
+#         raise NotImplementedError
+#
+#     @classmethod
+#     def from_summary(cls, summary):
+#         raise NotImplementedError
+
+
 class BaseServiceAPI:
     data = {}
 

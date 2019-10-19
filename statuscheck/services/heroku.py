@@ -1,51 +1,62 @@
+from typing import NamedTuple
+
 import requests
 
 from statuscheck.services._base import BaseServiceAPI
 from statuscheck.status_types import TYPE_INCIDENT, TYPE_OUTAGE, TYPE_GOOD
 
+STATUS_TYPE_MAPPING = {
+    'green': TYPE_GOOD,
+    'yellow': TYPE_INCIDENT,
+    'red': TYPE_OUTAGE,
+}
+
+
+class ServiceSummary(NamedTuple):
+    status: str
+    status_development: str
+    status_production: str
+    incidents: list
+
+    @classmethod
+    def _get_incidents(cls, summary):
+        incidents = summary['issues']
+        filtered_data = []
+        important_keys = ('title', 'status_dev', 'status_prod', 'full_url')
+        for component in incidents:
+            filtered_data.append(
+                {k: component.get(k, None) for k in important_keys}
+            )
+        return filtered_data
+
+    @classmethod
+    def from_summary(cls, summary):
+        status_data = summary['status']
+        status_production = STATUS_TYPE_MAPPING[status_data['Production']]
+        status_development = STATUS_TYPE_MAPPING[status_data['Development']]
+        status = status_production
+
+        if status_development != TYPE_GOOD:
+            status = status_development
+        if status_production != TYPE_GOOD:
+            status = status_production
+
+        return cls(
+            status=status,
+            status_production=status_production,
+            status_development=status_development,
+            incidents=cls._get_incidents(summary),
+        )
+
 
 class ServiceAPI(BaseServiceAPI):
-    STATUS_TYPE_MAPPING = {
-        'green': TYPE_GOOD,
-        'yellow': TYPE_INCIDENT,
-        'red': TYPE_OUTAGE,
-    }
-
+    name = 'Heroku'
     base_url = 'https://status.heroku.com/api/v3/'
     status_url = 'https://status.heroku.com'
 
-    def _get_status_data(self):
+    def get_summary(self):
         url = self.base_url + 'current-status'
         response = requests.get(url)
         response.raise_for_status()
-        return response.json()
-
-    def _is_status_good(self, status):
-        return self.STATUS_TYPE_MAPPING.get(status, '') == TYPE_GOOD
-
-    def get_status(self):
-        if not self.data:
-            self.data = self._get_status_data()
-        status = status_prod = self.data['status']['Production']
-        status_dev = self.data['status']['Development']
-        if not self._is_status_good(status_dev):
-            status = status_dev
-        if not self._is_status_good(status_prod):
-            status = status_prod
-        return status
-
-    def get_type(self):
-        status = self.get_status()
-        status_type = self.STATUS_TYPE_MAPPING.get(status, '')
-        if not status_type:
-            self.capture_log(status)
-        return status_type
-
-    def get_active_incident(self):
-        status_type = self.get_type()
-        if status_type == TYPE_GOOD:
-            return ''
-        incidents = self.data['issues']
-        if incidents:
-            return incidents[0]['title']
-        return self.get_status()
+        self.summary = ServiceSummary.from_summary(summary=response.json())
+        return self.summary
