@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [2.0.1] - 2019-10-20
+### Changed
+- Fix Travis PyPI build
+
 ## [2.0.0] - 2019-10-20
 ### Added
 - Code linters and checkers (https://github.com/amureki/statuscheck/pull/72)
