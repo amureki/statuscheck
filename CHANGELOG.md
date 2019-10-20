@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [2.0.0] - 2019-10-20
+### Added
+- Code linters and checkers (https://github.com/amureki/statuscheck/pull/72)
+
+### Changed
+- API was redesigned to provide unified status results (https://github.com/amureki/statuscheck/pull/71)
+
 ## [1.3.0] - 2019-01-21
 ### Added
 - Asana status checker
