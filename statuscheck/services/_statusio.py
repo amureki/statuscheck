@@ -38,13 +38,14 @@ class StatusIOSummary(NamedTuple):
         )
 
 
-class BaseStatusioAPI(BaseServiceAPI):
+class BaseStatusIOAPI(BaseServiceAPI):
     """
     Status.io pages API handler.
 
     API v2: https://statusio.docs.apiary.io
     Public status API: https://kb.status.io/developers/public-status-api/
     """
+
     STATUS_TYPE_MAPPING = {
         'Operational': TYPE_GOOD,
     }
