@@ -17,23 +17,29 @@ def main(service):
 
     summary = service_api.get_summary()
 
-    status = summary.status
-    incidents = summary.incidents
-    has_components = hasattr(summary, 'components')
+    click.echo(f'Current status of {service_api.name}: {summary.status}')
 
-    click.echo(f'{service_api.name}')
+    incidents = summary.incidents
     if incidents:
-        incident = incidents[0]['name']
-        click.echo(f'{status}: {incident}')
-    else:
-        click.echo(f'{status}')
+        click.echo(f'Registered incidents:')
+        for incident in incidents:
+            incident_name = incident['name']
+            incident_status = incident.get('status')
+            if incident_status:
+                click.echo(f'- {incident_name} [{incident_status}]')
+            else:
+                click.echo(f'- {incident_name}')
+
+    has_components = hasattr(summary, 'components')
     if has_components and summary.components:
         click.echo(f'Affected components:')
         for component in summary.components:
             name = component['name']
-            status = component['status']
-            click.echo(f'{name}: {status}')
+            component_status = component['status']
+            click.echo(f'- {name}: {component_status}')
+
     if incidents or (has_components and summary.components):
+        click.echo()
         click.echo(f'More: {service_api.status_url}')
     return 0
 
