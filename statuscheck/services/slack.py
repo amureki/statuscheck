@@ -1,7 +1,7 @@
 from typing import NamedTuple
 
+import statuscheck.status_types
 from statuscheck.services._custompage import BaseCustomStatusPageAPI
-from statuscheck.status_types import TYPE_INCIDENT, TYPE_GOOD, TYPE_MAINTENANCE, TYPE_OUTAGE
 
 
 class SlackSummary(NamedTuple):
@@ -18,10 +18,10 @@ class SlackSummary(NamedTuple):
 
 class ServiceAPI(BaseCustomStatusPageAPI):
     STATUS_TYPE_MAPPING = {
-        'Ok': TYPE_GOOD,
-        'Incident': TYPE_INCIDENT,
-        'Outage': TYPE_OUTAGE,
-        'Maintenance': TYPE_MAINTENANCE,
+        'Ok': statuscheck.status_types.TYPE_GOOD,
+        'Incident': statuscheck.status_types.TYPE_INCIDENT,
+        'Outage': statuscheck.status_types.TYPE_OUTAGE,
+        'Maintenance': statuscheck.status_types.TYPE_MAINTENANCE,
     }
 
     name = 'Slack'
@@ -39,7 +39,7 @@ class ServiceAPI(BaseCustomStatusPageAPI):
 
         # TODO: parse Slack components and their statuses
         incidents = []
-        if status != TYPE_GOOD:
+        if status != statuscheck.status_types.TYPE_GOOD:
             incidents.append({'name': description, 'status': status})
         return SlackSummary.from_data(
             data={'status': status, 'incidents': incidents}

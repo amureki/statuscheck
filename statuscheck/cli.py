@@ -1,8 +1,10 @@
 import sys
+
 import click
 
-from .__about__ import __url__
 from statuscheck.check import get_statuscheck_api
+
+from .__about__ import __url__
 
 
 @click.command()

@@ -30,4 +30,4 @@ SERVICES = [
     'twilio',
 ]
 
-__all__ = SERVICES
+__all__ = [SERVICES]

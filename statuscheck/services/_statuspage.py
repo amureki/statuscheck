@@ -3,8 +3,12 @@ from typing import NamedTuple
 import requests
 
 from statuscheck.services._base import BaseServiceAPI
-from statuscheck.status_types import SPIO_INDICATORS, SPIO_COMPONENT_OPERATIONAL, \
-    SPIO_COMPONENTS_STATUSES, SPIO_INCIDENTS_STATUSES
+from statuscheck.status_types import (
+    SPIO_COMPONENT_OPERATIONAL,
+    SPIO_COMPONENTS_STATUSES,
+    SPIO_INCIDENTS_STATUSES,
+    SPIO_INDICATORS,
+)
 
 
 class StatusPageIOSummary(NamedTuple):

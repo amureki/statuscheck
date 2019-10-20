@@ -2,13 +2,13 @@ from typing import NamedTuple
 
 import requests
 
+import statuscheck.status_types
 from statuscheck.services._base import BaseServiceAPI
-from statuscheck.status_types import TYPE_INCIDENT, TYPE_OUTAGE, TYPE_GOOD
 
 STATUS_TYPE_MAPPING = {
-    'green': TYPE_GOOD,
-    'yellow': TYPE_INCIDENT,
-    'red': TYPE_OUTAGE,
+    'green': statuscheck.status_types.TYPE_GOOD,
+    'yellow': statuscheck.status_types.TYPE_INCIDENT,
+    'red': statuscheck.status_types.TYPE_OUTAGE,
 }
 
 
@@ -36,9 +36,9 @@ class ServiceSummary(NamedTuple):
         status_development = STATUS_TYPE_MAPPING[status_data['Development']]
         status = status_production
 
-        if status_development != TYPE_GOOD:
+        if status_development != statuscheck.status_types.TYPE_GOOD:
             status = status_development
-        if status_production != TYPE_GOOD:
+        if status_production != statuscheck.status_types.TYPE_GOOD:
             status = status_production
 
         return cls(
