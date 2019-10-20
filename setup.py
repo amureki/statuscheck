@@ -38,6 +38,7 @@ setup(
     install_requires=requirements,
     license="Apache Software License 2.0",
     long_description=long_description,
+    long_description_content_type="text/markdown",
     include_package_data=True,
     keywords="statuscheck",
     name="statuscheck",
