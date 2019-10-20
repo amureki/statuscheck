@@ -40,7 +40,7 @@ class ServiceAPI(BaseCustomStatusPageAPI):
         # TODO: parse Slack components and their statuses
         incidents = []
         if status != TYPE_GOOD:
-            incidents.append({'name': description})
+            incidents.append({'name': description, 'status': status})
         return SlackSummary.from_data(
             data={'status': status, 'incidents': incidents}
         )
