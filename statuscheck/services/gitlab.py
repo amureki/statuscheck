@@ -1,7 +1,7 @@
-from statuscheck.services._statusio import BaseStatusioAPI
+from statuscheck.services._statusio import BaseStatusIOAPI
 
 
-class ServiceAPI(BaseStatusioAPI):
-    name = 'GitLab'
-    domain_id = '5b36dc6502d06804c08349f7'
-    status_url = 'https://status.gitlab.com/'
+class ServiceAPI(BaseStatusIOAPI):
+    name = "GitLab"
+    domain_id = "5b36dc6502d06804c08349f7"
+    status_url = "https://status.gitlab.com/"

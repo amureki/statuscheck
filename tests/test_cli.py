@@ -1,4 +1,3 @@
-import pytest
 from click.testing import CliRunner
 
 from statuscheck import cli
@@ -12,5 +11,5 @@ def test_command_line_interface_no_args():
 
 def test_command_line_interface():
     runner = CliRunner()
-    result = runner.invoke(cli.main, 'github')
+    result = runner.invoke(cli.main, "github")
     assert result.exit_code == 0

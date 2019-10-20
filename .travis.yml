@@ -1,8 +1,13 @@
 language: python
+branches:
+  only:
+  - master
 python:
 - 3.6
-install: pip install -U tox-travis
-script: tox
+install:
+- pip install -U tox-travis
+script:
+- tox
 deploy:
   provider: pypi
   skip_existing: true
