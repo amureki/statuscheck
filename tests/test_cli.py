@@ -10,7 +10,6 @@ def test_command_line_interface_no_args():
     assert result.exit_code == 2
 
 
-@pytest.mark.skip
 def test_command_line_interface():
     runner = CliRunner()
     result = runner.invoke(cli.main, 'github')
