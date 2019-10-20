@@ -1,10 +1,9 @@
 SERVICES = [
     'asana',
     'atlassian',
-    'aws',
     'bitbucket',
     'circleci',
-    'closeio',
+    'close',
     'cloudamqp',
     'cloudflare',
     'codecov',
