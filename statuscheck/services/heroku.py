@@ -6,9 +6,9 @@ import statuscheck.status_types
 from statuscheck.services._base import BaseServiceAPI
 
 STATUS_TYPE_MAPPING = {
-    'green': statuscheck.status_types.TYPE_GOOD,
-    'yellow': statuscheck.status_types.TYPE_INCIDENT,
-    'red': statuscheck.status_types.TYPE_OUTAGE,
+    "green": statuscheck.status_types.TYPE_GOOD,
+    "yellow": statuscheck.status_types.TYPE_INCIDENT,
+    "red": statuscheck.status_types.TYPE_OUTAGE,
 }
 
 
@@ -20,20 +20,18 @@ class ServiceSummary(NamedTuple):
 
     @classmethod
     def _get_incidents(cls, summary):
-        incidents = summary['issues']
+        incidents = summary["issues"]
         filtered_data = []
-        important_keys = ('title', 'status_dev', 'status_prod', 'full_url')
+        important_keys = ("title", "status_dev", "status_prod", "full_url")
         for component in incidents:
-            filtered_data.append(
-                {k: component.get(k, None) for k in important_keys}
-            )
+            filtered_data.append({k: component.get(k, None) for k in important_keys})
         return filtered_data
 
     @classmethod
     def from_summary(cls, summary):
-        status_data = summary['status']
-        status_production = STATUS_TYPE_MAPPING[status_data['Production']]
-        status_development = STATUS_TYPE_MAPPING[status_data['Development']]
+        status_data = summary["status"]
+        status_production = STATUS_TYPE_MAPPING[status_data["Production"]]
+        status_development = STATUS_TYPE_MAPPING[status_data["Development"]]
         status = status_production
 
         if status_development != statuscheck.status_types.TYPE_GOOD:
@@ -50,12 +48,12 @@ class ServiceSummary(NamedTuple):
 
 
 class ServiceAPI(BaseServiceAPI):
-    name = 'Heroku'
-    base_url = 'https://status.heroku.com/api/v3/'
-    status_url = 'https://status.heroku.com'
+    name = "Heroku"
+    base_url = "https://status.heroku.com/api/v3/"
+    status_url = "https://status.heroku.com"
 
     def get_summary(self):
-        url = self.base_url + 'current-status'
+        url = self.base_url + "current-status"
         response = requests.get(url)
         response.raise_for_status()
         return ServiceSummary.from_summary(summary=response.json())
