@@ -4,6 +4,7 @@ logger = logging.getLogger(__name__)
 
 
 class BaseServiceAPI:
+    name: str = None
     summary = None
 
     @property

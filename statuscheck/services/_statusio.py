@@ -7,6 +7,7 @@ from statuscheck.status_types import TYPE_GOOD
 
 
 class StatusIOSummary(NamedTuple):
+    name: str
     status: str
     incidents: list
     components: list
@@ -26,9 +27,10 @@ class StatusIOSummary(NamedTuple):
         return data["incidents"]
 
     @classmethod
-    def from_data(cls, data):
+    def from_data(cls, name, data):
         status = data["status_overall"]["status"]
         return cls(
+            name=name,
             status=status,
             incidents=cls._get_incidents(data),
             components=cls._get_components(data),
@@ -55,4 +57,4 @@ class BaseStatusIOAPI(BaseServiceAPI):
     def get_summary(self):
         response = requests.get(self._get_base_url())
         response.raise_for_status()
-        return StatusIOSummary.from_data(data=response.json()["result"])
+        return StatusIOSummary.from_data(name=self.name, data=response.json()["result"])
