@@ -13,6 +13,7 @@ STATUS_TYPE_MAPPING = {
 
 
 class ServiceSummary(NamedTuple):
+    name: str
     status: str
     status_development: str
     status_production: str
@@ -28,8 +29,8 @@ class ServiceSummary(NamedTuple):
         return filtered_data
 
     @classmethod
-    def from_summary(cls, summary):
-        status_data = summary["status"]
+    def from_data(cls, name, data):
+        status_data = data["status"]
         status_production = STATUS_TYPE_MAPPING[status_data["Production"]]
         status_development = STATUS_TYPE_MAPPING[status_data["Development"]]
         status = status_production
@@ -40,10 +41,11 @@ class ServiceSummary(NamedTuple):
             status = status_production
 
         return cls(
+            name=name,
             status=status,
             status_production=status_production,
             status_development=status_development,
-            incidents=cls._get_incidents(summary),
+            incidents=cls._get_incidents(data),
         )
 
 
@@ -56,4 +58,4 @@ class ServiceAPI(BaseServiceAPI):
         url = self.base_url + "current-status"
         response = requests.get(url)
         response.raise_for_status()
-        return ServiceSummary.from_summary(summary=response.json())
+        return ServiceSummary.from_data(name=self.name, data=response.json())

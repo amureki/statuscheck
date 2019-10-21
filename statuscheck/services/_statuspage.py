@@ -12,6 +12,7 @@ from statuscheck.status_types import (
 
 
 class StatusPageIOSummary(NamedTuple):
+    name: str
     status: str
     incidents: list
     components: list
@@ -44,10 +45,11 @@ class StatusPageIOSummary(NamedTuple):
         return filtered_data
 
     @classmethod
-    def from_data(cls, data):
+    def from_data(cls, name, data):
         status = data["status"]
         status_type = SPIO_INDICATORS[status["indicator"]]
         return cls(
+            name=name,
             status=status_type,
             incidents=cls._get_incidents(data),
             components=cls._get_components(data),
@@ -67,4 +69,4 @@ class BaseStatusPageAPI(BaseServiceAPI):
         url = self._get_base_url() + "summary.json"
         response = requests.get(url)
         response.raise_for_status()
-        return StatusPageIOSummary.from_data(data=response.json())
+        return StatusPageIOSummary.from_data(name=self.name, data=response.json())

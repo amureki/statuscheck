@@ -7,6 +7,7 @@ from statuscheck.services._base import BaseServiceAPI
 
 
 class SalesforceSummary(NamedTuple):
+    name: str
     status: str
     incidents: list
     components: list
@@ -16,11 +17,12 @@ class SalesforceSummary(NamedTuple):
         pass
 
     @classmethod
-    def from_summary(cls, summary):
+    def from_data(cls, name, data):
         return cls(
-            status=summary["status"],
-            incidents=summary["incidents"],
-            components=summary["components"],
+            name=name,
+            status=data["status"],
+            incidents=data["incidents"],
+            components=data["components"],
         )
 
 
@@ -61,12 +63,13 @@ class ServiceAPI(BaseServiceAPI):
 
     def get_summary(self):
         self.data = self._get_status_data()
-        return SalesforceSummary.from_summary(
-            summary={
+        return SalesforceSummary.from_data(
+            name=self.name,
+            data={
                 "status": self.get_general_status(),
                 "incidents": self._get_incidents(),
                 "components": self._get_affected_servers(),
-            }
+            },
         )
 
     def _get_status_data(self):

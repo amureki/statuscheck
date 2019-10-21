@@ -5,12 +5,13 @@ from statuscheck.services._custompage import BaseCustomStatusPageAPI
 
 
 class SlackSummary(NamedTuple):
+    name: str
     status: str
     incidents: list
 
     @classmethod
-    def from_data(cls, data):
-        return cls(status=data["status"], incidents=data["incidents"])
+    def from_data(cls, name, data):
+        return cls(name=name, status=data["status"], incidents=data["incidents"])
 
 
 class ServiceAPI(BaseCustomStatusPageAPI):
@@ -38,4 +39,6 @@ class ServiceAPI(BaseCustomStatusPageAPI):
         incidents = []
         if status != statuscheck.status_types.TYPE_GOOD:
             incidents.append({"name": description, "status": status})
-        return SlackSummary.from_data(data={"status": status, "incidents": incidents})
+        return SlackSummary.from_data(
+            name=self.name, data={"status": status, "incidents": incidents}
+        )

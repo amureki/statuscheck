@@ -5,12 +5,13 @@ from statuscheck.status_types import TYPE_GOOD
 
 
 class SignalSummary(NamedTuple):
+    name: str
     status: str
     incidents: list
 
     @classmethod
-    def from_data(cls, data):
-        return cls(status=data["status"], incidents=data["incidents"])
+    def from_data(cls, name, data):
+        return cls(name=name, status=data["status"], incidents=data["incidents"])
 
 
 class ServiceAPI(BaseCustomStatusPageAPI):
@@ -30,5 +31,5 @@ class ServiceAPI(BaseCustomStatusPageAPI):
         if status_type != TYPE_GOOD:
             incidents.append({"name": status_text, "status": status_type})
         return SignalSummary.from_data(
-            data={"status": status_type, "incidents": incidents}
+            name=self.name, data={"status": status_type, "incidents": incidents}
         )
