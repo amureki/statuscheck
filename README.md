@@ -14,22 +14,31 @@ Install the latest release via `pip` or `pipenv`:
 Then just use it in your shell:
 
     $ statuscheck github
-    No issues
+    Current status of GitHub: No issues
 
-    $ statuscheck slack
-    Incident: We are having issues with some features including the Events API, notifications, unfurls, and threads
-    More: https://status.slack.com/
+    $ statuscheck digitalocean
+    Current status of DigitalOcean: Minor incident
+    Registered incidents:
+    - DNS issues with Managed Databases [Identified]
+    - Issues with accessing S3/RDS resources inside Droplets across all regions [Monitoring]
+    Affected components:
+    - Services: Degraded performance
+    - Managed Databases: Degraded performance
+    - Spaces: Degraded performance
+
+    More: https://status.digitalocean.com/
 
 There is also an API available:
 
 
     >>> from statuscheck.check import get_statuscheck_api
 
-    >>> api = get_statuscheck_api('slack')
-    >>> api.get_status()
-    "We're having issues with some features including the Events API, notifications, unfurls, and threads"
-    >>> api.get_type()
-    'Incident'
+    >>> api = get_statuscheck_api('digitalocean')
+    >>> summary = api.get_summary()
+    >>> summary.status
+    'Minor incident'
+    >>> summary.incidents
+    [{'name': 'DNS issues with Managed Databases', 'status': 'Identified', 'impact': 'minor'}, {'name': 'Issues with accessing S3/RDS resources inside Droplets across all regions', 'status': 'Monitoring', 'impact': 'minor'}]
 
 
 Currently, all services that we support are defined [here](statuscheck/services/__init__.py).

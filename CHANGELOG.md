@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [2.2.0] - 2019-10-24
+### Added
+- Added CLI option to check all services (useful for debugging and/or gives you a good feeling):
+`statuscheck all` (https://github.com/amureki/statuscheck/pull/74)
+
+### Changed
+- Fixed Heroku incidents verbose display (https://github.com/amureki/statuscheck/pull/74)
+
 ## [2.1.0] - 2019-10-21
 ### Changed
 - Add name to summary, smaller clean ups (https://github.com/amureki/statuscheck/pull/73)
