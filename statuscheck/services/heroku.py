@@ -25,7 +25,9 @@ class ServiceSummary(NamedTuple):
         filtered_data = []
         important_keys = ("title", "status_dev", "status_prod", "full_url")
         for component in incidents:
-            filtered_data.append({k: component.get(k, None) for k in important_keys})
+            component_data = {k: component.get(k, None) for k in important_keys}
+            component_data["name"] = component_data.pop("title")
+            filtered_data.append(component_data)
         return filtered_data
 
     @classmethod

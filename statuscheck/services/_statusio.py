@@ -5,6 +5,8 @@ import requests
 from statuscheck.services._base import BaseServiceAPI
 from statuscheck.status_types import TYPE_GOOD
 
+STATUS_TYPE_MAPPING = {"Operational": TYPE_GOOD}
+
 
 class StatusIOSummary(NamedTuple):
     name: str
@@ -28,7 +30,8 @@ class StatusIOSummary(NamedTuple):
 
     @classmethod
     def from_data(cls, name, data):
-        status = data["status_overall"]["status"]
+        status_raw = data["status_overall"]["status"]
+        status = STATUS_TYPE_MAPPING.get(status_raw, "")
         return cls(
             name=name,
             status=status,
@@ -44,8 +47,6 @@ class BaseStatusIOAPI(BaseServiceAPI):
     API v2: https://statusio.docs.apiary.io
     Public status API: https://kb.status.io/developers/public-status-api/
     """
-
-    STATUS_TYPE_MAPPING = {"Operational": TYPE_GOOD}
 
     domain_id: str = None
 
