@@ -68,7 +68,7 @@ class ServiceAPI(BaseServiceAPI):
             data={
                 "status": self.get_general_status(),
                 "incidents": self._get_incidents(),
-                "components": self._get_affected_servers(),
+                "components": self.get_components(),
             },
         )
 
@@ -78,29 +78,55 @@ class ServiceAPI(BaseServiceAPI):
         response.raise_for_status()
         return response.json()
 
+    def get_components(self):
+        servers = self._get_affected_servers()
+        for server in servers:
+            server["status"] = self.STATUS_TYPE_MAPPING[server["status"]]
+        return servers
+
     def _get_affected_servers(self) -> list:
         servers = []
         for server in self.data:
             if server.get("status") != self.STATUS_OK:
+                server["name"] = server["key"]
                 servers.append(server)
         return servers
 
-    def _get_incidents(self):
+    def _get_all_incidents(self):
+        incident_keys = []
         incidents = []
         affected_servers = self._get_affected_servers()
+        affected_server_keys = [s["key"] for s in affected_servers]
         if not affected_servers:
-            return incidents
+            return []
+
         for server in affected_servers:
-            data = server["Incidents"]
-            data["key"] = server["key"]
-            data["status"] = server["status"]
-            incidents.append(data)
+            if server["key"] not in affected_server_keys:
+                continue
+            server_incidents = server["Incidents"]
+            for incident in server_incidents:
+                if incident["id"] in incident_keys:
+                    continue
+                incident["name"] = incident["IncidentImpacts"][0]["type"]
+                incident["server_status"] = self.STATUS_TYPE_MAPPING[server["status"]]
+                incidents.append(incident)
+                incident_keys.append(incident["id"])
         return incidents
 
-    def get_general_status(self):
-        incidents = self._get_incidents()
-        if not incidents:
-            return self.STATUS_TYPE_MAPPING[self.STATUS_OK]
+    def _get_general_incidents(self):
+        incidents = self._get_all_incidents()
+        general_incidents = []
         for incident in incidents:
             if incident["affectsAll"]:
-                return self.STATUS_TYPE_MAPPING[incident["status"]]
+                general_incidents.append(incident)
+        return general_incidents
+
+    def _get_incidents(self):
+        return self._get_all_incidents()
+
+    def get_general_status(self):
+        incidents = self._get_general_incidents()
+        if not incidents:
+            return self.STATUS_TYPE_MAPPING[self.STATUS_OK]
+
+        return incidents[0]["server_status"]
