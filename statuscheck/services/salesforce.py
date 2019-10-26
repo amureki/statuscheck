@@ -67,7 +67,7 @@ class ServiceAPI(BaseServiceAPI):
             name=self.name,
             data={
                 "status": self.get_general_status(),
-                "incidents": self._get_incidents(),
+                "incidents": self.get_incidents(),
                 "components": self.get_components(),
             },
         )
@@ -92,7 +92,15 @@ class ServiceAPI(BaseServiceAPI):
                 servers.append(server)
         return servers
 
-    def _get_all_incidents(self):
+    def _get_general_incidents(self):
+        incidents = self.get_incidents()
+        general_incidents = []
+        for incident in incidents:
+            if incident["affectsAll"]:
+                general_incidents.append(incident)
+        return general_incidents
+
+    def get_incidents(self):
         incident_keys = []
         incidents = []
         affected_servers = self._get_affected_servers()
@@ -103,26 +111,18 @@ class ServiceAPI(BaseServiceAPI):
         for server in affected_servers:
             if server["key"] not in affected_server_keys:
                 continue
+
             server_incidents = server["Incidents"]
             for incident in server_incidents:
                 if incident["id"] in incident_keys:
                     continue
+
                 incident["name"] = incident["IncidentImpacts"][0]["type"]
                 incident["server_status"] = self.STATUS_TYPE_MAPPING[server["status"]]
                 incidents.append(incident)
                 incident_keys.append(incident["id"])
+
         return incidents
-
-    def _get_general_incidents(self):
-        incidents = self._get_all_incidents()
-        general_incidents = []
-        for incident in incidents:
-            if incident["affectsAll"]:
-                general_incidents.append(incident)
-        return general_incidents
-
-    def _get_incidents(self):
-        return self._get_all_incidents()
 
     def get_general_status(self):
         incidents = self._get_general_incidents()
