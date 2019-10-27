@@ -17,15 +17,13 @@ with open(os.path.join(here, "statuscheck", "__about__.py")) as f:
 
 requirements = ["Click>=6.0", "requests", "requests_html", "feedparser"]
 
-setup_requirements = ["pytest-runner"]
-
 test_requirements = ["pytest"]
 
 setup(
     author=about["__author__"],
     author_email=about["__email__"],
     classifiers=[
-        "Development Status :: 2 - Pre-Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Apache Software License",
         "Natural Language :: English",
@@ -43,7 +41,6 @@ setup(
     keywords="statuscheck",
     name="statuscheck",
     packages=find_packages(exclude=["tests", "tests.*"]),
-    setup_requires=setup_requirements,
     test_suite="tests",
     tests_require=test_requirements,
     url=about["__url__"],

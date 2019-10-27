@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [2.3.1] - 2019-10-27
+### Changed
+- Drop deprecated pytest-runner
+- Dependencies update
+
 ## [2.3.0] - 2019-10-26
 ### Changed
 - Handle major Salesforce incidents properly (https://github.com/amureki/statuscheck/pull/76)
