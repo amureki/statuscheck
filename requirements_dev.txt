@@ -7,4 +7,4 @@ pytest==5.2.2
 pre-commit==1.19.0
 isort==4.3.21
 flake8==3.7.9
-pydocstyle==4.0.1
+pydocstyle==5.0.0
