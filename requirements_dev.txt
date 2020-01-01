@@ -4,7 +4,7 @@ coverage==4.5.4
 pytest==5.3.1
 
 # Linting & QA
-pre-commit==1.19.0
+pre-commit==1.20.0
 isort==4.3.21
 flake8==3.7.9
 pydocstyle==5.0.1
