@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [2.4.0] - 2020-02-10
+### Changed
+- Improve `StatusIO` check types
+- Dependencies update
+
 ## [2.3.1] - 2019-10-27
 ### Changed
 - Drop deprecated pytest-runner
