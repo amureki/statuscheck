@@ -1,6 +1,6 @@
 pip==20.0.2
 tox==3.14.3
-coverage==5.0.1
+coverage==5.0.3
 pytest==5.3.5
 
 # Linting & QA
