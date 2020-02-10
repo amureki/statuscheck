@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [2.4.1] - 2020-02-10
+### Changed
+- Use `StatusIO` security type for security incidents
+
 ## [2.4.0] - 2020-02-10
 ### Changed
 - Improve `StatusIO` check types
