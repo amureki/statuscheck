@@ -3,9 +3,13 @@ from typing import NamedTuple
 import requests
 
 from statuscheck.services._base import BaseServiceAPI
-from statuscheck.status_types import TYPE_GOOD, TYPE_SECURITY
+from statuscheck.status_types import TYPE_GOOD, TYPE_INCIDENT, TYPE_SECURITY
 
-STATUS_TYPE_MAPPING = {"Operational": TYPE_GOOD, "Security Issue": TYPE_SECURITY}
+STATUS_TYPE_MAPPING = {
+    "Operational": TYPE_GOOD,
+    "Degraded Performance": TYPE_INCIDENT,
+    "Security Issue": TYPE_SECURITY,
+}
 
 
 class StatusIOSummary(NamedTuple):
