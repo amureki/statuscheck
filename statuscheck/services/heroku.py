@@ -9,6 +9,7 @@ STATUS_TYPE_MAPPING = {
     "green": statuscheck.status_types.TYPE_GOOD,
     "yellow": statuscheck.status_types.TYPE_INCIDENT,
     "red": statuscheck.status_types.TYPE_OUTAGE,
+    "blue": statuscheck.status_types.TYPE_MAINTENANCE,
 }
 
 
