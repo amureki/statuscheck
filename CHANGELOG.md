@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [2.6.0] - 2020-02-21
+### Changed
+- Add `StatusIO` outage performance status type
+- Add `Heroku` maintenance status type
+
 ## [2.5.0] - 2020-02-11
 ### Changed
 - Add `StatusIO` degraded performance status type
