@@ -3,11 +3,17 @@ from typing import NamedTuple
 import requests
 
 from statuscheck.services._base import BaseServiceAPI
-from statuscheck.status_types import TYPE_GOOD, TYPE_INCIDENT, TYPE_SECURITY
+from statuscheck.status_types import (
+    TYPE_GOOD,
+    TYPE_INCIDENT,
+    TYPE_OUTAGE,
+    TYPE_SECURITY,
+)
 
 STATUS_TYPE_MAPPING = {
     "Operational": TYPE_GOOD,
     "Degraded Performance": TYPE_INCIDENT,
+    "Full Service Disruption": TYPE_OUTAGE,
     "Security Issue": TYPE_SECURITY,
 }
 
