@@ -16,6 +16,7 @@ SERVICES = [
     "heroku",
     "mailgun",
     "npm",
+    "nylas",
     "pagerduty",
     "personio",
     "pypi",

@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [2.7.0] - 2020-03-13
+### Added
+- Nylas status checker
+
 ## [2.6.0] - 2020-02-21
 ### Changed
 - Add `StatusIO` outage performance status type
