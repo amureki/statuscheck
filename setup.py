@@ -13,8 +13,6 @@ about = {}
 with open(join(here, "statuscheck", "__about__.py")) as f:
     exec(f.read(), about)
 
-test_requirements = ["pytest"]
-
 setup(
     author=about["__author__"],
     author_email=about["__email__"],
@@ -27,9 +25,10 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
     ],
-    description="Tool to check PAAS/SAAS status pages",
+    description="Tool to check PaaS/SaaS status pages",
     entry_points={"console_scripts": ["statuscheck=statuscheck.cli:main"]},
     install_requires=open(join(here, "requirements.txt")).readlines(),
+    extras_require={"tests": ["pytest"]},
     license="Apache Software License 2.0",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -37,8 +36,6 @@ setup(
     keywords="statuscheck",
     name="statuscheck",
     packages=find_packages(exclude=["tests", "tests.*"]),
-    test_suite="tests",
-    tests_require=test_requirements,
     url=about["__url__"],
     version=about["__version__"],
     zip_safe=False,

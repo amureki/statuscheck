@@ -1,6 +1,6 @@
 # statuscheck: Tool to check PAAS/SAAS status pages
 
-[![Build Status](https://travis-ci.org/amureki/statuscheck.svg?branch=master)](https://travis-ci.org/amureki/statuscheck)
+![Tests](https://github.com/amureki/statuscheck/workflows/Tests/badge.svg)
 [![image](https://img.shields.io/pypi/v/statuscheck.svg)](https://pypi.org/project/statuscheck/)
 [![image](https://img.shields.io/pypi/l/statuscheck.svg)](https://pypi.org/project/statuscheck/)
 [![image](https://img.shields.io/pypi/pyversions/statuscheck.svg)](https://pypi.org/project/statuscheck/)
