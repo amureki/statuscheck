@@ -1,21 +1,17 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import codecs
-import os
+from os.path import abspath, dirname, join
 
 from setuptools import find_packages, setup
 
-here = os.path.abspath(os.path.dirname(__file__))
+here = abspath(dirname(__file__))
 
-with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
+with codecs.open(join(here, "README.md"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
 
 about = {}
 
-with open(os.path.join(here, "statuscheck", "__about__.py")) as f:
+with open(join(here, "statuscheck", "__about__.py")) as f:
     exec(f.read(), about)
-
-requirements = ["Click>=6.0", "requests", "requests_html", "feedparser"]
 
 test_requirements = ["pytest"]
 
@@ -33,7 +29,7 @@ setup(
     ],
     description="Tool to check PAAS/SAAS status pages",
     entry_points={"console_scripts": ["statuscheck=statuscheck.cli:main"]},
-    install_requires=requirements,
+    install_requires=open(join(here, "requirements.txt")).readlines(),
     license="Apache Software License 2.0",
     long_description=long_description,
     long_description_content_type="text/markdown",
