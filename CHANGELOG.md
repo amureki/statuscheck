@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [2.8.0] - 2020-05-24
+### Changed
+- [CI] Switch from Travis CI to GitHub Actions
+- Dependencies update
+
 ## [2.7.0] - 2020-03-13
 ### Added
 - Nylas status checker
