@@ -1,9 +1,8 @@
-include LICENSE
-include README.rst
-include requirements.txt
+include LICENSE README.md requirements.txt
 
-recursive-include tests *
-recursive-exclude * __pycache__
-recursive-exclude * *.py[co]
+include *.ini *.yml *.yaml *.toml
 
-recursive-include *.rst
+graft .github
+graft tests
+
+recursive-exclude tests *.pyc
