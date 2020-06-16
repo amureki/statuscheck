@@ -20,6 +20,7 @@ class ServiceAPI(BaseCustomStatusPageAPI):
     name = "Signal"
     base_url = "https://status.signal.org/"
     status_url = base_url
+    service_url = "https://signal.org/"
 
     def get_summary(self):
         html = self._get_html_response()

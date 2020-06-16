@@ -60,6 +60,7 @@ class ServiceAPI(BaseServiceAPI):
     name = "Salesforce"
     base_url = "https://api.status.salesforce.com/v1/"
     status_url = "https://status.salesforce.com"
+    service_url = "https://salesforce.com/"
 
     def get_summary(self):
         self.data = self._get_status_data()
