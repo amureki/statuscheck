@@ -56,6 +56,7 @@ class ServiceAPI(BaseServiceAPI):
     name = "Heroku"
     base_url = "https://status.heroku.com/api/v3/"
     status_url = "https://status.heroku.com"
+    service_url = "https://heroku.com"
 
     def get_summary(self):
         url = self.base_url + "current-status"

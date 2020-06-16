@@ -25,6 +25,7 @@ class ServiceAPI(BaseCustomStatusPageAPI):
     name = "Slack"
     base_url = "https://status.slack.com/"
     status_url = base_url
+    service_url = "https://slack.com/"
 
     def get_summary(self):
         html = self._get_html_response()
