@@ -30,5 +30,6 @@ def test_get_statuscheck_api(service):
     api = get_statuscheck_api(service)
     assert api._module_name == service
     assert api.status_url
+    assert api.service_url
     assert api.summary
     print(api.summary)

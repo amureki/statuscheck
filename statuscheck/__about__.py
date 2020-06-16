@@ -1,4 +1,4 @@
-__author__ = "Rustem Saiargaliev"
+__author__ = "Rust Saiargaliev"
 __email__ = "hi@amureki.me"
 __url__ = "https://github.com/amureki/statuscheck"
-__version__ = "2.8.0"
+__version__ = "2.9.0"

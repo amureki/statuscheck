@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [2.9.0] - 2020-06-16
+### Changed
+- Add service URLs
+- Dependencies update
+- [dev] Add .editorconfig
+
 ## [2.8.0] - 2020-05-24
 ### Changed
 - [CI] Switch from Travis CI to GitHub Actions
