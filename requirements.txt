@@ -2,3 +2,5 @@ Click>=6.0
 requests
 requests_html
 feedparser
+httpx
+attrs
