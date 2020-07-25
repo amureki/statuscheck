@@ -2,10 +2,9 @@ import sys
 
 import click
 
-from statuscheck.check import get_statuscheck_api
+from statuscheck.__about__ import __url__
 from statuscheck.services import SERVICES
-
-from .__about__ import __url__
+from statuscheck.utils import get_statuscheck_api
 
 
 @click.command()
@@ -21,36 +20,33 @@ def main(service):
         click.echo(f'"{service}" is not implemented, leave a note at {__url__}')
         return 1
 
-    _report_status(service_api)
+    _print_status(service_api)
 
     return 0
 
 
-def _report_status(service_api):
+def _print_status(service_api):
     summary = service_api.get_summary()
-
-    click.echo(f"Current {service_api.name} status: {summary.status}")
+    click.echo(f"Current {service_api.name} status: {summary.status.description}")
 
     incidents = summary.incidents
     if incidents:
-        click.echo(f"Registered incidents:")
+        click.echo(f"Registered events:")
         for incident in incidents:
-            incident_name = incident["name"]
-            incident_status = incident.get("status")
-            if incident_status:
-                click.echo(f"- {incident_name} [{incident_status}]")
+            if incident.status:
+                click.echo(f"- [{incident.status}] {incident.name}")
             else:
-                click.echo(f"- {incident_name}")
+                click.echo(f"- {incident.name}")
+            if hasattr(incident, "scheduled_for") and incident.scheduled_for:
+                click.echo(f"  {incident.scheduled_for}")
+            # TODO: verbosity 2?
+            if incident.components:
+                click.echo(f"  Affected components:")
+                for component in incident.components:
+                    click.echo(f"    - {component.name} [{component.status}]")
 
-    has_components = hasattr(summary, "components")
-    if has_components and summary.components:
-        click.echo(f"Affected components:")
-        for component in summary.components:
-            name = component["name"]
-            component_status = component["status"]
-            click.echo(f"- {name}: {component_status}")
-
-    if incidents or (has_components and summary.components):
+    # TODO: if status not OK?
+    if incidents:
         click.echo()
         click.echo(f"More: {service_api.status_url}")
 
@@ -58,7 +54,7 @@ def _report_status(service_api):
 def _check_all():
     for service in SERVICES:
         service_api = get_statuscheck_api(service)
-        _report_status(service_api=service_api)
+        _print_status(service_api=service_api)
         click.echo("=" * 40)
 
 

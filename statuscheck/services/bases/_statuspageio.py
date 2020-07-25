@@ -1,14 +1,20 @@
-from new.services._base import BaseServiceAPI
-from new.statuspage.models import Component, Incident, Status, Summary
-
 import httpx
+
+from statuscheck.services.bases._base import BaseServiceAPI
+from statuscheck.services.models.generic import Component, Incident, Status, Summary
+from statuscheck.services.models.statuspageio import (
+    Component as _Component,
+    Incident as _Incident,
+    Status as _Status,
+    Summary as _Summary,
+)
 
 
 class BaseStatusPageAPI(BaseServiceAPI):
     """
     Statuspage.io pages API handler.
 
-    API: https://developer.statuspage.io/
+    Documentation: https://developer.statuspage.io/
     """
 
     domain_id: str = None
@@ -19,14 +25,47 @@ class BaseStatusPageAPI(BaseServiceAPI):
             raise NotImplementedError("Please, add domain id")
         return f"https://{self.domain_id}.statuspage.io/api/v2/"
 
-    def get_simple_status(self) -> Status:
+    def get_status(self) -> Status:
+        statuspageio_status = self._get_status()
+        return Status(
+            code=statuspageio_status.indicator,
+            description=statuspageio_status.description,
+        )
+
+    def get_summary(self) -> Summary:
+        statuspageio_summary = self._get_summary()
+        incidents = [
+            Incident(
+                id=incident.id,
+                name=incident.name,
+                status=incident.status,
+                components=[
+                    Component(
+                        id=component.id, name=component.name, status=component.status,
+                    )
+                    for component in incident.components
+                ],
+            )
+            for incident in statuspageio_summary.incidents
+        ]
+        components = [
+            Component(id=component.id, name=component.name, status=component.status,)
+            for component in statuspageio_summary.components
+        ]
+        summary = Summary(
+            status=statuspageio_summary.status,
+            components=components,
+            incidents=incidents,
+        )
+        return summary
+
+    def _get_status(self) -> _Status:
         url = self._get_base_url() + "status.json"
         response_json = httpx.get(url).json()
         status_dict = response_json["status"]
-        status = Status(**status_dict)
-        return status
+        return Status(**status_dict)
 
-    def get_summary(self) -> Summary:
+    def _get_summary(self) -> _Summary:
         url = self._get_base_url() + "summary.json"
         # with open("tests/test_services/test_data/github_summary.json", "rb") as f:
         #     import json
@@ -34,9 +73,9 @@ class BaseStatusPageAPI(BaseServiceAPI):
         # response_json = data
         response_json = httpx.get(url).json()
         status_dict = response_json["status"]
-        status = Status(**status_dict)
+        status = _Status(**status_dict)
         incidents = [
-            Incident(
+            _Incident(
                 incident["id"],
                 incident["name"],
                 incident["status"],
@@ -44,7 +83,7 @@ class BaseStatusPageAPI(BaseServiceAPI):
                 incident.get("scheduled_for"),
                 incident.get("scheduled_until"),
                 [
-                    Component(
+                    _Component(
                         component["id"],
                         component["description"],
                         component["status"],
@@ -58,7 +97,7 @@ class BaseStatusPageAPI(BaseServiceAPI):
             + response_json["scheduled_maintenances"]
         ]
         components = [
-            Component(
+            _Component(
                 component["id"],
                 component["description"],
                 component["status"],
@@ -67,5 +106,4 @@ class BaseStatusPageAPI(BaseServiceAPI):
             )
             for component in response_json["components"]
         ]
-
-        return Summary(status, components, incidents)
+        return _Summary(status, components, incidents)

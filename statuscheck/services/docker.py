@@ -1,4 +1,4 @@
-from statuscheck.services._statusio import BaseStatusIOAPI
+from statuscheck.services.bases._statusio import BaseStatusIOAPI
 
 
 class ServiceAPI(BaseStatusIOAPI):

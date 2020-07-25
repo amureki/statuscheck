@@ -2,8 +2,8 @@ from typing import NamedTuple
 
 import requests
 
-import statuscheck.status_types
-from statuscheck.services._base import BaseServiceAPI
+import old.status_types
+from old.services._base import BaseServiceAPI
 
 
 class SalesforceSummary(NamedTuple):
@@ -47,14 +47,14 @@ class ServiceAPI(BaseServiceAPI):
     ]
 
     STATUS_TYPE_MAPPING = {
-        STATUS_OK: statuscheck.status_types.TYPE_GOOD,
-        STATUS_CORE_INCIDENT: statuscheck.status_types.TYPE_INCIDENT,
-        STATUS_NONCORE_INCIDENT: statuscheck.status_types.TYPE_INCIDENT,
-        STATUS_CORE_OUTAGE: statuscheck.status_types.TYPE_OUTAGE,
-        STATUS_NONCORE_OUTAGE: statuscheck.status_types.TYPE_OUTAGE,
-        STATUS_CORE_MAINTENANCE: statuscheck.status_types.TYPE_MAINTENANCE,
-        STATUS_NONCORE_MAINTENANCE: statuscheck.status_types.TYPE_MAINTENANCE,
-        STATUS_UNKNOWN: statuscheck.status_types.TYPE_UNKNOWN,
+        STATUS_OK: old.status_types.TYPE_GOOD,
+        STATUS_CORE_INCIDENT: old.status_types.TYPE_INCIDENT,
+        STATUS_NONCORE_INCIDENT: old.status_types.TYPE_INCIDENT,
+        STATUS_CORE_OUTAGE: old.status_types.TYPE_OUTAGE,
+        STATUS_NONCORE_OUTAGE: old.status_types.TYPE_OUTAGE,
+        STATUS_CORE_MAINTENANCE: old.status_types.TYPE_MAINTENANCE,
+        STATUS_NONCORE_MAINTENANCE: old.status_types.TYPE_MAINTENANCE,
+        STATUS_UNKNOWN: old.status_types.TYPE_UNKNOWN,
     }
 
     name = "Salesforce"

@@ -1,7 +1,7 @@
 from typing import NamedTuple
 
-from statuscheck.services._custompage import BaseCustomStatusPageAPI
-from statuscheck.status_types import TYPE_GOOD
+from old.services._custompage import BaseCustomStatusPageAPI
+from old.status_types import TYPE_GOOD
 
 
 class SignalSummary(NamedTuple):
