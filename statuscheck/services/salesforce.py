@@ -51,9 +51,19 @@ class ServiceAPI(BaseServiceAPI):
 
     def _get_summary(self):
         url = self.base_url + "instances/status/preview"
+        localizations_url = self.base_url + "localizations"
         response = httpx.get(url)
         response.raise_for_status()
         response_json = response.json()
+
+        localizations_response = httpx.get(localizations_url)
+        localizations_response.raise_for_status()
+        localizations_response_json = localizations_response.json()
+        localizations = {
+            localization["modelKey"]: localization["text"]
+            for localization in localizations_response_json
+        }
+
         components_list = response_json
         incidents_raw = []
         incident_keys = []
@@ -88,6 +98,7 @@ class ServiceAPI(BaseServiceAPI):
             _Incident(
                 id=incident["id"],
                 type=incident["type"],
+                text=localizations[incident["type"]],
                 affects_all=incident["affectsAll"],
                 is_core=incident["isCore"],
                 status=incident["status"],
@@ -107,4 +118,5 @@ class ServiceAPI(BaseServiceAPI):
                 status.code = incident.status
                 status.description = STATUS_TYPE_MAPPING[incident.status]
                 break
+
         return _Summary(status, components, incidents)
