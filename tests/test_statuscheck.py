@@ -2,8 +2,8 @@ import os
 
 import pytest
 
-from statuscheck.check import get_available_services, get_statuscheck_api
 from statuscheck.services import SERVICES
+from statuscheck.utils import get_available_services, get_statuscheck_api
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -12,7 +12,8 @@ def test_get_available_services():
     services = get_available_services()
     assert services
 
-    service_files = os.listdir(os.path.join(BASE_DIR, "statuscheck", "services"))
+    services_dir = os.path.join(BASE_DIR, "statuscheck", "services")
+    service_files = os.listdir(services_dir)
     excluded_files = (
         "__pycache__",
         "__init__.py",
@@ -21,7 +22,11 @@ def test_get_available_services():
         "_statuspage.py",
         "_statusio.py",
     )
-    service_files = [f[:-3] for f in service_files if f not in excluded_files]
+    service_files = [
+        f[:-3]
+        for f in service_files
+        if f not in excluded_files and os.path.isfile(os.path.join(services_dir, f))
+    ]
     assert set(services) == set(service_files)
 
 

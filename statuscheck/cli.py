@@ -52,6 +52,7 @@ def _print_status(service_api):
 
 
 def _check_all():
+    # TODO: make this async
     for service in SERVICES:
         service_api = get_statuscheck_api(service)
         _print_status(service_api=service_api)
