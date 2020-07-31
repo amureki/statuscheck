@@ -10,9 +10,10 @@ from statuscheck.utils import get_statuscheck_api
 
 @click.command()
 @click.argument("service")
-def main(service):
+@click.option("-v", "--verbose", is_flag=True, help="Extra verbose mode")
+def main(service, verbose):
     if service == "all":
-        _check_all()
+        _check_all(verbose)
         return 0
 
     try:
@@ -21,7 +22,7 @@ def main(service):
         click.echo(f'"{service}" is not implemented, leave a note at {__url__}')
         return 1
 
-    service_api._print_summary()
+    service_api._print_summary(verbose=verbose)
     return 0
 
 
@@ -30,14 +31,14 @@ def _parse_api_summary(service):
     return service_api
 
 
-def _check_all():
+def _check_all(verbose):
     click.echo(f"Parsing {len(SERVICES)} services...")
     with PoolExecutor(max_workers=8) as executor:
         services = []
         for service in executor.map(_parse_api_summary, SERVICES):
             services.append(service)
     for service_api in services:
-        service_api._print_summary()
+        service_api._print_summary(verbose)
         click.echo("=" * 40)
 
 

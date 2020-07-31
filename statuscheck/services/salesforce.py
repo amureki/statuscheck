@@ -81,8 +81,6 @@ class ServiceAPI(BaseServiceAPI):
                     if incident["id"] in incident_keys:
                         continue
                     incident_keys.append(incident["id"])
-                    # TODO: use localizations to get text from this type
-                    #  https://api.status.salesforce.com/v1/localizations
                     incident["type"] = incident["IncidentImpacts"][0]["type"]
                     incident["status"] = component["status"]
                     incidents_raw.append(incident)
