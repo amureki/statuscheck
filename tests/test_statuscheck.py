@@ -37,4 +37,3 @@ def test_get_statuscheck_api(service):
     assert api.status_url
     assert api.service_url
     assert api.summary
-    print(api.summary)

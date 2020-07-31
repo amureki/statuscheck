@@ -52,12 +52,11 @@ class BaseStatusPageAPI(BaseServiceAPI):
             Component(id=component.id, name=component.name, status=component.status,)
             for component in statuspageio_summary.components
         ]
-        summary = Summary(
-            status=statuspageio_summary.status,
-            components=components,
-            incidents=incidents,
+        status = Status(
+            code=statuspageio_summary.status.indicator,
+            description=statuspageio_summary.status.description,
         )
-        return summary
+        return Summary(status=status, components=components, incidents=incidents,)
 
     def _get_status(self) -> _Status:
         url = self._get_base_url() + "status.json"
@@ -67,10 +66,6 @@ class BaseStatusPageAPI(BaseServiceAPI):
 
     def _get_summary(self) -> _Summary:
         url = self._get_base_url() + "summary.json"
-        # with open("tests/test_services/test_data/github_summary.json", "rb") as f:
-        #     import json
-        #     data = json.load(f)
-        # response_json = data
         response_json = httpx.get(url).json()
         status_dict = response_json["status"]
         status = _Status(**status_dict)

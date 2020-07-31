@@ -1,0 +1,272 @@
+{
+  "result": {
+    "status_overall": {
+      "updated": "2020-02-09T18:43:10.017Z",
+      "status": "Security Issue",
+      "status_code": 600
+    },
+    "status": [
+      {
+        "id": "5b36dc6502d06804c0834a07",
+        "name": "Website",
+        "updated": "2020-02-09T18:43:10.017Z",
+        "status": "Security Issue",
+        "status_code": 600,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-02-09T18:42:33.608Z",
+            "status": "Security Issue",
+            "status_code": 600
+          }
+        ]
+      },
+      {
+        "id": "5b36e05f02d06804c0834a09",
+        "name": "API",
+        "updated": "2020-02-09T18:43:10.017Z",
+        "status": "Security Issue",
+        "status_code": 600,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-02-09T18:42:33.603Z",
+            "status": "Security Issue",
+            "status_code": 600
+          }
+        ]
+      },
+      {
+        "id": "5d2f74932676bc45e4927ead",
+        "name": "Git (ssh and https)",
+        "updated": "2020-02-09T18:43:10.017Z",
+        "status": "Security Issue",
+        "status_code": 600,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-02-09T18:42:33.605Z",
+            "status": "Security Issue",
+            "status_code": 600
+          }
+        ]
+      },
+      {
+        "id": "5b371ffc1d4f0004bf746dbf",
+        "name": "Pages",
+        "updated": "2020-02-09T18:43:10.017Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2019-12-23T23:33:36.906Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5b36e07afc1f0804be9d754d",
+        "name": "Registry",
+        "updated": "2020-02-09T18:43:10.017Z",
+        "status": "Security Issue",
+        "status_code": 600,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-02-09T18:42:33.606Z",
+            "status": "Security Issue",
+            "status_code": 600
+          }
+        ]
+      },
+      {
+        "id": "5b36e06c633e9004b3d624ad",
+        "name": "CI/CD",
+        "updated": "2020-02-09T18:43:10.017Z",
+        "status": "Security Issue",
+        "status_code": 600,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-02-09T18:42:33.607Z",
+            "status": "Security Issue",
+            "status_code": 600
+          }
+        ]
+      },
+      {
+        "id": "5b371ff2ab905c04b1de922e",
+        "name": "Background Processing",
+        "updated": "2020-02-09T18:43:10.017Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-01-15T02:36:32.273Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5c38362c5495bf472f8dfbae",
+        "name": "Support Services",
+        "updated": "2020-02-09T18:43:10.017Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5c3836366953ce47539ce53a",
+            "name": "Zendesk",
+            "updated": "2019-11-28T13:18:47.308Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5c7d5bb83efc3204ba5f53c3",
+        "name": "packages.gitlab.com",
+        "updated": "2020-02-09T18:43:10.017Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5c7d5baf70abc604c107381c",
+            "name": "AWS",
+            "updated": "2019-11-28T13:18:47.321Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5d02cb79b2e5f00a022b5fb4",
+        "name": "customers.gitlab.com",
+        "updated": "2020-02-09T18:43:10.017Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36dc6502d06804c0834a06",
+            "name": "Azure",
+            "updated": "2019-11-28T13:18:47.298Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5d31c2f251014050f413e808",
+        "name": "version.gitlab.com",
+        "updated": "2020-02-09T18:43:10.017Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5c7d5baf70abc604c107381c",
+            "name": "AWS",
+            "updated": "2020-02-03T16:35:32.574Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5d93c0defdc75b69cf385b1f",
+        "name": "forum.gitlab.com",
+        "updated": "2020-02-09T18:43:10.017Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36e09b17b99c04bef1f946",
+            "name": "Digital Ocean",
+            "updated": "2019-11-28T13:18:47.318Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5e29c1403f4deb04c0d7f035",
+        "name": "Windows Runners (beta)",
+        "updated": "2020-02-09T18:43:10.017Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-01-23T15:52:32.366Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      }
+    ],
+    "incidents": [
+      {
+        "name": "https://gitlab.com/gitlab-com/gl-infra/production/issues/1635",
+        "_id": "5e3d877d593d1b04c4620561",
+        "datetime_open": "2020-02-07T15:51:25.249Z",
+        "messages": [
+          {
+            "details": "We have uncovered a bug in the feature to allow groups to be shared with groups which impacted membership resolution. Out of an abundance of caution we have disabled this feature until we can identify and deploy a fix. Please follow updates in https://gitlab.com/gitlab-com/gl-infra/production/issues/1635. ",
+            "state": 200,
+            "status": 600,
+            "datetime": "2020-02-07T15:51:25.269Z"
+          },
+          {
+            "details": "We are continuing to develop and test a fix for the issue regarding a bug in the feature to allow groups to be shared with groups. Please continue to follow updates in gitlab.com/gitlab-com/gl-infra/production/issues/1635. ",
+            "state": 200,
+            "status": 600,
+            "datetime": "2020-02-09T18:42:33.493Z"
+          }
+        ],
+        "containers_affected": [
+          {
+            "name": "Google Compute Engine",
+            "_id": "5b36e11140e76c04b7220a31"
+          }
+        ],
+        "components_affected": [
+          {
+            "name": "Website",
+            "_id": "5b36dc6502d06804c0834a07"
+          },
+          {
+            "name": "API",
+            "_id": "5b36e05f02d06804c0834a09"
+          },
+          {
+            "name": "Git (ssh and https)",
+            "_id": "5d2f74932676bc45e4927ead"
+          },
+          {
+            "name": "Registry",
+            "_id": "5b36e07afc1f0804be9d754d"
+          },
+          {
+            "name": "CI/CD",
+            "_id": "5b36e06c633e9004b3d624ad"
+          }
+        ]
+      }
+    ],
+    "maintenance": {
+      "active": [],
+      "upcoming": []
+    }
+  }
+}

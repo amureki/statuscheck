@@ -28,7 +28,7 @@ setup(
     description="Tool to check PaaS/SaaS status pages",
     entry_points={"console_scripts": ["statuscheck=statuscheck.cli:main"]},
     install_requires=open(join(here, "requirements.txt")).readlines(),
-    extras_require={"tests": ["pytest"]},
+    extras_require={"tests": ["pytest", "respx"]},
     license="Apache Software License 2.0",
     long_description=long_description,
     long_description_content_type="text/markdown",

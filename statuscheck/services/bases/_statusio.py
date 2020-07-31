@@ -51,10 +51,11 @@ class BaseStatusIOAPI(BaseServiceAPI):
             Component(id=component.id, name=component.name, status=component.status,)
             for component in statusio_summary.components
         ]
-        summary = Summary(
-            status=statusio_summary.status, components=components, incidents=incidents,
+        status = Status(
+            code=statusio_summary.status.status_code,
+            description=statusio_summary.status.description,
         )
-        return summary
+        return Summary(status=status, components=components, incidents=incidents,)
 
     def _get_status(self) -> _Status:
         url = self._get_base_url()

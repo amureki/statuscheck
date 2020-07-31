@@ -2,6 +2,20 @@ from typing import List
 
 import attr
 
+STATUS_NONE = "none"
+STATUS_MINOR = "minor"
+STATUS_MAJOR = "major"
+STATUS_CRITICAL = "critical"
+STATUS_MAINTENANCE = "maintenance"
+
+STATUS_TYPE_MAPPING = {
+    STATUS_NONE: "No issues",
+    STATUS_MINOR: "Minor incident",
+    STATUS_MAJOR: "Major outage",
+    STATUS_CRITICAL: "Critical incident",
+    STATUS_MAINTENANCE: "Maintenance",
+}
+
 
 @attr.s(auto_attribs=True)
 class Component:
@@ -41,11 +55,7 @@ class Incident:
             ]
         )
     )
-    impact: str = attr.ib(
-        validator=attr.validators.in_(
-            ["none", "minor", "major", "critical", "maintenance"]
-        )
-    )
+    impact: str = attr.ib(validator=attr.validators.in_(STATUS_TYPE_MAPPING.keys()))
     scheduled_for: str
     scheduled_until: str
     components: List[Component] = attr.ib(
@@ -57,11 +67,7 @@ class Incident:
 @attr.s(auto_attribs=True)
 class Status:
     description: str
-    indicator: str = attr.ib(
-        validator=attr.validators.in_(
-            ["none", "minor", "major", "critical", "maintenance"]
-        )
-    )
+    indicator: str = attr.ib(validator=attr.validators.in_(STATUS_TYPE_MAPPING.keys()))
 
 
 @attr.s(auto_attribs=True)
