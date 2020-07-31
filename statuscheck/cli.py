@@ -10,7 +10,7 @@ from statuscheck.utils import get_statuscheck_api
 
 @click.command()
 @click.argument("service")
-@click.option("-v", "--verbose", is_flag=True, help="Extra verbose mode")
+@click.option("-v", "--verbose", is_flag=True, help="More verbose mode")
 def main(service, verbose):
     if service == "all":
         _check_all(verbose)
