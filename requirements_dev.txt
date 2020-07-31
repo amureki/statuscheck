@@ -1,4 +1,4 @@
-pip==20.1.1
+pip==20.2
 tox==3.18.1
 coverage==5.2.1
 pytest==5.4.3
