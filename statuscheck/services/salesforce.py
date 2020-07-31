@@ -38,10 +38,14 @@ class ServiceAPI(BaseServiceAPI):
         incidents = [
             Incident(
                 id=str(incident.id),
-                name=incident.type,
+                name=incident.text,
                 status=incident.status,
                 components=[
-                    Component(name=component.key, status=component.status,)
+                    Component(
+                        name=component.key,
+                        # we put status in the incident, so we don't need it here
+                        # status=component.status,
+                    )
                     for component in incident.components
                 ],
             )

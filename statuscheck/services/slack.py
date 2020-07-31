@@ -34,17 +34,15 @@ class ServiceAPI(BaseServiceAPI):
             code=summary.status.code, description=summary.status.description
         )
         components = [
-            Component(name=component.name, status=component.status,)
-            for component in summary.components
+            Component(name=component.name) for component in summary.components
         ]
         incidents = [
             Incident(
                 id=incident.id,
                 name=incident.title,
-                status=incident.state,
+                status=incident.status,
                 components=[
-                    Component(name=component.name, status=component.status,)
-                    for component in incident.components
+                    Component(name=component.name) for component in incident.components
                 ],
             )
             for incident in summary.incidents

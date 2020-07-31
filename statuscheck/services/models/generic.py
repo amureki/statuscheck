@@ -6,7 +6,7 @@ import attr
 @attr.s(auto_attribs=True)
 class Component:
     name: str
-    status: str
+    status: str = attr.ib(default="")
     id: str = attr.ib(default="")
 
 

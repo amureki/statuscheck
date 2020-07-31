@@ -1,4 +1,5 @@
 import sys
+from concurrent.futures import ThreadPoolExecutor as PoolExecutor
 
 import click
 
@@ -20,42 +21,23 @@ def main(service):
         click.echo(f'"{service}" is not implemented, leave a note at {__url__}')
         return 1
 
-    _print_status(service_api)
-
+    service_api._print_summary()
     return 0
 
 
-def _print_status(service_api):
-    summary = service_api.get_summary()
-    click.echo(f"Current {service_api.name} status: {summary.status.description}")
-
-    incidents = summary.incidents
-    if incidents:
-        click.echo(f"Registered events:")
-        for incident in incidents:
-            if incident.status:
-                click.echo(f"- [{incident.status}] {incident.name}")
-            else:
-                click.echo(f"- {incident.name}")
-            if hasattr(incident, "scheduled_for") and incident.scheduled_for:
-                click.echo(f"  {incident.scheduled_for}")
-            # TODO: verbosity 2?
-            if incident.components:
-                click.echo(f"  Affected components:")
-                for component in incident.components:
-                    click.echo(f"    - {component.name} [{component.status}]")
-
-    # TODO: if status not OK?
-    if incidents:
-        click.echo()
-        click.echo(f"More: {service_api.status_url}")
+def _parse_api_summary(service):
+    service_api = get_statuscheck_api(service)
+    return service_api
 
 
 def _check_all():
-    # TODO: make this async
-    for service in SERVICES:
-        service_api = get_statuscheck_api(service)
-        _print_status(service_api=service_api)
+    click.echo(f"Parsing {len(SERVICES)} services...")
+    with PoolExecutor(max_workers=8) as executor:
+        services = []
+        for service in executor.map(_parse_api_summary, SERVICES):
+            services.append(service)
+    for service_api in services:
+        service_api._print_summary()
         click.echo("=" * 40)
 
 
