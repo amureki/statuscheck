@@ -1,18 +1,19 @@
 import sys
+from concurrent.futures import ThreadPoolExecutor as PoolExecutor
 
 import click
 
-from statuscheck.check import get_statuscheck_api
+from statuscheck.__about__ import __url__
 from statuscheck.services import SERVICES
-
-from .__about__ import __url__
+from statuscheck.utils import get_statuscheck_api
 
 
 @click.command()
 @click.argument("service")
-def main(service):
+@click.option("-v", "--verbose", is_flag=True, help="More verbose mode")
+def main(service, verbose):
     if service == "all":
-        _check_all()
+        _check_all(verbose)
         return 0
 
     try:
@@ -21,44 +22,23 @@ def main(service):
         click.echo(f'"{service}" is not implemented, leave a note at {__url__}')
         return 1
 
-    _report_status(service_api)
-
+    service_api._print_summary(verbose=verbose)
     return 0
 
 
-def _report_status(service_api):
-    summary = service_api.get_summary()
-
-    click.echo(f"Current {service_api.name} status: {summary.status}")
-
-    incidents = summary.incidents
-    if incidents:
-        click.echo(f"Registered incidents:")
-        for incident in incidents:
-            incident_name = incident["name"]
-            incident_status = incident.get("status")
-            if incident_status:
-                click.echo(f"- {incident_name} [{incident_status}]")
-            else:
-                click.echo(f"- {incident_name}")
-
-    has_components = hasattr(summary, "components")
-    if has_components and summary.components:
-        click.echo(f"Affected components:")
-        for component in summary.components:
-            name = component["name"]
-            component_status = component["status"]
-            click.echo(f"- {name}: {component_status}")
-
-    if incidents or (has_components and summary.components):
-        click.echo()
-        click.echo(f"More: {service_api.status_url}")
+def _parse_api_summary(service):
+    service_api = get_statuscheck_api(service)
+    return service_api
 
 
-def _check_all():
-    for service in SERVICES:
-        service_api = get_statuscheck_api(service)
-        _report_status(service_api=service_api)
+def _check_all(verbose):
+    click.echo(f"Parsing {len(SERVICES)} services...")
+    with PoolExecutor(max_workers=8) as executor:
+        services = []
+        for service in executor.map(_parse_api_summary, SERVICES):
+            services.append(service)
+    for service_api in services:
+        service_api._print_summary(verbose)
         click.echo("=" * 40)
 
 

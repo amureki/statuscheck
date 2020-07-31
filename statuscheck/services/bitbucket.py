@@ -1,4 +1,4 @@
-from statuscheck.services._statuspage import BaseStatusPageAPI
+from statuscheck.services.bases._statuspageio import BaseStatusPageAPI
 
 
 class ServiceAPI(BaseStatusPageAPI):

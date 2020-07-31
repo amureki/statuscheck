@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- Major refactoring of the library core
+- Unified status and summary data models (using attrs)
+- Better typing hints
+- some services contain tests with mocked responses (more to come whenever we'll get more incidents)
 
 ### Removed
 

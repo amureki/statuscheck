@@ -1,21 +1,14 @@
-from typing import NamedTuple
+import httpx
 
-from statuscheck.services._custompage import BaseCustomStatusPageAPI
-from statuscheck.status_types import TYPE_GOOD
-
-
-class SignalSummary(NamedTuple):
-    name: str
-    status: str
-    incidents: list
-
-    @classmethod
-    def from_data(cls, name, data):
-        return cls(name=name, status=data["status"], incidents=data["incidents"])
+from statuscheck.services.bases._base import BaseServiceAPI
+from statuscheck.services.models.generic import Status, Summary
 
 
-class ServiceAPI(BaseCustomStatusPageAPI):
-    STATUS_TYPE_MAPPING = {"Signal is up and running.": TYPE_GOOD}
+class ServiceAPI(BaseServiceAPI):
+    """Signal status page API handler."""
+
+    STATUS_OK = "Signal is up and running."
+    STATUS_TYPE_MAPPING = {STATUS_OK: "No issues"}
 
     name = "Signal"
     base_url = "https://status.signal.org/"
@@ -23,14 +16,14 @@ class ServiceAPI(BaseCustomStatusPageAPI):
     service_url = "https://signal.org/"
 
     def get_summary(self):
-        html = self._get_html_response()
-        status_raw = html.find("div", first=True).text
-        status_text = status_raw.split("\n", 1)[1]
-        # TODO: parse incidents
-        status_type = self.STATUS_TYPE_MAPPING.get(status_text, "")
-        incidents = []
-        if status_type != TYPE_GOOD:
-            incidents.append({"name": status_text, "status": status_type})
-        return SignalSummary.from_data(
-            name=self.name, data={"status": status_type, "incidents": incidents}
-        )
+        response = httpx.get(self.base_url)
+        response.raise_for_status()
+        text = response.text
+        if self.STATUS_OK in text:
+            status = Status(
+                code=self.STATUS_OK,
+                description=self.STATUS_TYPE_MAPPING[self.STATUS_OK],
+            )
+            return Summary(status=status, components=[], incidents=[])
+        else:
+            raise NotImplementedError("Signal status not implemented: %s", text)

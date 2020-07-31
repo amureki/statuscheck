@@ -1,45 +1,78 @@
-from typing import NamedTuple
+import httpx
 
-import statuscheck.status_types
-from statuscheck.services._custompage import BaseCustomStatusPageAPI
-
-
-class SlackSummary(NamedTuple):
-    name: str
-    status: str
-    incidents: list
-
-    @classmethod
-    def from_data(cls, name, data):
-        return cls(name=name, status=data["status"], incidents=data["incidents"])
+from statuscheck.services.bases._base import BaseServiceAPI
+from statuscheck.services.models.generic import Component, Incident, Status, Summary
+from statuscheck.services.models.slack import (
+    STATUS_TYPE_MAPPING,
+    Component as _Component,
+    Incident as _Incident,
+    Status as _Status,
+    Summary as _Summary,
+)
 
 
-class ServiceAPI(BaseCustomStatusPageAPI):
-    STATUS_TYPE_MAPPING = {
-        "Ok": statuscheck.status_types.TYPE_GOOD,
-        "Incident": statuscheck.status_types.TYPE_INCIDENT,
-        "Outage": statuscheck.status_types.TYPE_OUTAGE,
-        "Maintenance": statuscheck.status_types.TYPE_MAINTENANCE,
-    }
+class ServiceAPI(BaseServiceAPI):
+    """
+    Slack status page API handler.
+
+    Documentation: https://api.slack.com/docs/slack-status
+
+    """
 
     name = "Slack"
-    base_url = "https://status.slack.com/"
-    status_url = base_url
+    base_url = "https://status.slack.com/api/v2.0.0/"
+    status_url = "https://status.slack.com/"
     service_url = "https://slack.com/"
 
-    def get_summary(self):
-        html = self._get_html_response()
-        html_container = html.find(".container", first=True)
+    def get_status(self) -> Status:
+        summary = self._get_summary()
+        return summary.status
 
-        status_icon = html_container.find("img", first=True).attrs.get("src")
-        status_icon_type = status_icon.rsplit(".")[0].split("/")[-1]
-        status = self.STATUS_TYPE_MAPPING.get(status_icon_type, "")
-        description = html_container.find("h1", first=True).text
-
-        # TODO: parse Slack components and their statuses
-        incidents = []
-        if status != statuscheck.status_types.TYPE_GOOD:
-            incidents.append({"name": description, "status": status})
-        return SlackSummary.from_data(
-            name=self.name, data={"status": status, "incidents": incidents}
+    def get_summary(self) -> Summary:
+        summary = self._get_summary()
+        status = Status(
+            code=summary.status.code, description=summary.status.description
         )
+        components = [
+            Component(name=component.name) for component in summary.components
+        ]
+        incidents = [
+            Incident(
+                id=incident.id,
+                name=incident.title,
+                status=incident.status,
+                components=[
+                    Component(name=component.name) for component in incident.components
+                ],
+            )
+            for incident in summary.incidents
+        ]
+        return Summary(status=status, components=components, incidents=incidents,)
+
+    def _get_summary(self) -> Summary:
+        url = self.base_url + "current"
+        response_json = httpx.get(url).json()
+        incidents_list = response_json["active_incidents"]
+        status = _Status(
+            code=response_json["status"],
+            description=STATUS_TYPE_MAPPING[response_json["status"]],
+        )
+
+        incidents = [
+            _Incident(
+                id=incident["id"],
+                title=incident["title"],
+                status=incident["status"],
+                type=incident["type"],
+                components=[
+                    _Component(name=component) for component in incident["services"]
+                ],
+            )
+            for incident in incidents_list
+        ]
+
+        components = []
+        for incident in incidents:
+            components.extend(incident.components)
+
+        return _Summary(status, components, incidents)

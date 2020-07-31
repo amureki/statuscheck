@@ -1,65 +1,91 @@
-from typing import NamedTuple
+import httpx
 
-import requests
-
-import statuscheck.status_types
-from statuscheck.services._base import BaseServiceAPI
-
-STATUS_TYPE_MAPPING = {
-    "green": statuscheck.status_types.TYPE_GOOD,
-    "yellow": statuscheck.status_types.TYPE_INCIDENT,
-    "red": statuscheck.status_types.TYPE_OUTAGE,
-    "blue": statuscheck.status_types.TYPE_MAINTENANCE,
-}
-
-
-class ServiceSummary(NamedTuple):
-    name: str
-    status: str
-    status_development: str
-    status_production: str
-    incidents: list
-
-    @classmethod
-    def _get_incidents(cls, summary):
-        incidents = summary["issues"]
-        filtered_data = []
-        important_keys = ("title", "status_dev", "status_prod", "full_url")
-        for component in incidents:
-            component_data = {k: component.get(k, None) for k in important_keys}
-            component_data["name"] = component_data.pop("title")
-            filtered_data.append(component_data)
-        return filtered_data
-
-    @classmethod
-    def from_data(cls, name, data):
-        status_data = data["status"]
-        status_production = STATUS_TYPE_MAPPING[status_data["Production"]]
-        status_development = STATUS_TYPE_MAPPING[status_data["Development"]]
-        status = status_production
-
-        if status_development != statuscheck.status_types.TYPE_GOOD:
-            status = status_development
-        if status_production != statuscheck.status_types.TYPE_GOOD:
-            status = status_production
-
-        return cls(
-            name=name,
-            status=status,
-            status_production=status_production,
-            status_development=status_development,
-            incidents=cls._get_incidents(data),
-        )
+from statuscheck.services.bases._base import BaseServiceAPI
+from statuscheck.services.models.generic import Component, Incident, Status, Summary
+from statuscheck.services.models.heroku import (
+    STATUS_GREEN,
+    STATUS_RED,
+    STATUS_TYPE_MAPPING,
+    STATUS_YELLOW,
+    Component as _Component,
+    Incident as _Incident,
+    Status as _Status,
+    Summary as _Summary,
+)
 
 
 class ServiceAPI(BaseServiceAPI):
+    """
+    Heroku status page API handler.
+
+    Documentation: https://devcenter.heroku.com/articles/heroku-status
+
+    """
+
     name = "Heroku"
-    base_url = "https://status.heroku.com/api/v3/"
+    base_url = "https://status.heroku.com/api/v4/"
     status_url = "https://status.heroku.com"
     service_url = "https://heroku.com"
 
-    def get_summary(self):
+    def get_status(self) -> Status:
+        summary = self._get_summary()
+        return summary.status
+
+    def get_summary(self) -> Summary:
+        summary = self._get_summary()
+        status = summary.status
+        components = [
+            Component(name=component.name, status=component.status,)
+            for component in summary.components
+        ]
+        incidents = [
+            Incident(
+                id=incident.id,
+                name=incident.title,
+                status=incident.state,
+                components=[
+                    Component(name=component.name, status=component.status,)
+                    for component in incident.components
+                ],
+            )
+            for incident in summary.incidents
+        ]
+        return Summary(status=status, components=components, incidents=incidents,)
+
+    def _get_summary(self):
         url = self.base_url + "current-status"
-        response = requests.get(url)
-        response.raise_for_status()
-        return ServiceSummary.from_data(name=self.name, data=response.json())
+        response_json = httpx.get(url).json()
+        status_list = response_json["status"]
+        incidents_list = response_json["incidents"]
+        # scheduled_list = response_json["scheduled"]
+
+        incidents = [
+            _Incident(
+                id=incident["id"],
+                title=incident["title"],
+                state=incident["state"],
+                components=[
+                    _Component(name=component["system"], status=component["status"],)
+                    for component in status_list
+                ],
+            )
+            for incident in incidents_list
+        ]
+        components = [
+            _Component(name=component["system"], status=component["status"],)
+            for component in status_list
+        ]
+
+        worst_status = STATUS_GREEN
+
+        for component in components:
+            if component.status == STATUS_RED:
+                worst_status = component.status
+            if component.status == STATUS_YELLOW and worst_status != STATUS_RED:
+                worst_status = component.status
+
+        status = _Status(
+            code=worst_status, description=STATUS_TYPE_MAPPING[worst_status]
+        )
+
+        return _Summary(status, components, incidents)
