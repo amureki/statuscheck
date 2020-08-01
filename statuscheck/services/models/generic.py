@@ -2,6 +2,24 @@ from typing import List
 
 import attr
 
+TYPE_GOOD = "No issues"
+TYPE_MAINTENANCE = "Maintenance"
+TYPE_INCIDENT = "Minor incident"
+TYPE_OUTAGE = "Major outage"
+TYPE_CRITICAL = "Critical incident"
+TYPE_SECURITY = "Security incident"
+TYPE_UNKNOWN = ""
+
+STATUS_TYPES = (
+    TYPE_GOOD,
+    TYPE_MAINTENANCE,
+    TYPE_INCIDENT,
+    TYPE_OUTAGE,
+    TYPE_CRITICAL,
+    TYPE_SECURITY,
+    TYPE_UNKNOWN,
+)
+
 
 @attr.s(auto_attribs=True)
 class Component:
@@ -23,6 +41,7 @@ class Incident:
 @attr.s(auto_attribs=True)
 class Status:
     code: str
+    name: str = attr.ib(validator=attr.validators.in_(STATUS_TYPES))
     description: str
     is_ok: bool
 

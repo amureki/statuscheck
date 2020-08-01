@@ -2,6 +2,12 @@ from typing import List
 
 import attr
 
+from statuscheck.services.models.generic import (
+    TYPE_GOOD,
+    TYPE_INCIDENT,
+    TYPE_MAINTENANCE,
+)
+
 STATUS_OK = "ok"
 STATUS_ACTIVE = "active"
 STATUS_RESOLVED = "resolved"
@@ -10,12 +16,12 @@ STATUS_COMPLETED = "completed"
 STATUS_CANCELED = "canceled"
 
 STATUS_TYPE_MAPPING = {
-    STATUS_OK: "No issues",
-    STATUS_ACTIVE: "Active incident",
-    STATUS_RESOLVED: "Resolved incident",
-    STATUS_SCHEDULED: "Scheduled maintenance",
-    STATUS_COMPLETED: "Completed maintenance",
-    STATUS_CANCELED: "Canceled maintenance",
+    STATUS_OK: TYPE_GOOD,
+    STATUS_ACTIVE: TYPE_INCIDENT,
+    STATUS_RESOLVED: TYPE_INCIDENT,
+    STATUS_SCHEDULED: TYPE_MAINTENANCE,
+    STATUS_COMPLETED: TYPE_MAINTENANCE,
+    STATUS_CANCELED: TYPE_MAINTENANCE,
 }
 
 

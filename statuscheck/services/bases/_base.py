@@ -19,7 +19,7 @@ class BaseServiceAPI:
         raise NotImplementedError
 
     def _print_summary(self, verbose=False):
-        click.echo(f"Current {self.name} status: {self.summary.status.description}")
+        click.echo(f"Current {self.name} status: {self.summary.status.name}")
 
         incidents = self.summary.incidents
         if incidents:

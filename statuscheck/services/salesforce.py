@@ -24,14 +24,6 @@ class ServiceAPI(BaseServiceAPI):
     status_url = "https://status.salesforce.com"
     service_url = "https://salesforce.com/"
 
-    def get_status(self) -> Status:
-        summary = self._get_summary()
-        return Status(
-            code=summary.status.code,
-            description=summary.status.description,
-            is_ok=summary.status.is_ok,
-        )
-
     def get_summary(self) -> Summary:
         summary = self._get_summary()
         components = [
@@ -56,6 +48,7 @@ class ServiceAPI(BaseServiceAPI):
         ]
         status = Status(
             code=summary.status.code,
+            name=summary.status.description,
             description=summary.status.description,
             is_ok=summary.status.is_ok,
         )

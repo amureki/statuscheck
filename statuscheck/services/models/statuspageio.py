@@ -2,6 +2,14 @@ from typing import List
 
 import attr
 
+from statuscheck.services.models.generic import (
+    TYPE_CRITICAL,
+    TYPE_GOOD,
+    TYPE_INCIDENT,
+    TYPE_MAINTENANCE,
+    TYPE_OUTAGE,
+)
+
 STATUS_NONE = "none"
 STATUS_MINOR = "minor"
 STATUS_MAJOR = "major"
@@ -9,11 +17,11 @@ STATUS_CRITICAL = "critical"
 STATUS_MAINTENANCE = "maintenance"
 
 STATUS_TYPE_MAPPING = {
-    STATUS_NONE: "No issues",
-    STATUS_MINOR: "Minor incident",
-    STATUS_MAJOR: "Major outage",
-    STATUS_CRITICAL: "Critical incident",
-    STATUS_MAINTENANCE: "Maintenance",
+    STATUS_NONE: TYPE_GOOD,
+    STATUS_MINOR: TYPE_INCIDENT,
+    STATUS_MAJOR: TYPE_OUTAGE,
+    STATUS_CRITICAL: TYPE_CRITICAL,
+    STATUS_MAINTENANCE: TYPE_MAINTENANCE,
 }
 
 

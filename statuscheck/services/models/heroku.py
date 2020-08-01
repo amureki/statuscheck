@@ -2,16 +2,23 @@ from typing import List
 
 import attr
 
+from statuscheck.services.models.generic import (
+    TYPE_GOOD,
+    TYPE_INCIDENT,
+    TYPE_MAINTENANCE,
+    TYPE_OUTAGE,
+)
+
 STATUS_GREEN = "green"
 STATUS_YELLOW = "yellow"
 STATUS_RED = "red"
 STATUS_BLUE = "blue"
 
 STATUS_TYPE_MAPPING = {
-    STATUS_GREEN: "No issues",
-    STATUS_YELLOW: "Minor incident",
-    STATUS_RED: "Major outage",
-    STATUS_BLUE: "Maintenance",
+    STATUS_GREEN: TYPE_GOOD,
+    STATUS_YELLOW: TYPE_INCIDENT,
+    STATUS_RED: TYPE_OUTAGE,
+    STATUS_BLUE: TYPE_MAINTENANCE,
 }
 
 

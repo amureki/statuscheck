@@ -3,6 +3,7 @@ import httpx
 from statuscheck.services.bases._base import BaseServiceAPI
 from statuscheck.services.models.generic import Component, Incident, Status, Summary
 from statuscheck.services.models.statuspageio import (
+    STATUS_TYPE_MAPPING,
     Component as _Component,
     Incident as _Incident,
     Status as _Status,
@@ -24,13 +25,6 @@ class BaseStatusPageAPI(BaseServiceAPI):
         if not self.domain_id:
             raise NotImplementedError("Please, add domain id")
         return f"https://{self.domain_id}.statuspage.io/api/v2/"
-
-    def get_status(self) -> Status:
-        statuspageio_status = self._get_status()
-        return Status(
-            code=statuspageio_status.indicator,
-            description=statuspageio_status.description,
-        )
 
     def get_summary(self) -> Summary:
         summary = self._get_summary()
@@ -54,16 +48,11 @@ class BaseStatusPageAPI(BaseServiceAPI):
         ]
         status = Status(
             code=summary.status.indicator,
+            name=STATUS_TYPE_MAPPING[summary.status.indicator],
             description=summary.status.description,
             is_ok=summary.status.is_ok,
         )
         return Summary(status=status, components=components, incidents=incidents,)
-
-    def _get_status(self) -> _Status:
-        url = self._get_base_url() + "status.json"
-        response_json = httpx.get(url).json()
-        status_dict = response_json["status"]
-        return Status(**status_dict)
 
     def _get_summary(self) -> _Summary:
         url = self._get_base_url() + "summary.json"

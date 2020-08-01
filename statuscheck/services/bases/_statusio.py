@@ -3,6 +3,7 @@ import httpx
 from statuscheck.services.bases._base import BaseServiceAPI
 from statuscheck.services.models.generic import Component, Incident, Status, Summary
 from statuscheck.services.models.statusio import (
+    STATUS_TYPE_MAPPING,
     Component as _Component,
     Incident as _Incident,
     Status as _Status,
@@ -25,14 +26,8 @@ class BaseStatusIOAPI(BaseServiceAPI):
             raise NotImplementedError("Please, add domain id")
         return f"https://api.status.io/1.0/status/{self.domain_id}"
 
-    def get_status(self) -> Status:
-        statusio_status = self._get_status()
-        return Status(
-            code=statusio_status.status_code, description=statusio_status.description
-        )
-
     def get_summary(self) -> Summary:
-        statusio_summary = self._get_summary()
+        summary = self._get_summary()
         incidents = [
             Incident(
                 id=incident._id,
@@ -45,33 +40,23 @@ class BaseStatusIOAPI(BaseServiceAPI):
                     for component in incident.components
                 ],
             )
-            for incident in statusio_summary.incidents
+            for incident in summary.incidents
         ]
         components = [
             Component(id=component.id, name=component.name, status=component.status,)
-            for component in statusio_summary.components
+            for component in summary.components
         ]
         status = Status(
-            code=statusio_summary.status.status_code,
-            description=statusio_summary.status.description,
-            is_ok=statusio_summary.status.is_ok,
+            code=summary.status.status_code,
+            name=STATUS_TYPE_MAPPING[summary.status.status_code],
+            description=summary.status.description,
+            is_ok=summary.status.is_ok,
         )
         return Summary(status=status, components=components, incidents=incidents,)
-
-    def _get_status(self) -> _Status:
-        url = self._get_base_url()
-        response_json = httpx.get(url).json()
-        status_dict = response_json["result"]["status_overall"]
-        return _Status(**status_dict)
 
     def _get_summary(self) -> _Summary:
         url = self._get_base_url()
         response_json = httpx.get(url).json()
-        # with open("tests/test_services/test_data/docker_partial.json", "rb") as f:
-        #     import json
-        #     data = json.load(f)
-        # response_json = data
-
         status_dict = response_json["result"]["status_overall"]
         status = _Status(
             description=status_dict["status"],
