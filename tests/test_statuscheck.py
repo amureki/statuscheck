@@ -37,3 +37,4 @@ def test_get_statuscheck_api(service):
     assert api.status_url
     assert api.service_url
     assert api.summary
+    assert api.summary.as_dict()

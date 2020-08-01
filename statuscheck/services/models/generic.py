@@ -57,3 +57,6 @@ class Summary:
         default=[],
         validator=attr.validators.optional(attr.validators.instance_of(list)),
     )
+
+    def as_dict(self) -> dict:
+        return attr.asdict(self)

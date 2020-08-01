@@ -33,9 +33,11 @@ There is also an API available:
     >>> api = get_statuscheck_api('slack')
     >>> summary = api.get_summary()
     >>> summary.status
-    Status(code='active', description='Active incident')
+    Status(code='active', name='Minor incident', description='Minor incident', is_ok=False)
     >>> summary.incidents
-    [Incident(id=878, name='We are investigating an issue with notification settings', status='active', components=[Component(name='Notifications', status='', id='')]), Incident(id=879, name="We're looking into an issue with certain API calls", status='active', components=[Component(name='Apps/Integrations/APIs', status='', id='')])]
+    [Incident(id=879, name="We're looking into an issue with certain API calls", status='active', components=[Component(name='Apps/Integrations/APIs', status='', id='')])]
+    >>> summary.as_dict()
+    {'status': {'code': 'active', 'name': 'Minor incident', 'description': 'Minor incident', 'is_ok': False}, 'components': [{'name': 'Apps/Integrations/APIs', 'status': '', 'id': ''}], 'incidents': [{'id': 879, 'name': "We're looking into an issue with certain API calls", 'status': 'active', 'components': [{'name': 'Apps/Integrations/APIs', 'status': '', 'id': ''}]}]}
 
 
 Currently, all services that we support are defined [here](statuscheck/services/__init__.py).
