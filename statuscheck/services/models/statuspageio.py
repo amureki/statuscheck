@@ -69,6 +69,10 @@ class Status:
     description: str
     indicator: str = attr.ib(validator=attr.validators.in_(STATUS_TYPE_MAPPING.keys()))
 
+    @property
+    def is_ok(self):
+        return self.indicator == STATUS_NONE
+
 
 @attr.s(auto_attribs=True)
 class Summary:

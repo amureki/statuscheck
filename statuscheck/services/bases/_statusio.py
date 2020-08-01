@@ -54,6 +54,7 @@ class BaseStatusIOAPI(BaseServiceAPI):
         status = Status(
             code=statusio_summary.status.status_code,
             description=statusio_summary.status.description,
+            is_ok=statusio_summary.status.is_ok,
         )
         return Summary(status=status, components=components, incidents=incidents,)
 

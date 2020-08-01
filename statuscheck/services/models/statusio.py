@@ -30,6 +30,10 @@ class Status:
     status_code: int
     updated: datetime
 
+    @property
+    def is_ok(self):
+        return self.status_code == 100
+
 
 @attr.s(auto_attribs=True)
 class Summary:

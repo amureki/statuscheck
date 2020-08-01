@@ -40,6 +40,6 @@ class BaseServiceAPI:
                         else:
                             click.echo(f"    - {component.name}")
 
-        if incidents:
+        if incidents or not self.summary.status.is_ok:
             click.echo()
             click.echo(f"More: {self.status_url}")

@@ -15,7 +15,7 @@ class ServiceAPI(BaseServiceAPI):
     status_url = base_url
     service_url = "https://signal.org/"
 
-    def get_summary(self):
+    def get_summary(self) -> Summary:
         response = httpx.get(self.base_url)
         response.raise_for_status()
         text = response.text
@@ -23,6 +23,7 @@ class ServiceAPI(BaseServiceAPI):
             status = Status(
                 code=self.STATUS_OK,
                 description=self.STATUS_TYPE_MAPPING[self.STATUS_OK],
+                is_ok=True,
             )
             return Summary(status=status, components=[], incidents=[])
         else:

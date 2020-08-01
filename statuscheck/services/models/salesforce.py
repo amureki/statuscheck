@@ -59,6 +59,10 @@ class Status:
     code: str
     description: str = attr.ib(default="")
 
+    @property
+    def is_ok(self):
+        return self.code == STATUS_OK
+
 
 @attr.s(auto_attribs=True)
 class Summary:

@@ -24,6 +24,7 @@ class Incident:
 class Status:
     code: str
     description: str
+    is_ok: bool
 
 
 @attr.s(auto_attribs=True)

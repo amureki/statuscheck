@@ -33,7 +33,7 @@ class BaseStatusPageAPI(BaseServiceAPI):
         )
 
     def get_summary(self) -> Summary:
-        statuspageio_summary = self._get_summary()
+        summary = self._get_summary()
         incidents = [
             Incident(
                 id=incident.id,
@@ -46,15 +46,16 @@ class BaseStatusPageAPI(BaseServiceAPI):
                     for component in incident.components
                 ],
             )
-            for incident in statuspageio_summary.incidents
+            for incident in summary.incidents
         ]
         components = [
             Component(id=component.id, name=component.name, status=component.status,)
-            for component in statuspageio_summary.components
+            for component in summary.components
         ]
         status = Status(
-            code=statuspageio_summary.status.indicator,
-            description=statuspageio_summary.status.description,
+            code=summary.status.indicator,
+            description=summary.status.description,
+            is_ok=summary.status.is_ok,
         )
         return Summary(status=status, components=components, incidents=incidents,)
 

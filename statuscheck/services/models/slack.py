@@ -40,6 +40,10 @@ class Status:
     code: str = attr.ib(validator=attr.validators.in_(STATUS_TYPE_MAPPING.keys()))
     description: str
 
+    @property
+    def is_ok(self):
+        return self.code == STATUS_OK
+
 
 @attr.s(auto_attribs=True)
 class Summary:

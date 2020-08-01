@@ -26,11 +26,14 @@ class ServiceAPI(BaseServiceAPI):
 
     def get_status(self) -> Status:
         summary = self._get_summary()
-        return summary.status
+        return Status(
+            code=summary.status.code,
+            description=summary.status.description,
+            is_ok=summary.status.is_ok,
+        )
 
     def get_summary(self) -> Summary:
         summary = self._get_summary()
-        status = summary.status
         components = [
             Component(name=component.key, status=component.status,)
             for component in summary.components
@@ -51,9 +54,14 @@ class ServiceAPI(BaseServiceAPI):
             )
             for incident in summary.incidents
         ]
+        status = Status(
+            code=summary.status.code,
+            description=summary.status.description,
+            is_ok=summary.status.is_ok,
+        )
         return Summary(status=status, components=components, incidents=incidents,)
 
-    def _get_summary(self):
+    def _get_summary(self) -> _Summary:
         url = self.base_url + "instances/status/preview"
         localizations_url = self.base_url + "localizations"
         response = httpx.get(url)
