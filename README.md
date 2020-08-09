@@ -5,6 +5,7 @@
 [![image](https://img.shields.io/pypi/v/statuscheck.svg)](https://pypi.org/project/statuscheck/)
 [![image](https://img.shields.io/pypi/l/statuscheck.svg)](https://pypi.org/project/statuscheck/)
 [![image](https://img.shields.io/pypi/pyversions/statuscheck.svg)](https://pypi.org/project/statuscheck/)
+[![Coverage Status](https://coveralls.io/repos/github/amureki/statuscheck/badge.svg)](https://coveralls.io/github/amureki/statuscheck)
 
 ## Usage
 
