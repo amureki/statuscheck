@@ -8,9 +8,9 @@
 
 ## Usage
 
-Install the latest release via `pip` or `pipenv`:
+Install the latest release:
 
-    $ pipenv install statuscheck
+    $ pip install statuscheck
 
 Then just use it in your shell:
 
