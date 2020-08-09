@@ -8,18 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
-- Major refactoring of the library core
-- Unified status and summary data models (using attrs)
-- Better typing hints
-- some services contain tests with mocked responses (more to come whenever we'll get more incidents)
 
 ### Removed
+
+## [3.0.0] - 2020-08-09
+### Changed
+
+- [Breaking change] Major refactoring of the library core and public APIs
+- Unified status and summary data models (using attrs)
+- Better typing hints
+- Some services contain tests with mocked responses (more to come whenever we'll get more incidents)
+- [Dev] Add coverage reports via coveralls.io (current coverage 96%)
 
 ## [2.9.0] - 2020-06-16
 ### Changed
 - Add service URLs
 - Dependencies update
-- [dev] Add .editorconfig
+- [Dev] Add .editorconfig
 
 ## [2.8.0] - 2020-05-24
 ### Changed
