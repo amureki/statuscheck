@@ -1,3 +1,3 @@
-Click
-httpx<0.14,>=0.13
-attrs
+Click==7.1.2
+httpx==0.13.3
+attrs==19.3.0
