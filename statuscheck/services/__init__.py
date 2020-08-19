@@ -7,12 +7,15 @@ SERVICES = [
     "cloudamqp",
     "cloudflare",
     "codecov",
+    "confluence",
+    "coveralls",
     "digitalocean",
     "discord",
     "docker",
     "github",
     "gitlab",
     "invision",
+    "jira",
     "heroku",
     "mailgun",
     "npm",
@@ -28,6 +31,7 @@ SERVICES = [
     "slack",
     "sparkpost",
     "travis",
+    "trello",
     "twilio",
 ]
 

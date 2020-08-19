@@ -6,8 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Confluence status checker
+- Coveralls status checker
+- Jira status checker
+- Trello status checker
 
 ### Changed
+- [Dev] httpx bump 0.14.1
 
 ### Removed
 
