@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Removed
+
+## [3.1.0] - 2020-08-19
+### Added
 - Confluence status checker
 - Coveralls status checker
 - Jira status checker
@@ -13,8 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - [Dev] httpx bump 0.14.1
-
-### Removed
+- [Dev] Dependencies update
 
 ## [3.0.0] - 2020-08-09
 ### Changed
