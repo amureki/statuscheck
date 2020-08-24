@@ -6,13 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Removed
+
+## [3.2.0] - 2020-08-24
+### Added
 - Gandi API status checker
 - Twitter API status checker
 - Zoom status checker
 
 ### Changed
-
-### Removed
+- [Dev] httpx bump 0.14.1
 
 ## [3.1.0] - 2020-08-19
 ### Added
@@ -22,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Trello status checker
 
 ### Changed
-- [Dev] httpx bump 0.14.2
+- [Dev] httpx bump 0.14.1
 - [Dev] Dependencies update
 
 ## [3.0.0] - 2020-08-09
