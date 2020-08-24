@@ -12,6 +12,7 @@ SERVICES = [
     "digitalocean",
     "discord",
     "docker",
+    "gandi",
     "github",
     "gitlab",
     "invision",
@@ -33,6 +34,8 @@ SERVICES = [
     "travis",
     "trello",
     "twilio",
+    "twitter",
+    "zoom",
 ]
 
 __all__ = [SERVICES]

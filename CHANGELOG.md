@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Gandi API status checker
+- Twitter API status checker
+- Zoom status checker
 
 ### Changed
 
