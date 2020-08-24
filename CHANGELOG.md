@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Trello status checker
 
 ### Changed
-- [Dev] httpx bump 0.14.1
+- [Dev] httpx bump 0.14.2
 - [Dev] Dependencies update
 
 ## [3.0.0] - 2020-08-09
