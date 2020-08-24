@@ -10,4 +10,4 @@ black==19.10b0
 pre-commit==2.6.0
 isort==5.4.2
 flake8==3.8.3
-pydocstyle==5.0.2
+pydocstyle==5.1.0
