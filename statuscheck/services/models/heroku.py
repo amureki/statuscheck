@@ -34,7 +34,8 @@ class Incident:
     title: str
     state: str
     components: List[Component] = attr.ib(
-        default=[], validator=attr.validators.instance_of(list),
+        default=[],
+        validator=attr.validators.instance_of(list),
     )
 
 

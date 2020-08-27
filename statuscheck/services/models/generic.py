@@ -34,7 +34,8 @@ class Incident:
     name: str
     status: str = attr.ib(default="")
     components: List[Component] = attr.ib(
-        default=[], validator=attr.validators.instance_of(list),
+        default=[],
+        validator=attr.validators.instance_of(list),
     )
 
 

@@ -27,7 +27,10 @@ class ServiceAPI(BaseServiceAPI):
     def get_summary(self) -> Summary:
         summary = self._get_summary()
         components = [
-            Component(name=component.key, status=component.status,)
+            Component(
+                name=component.key,
+                status=component.status,
+            )
             for component in summary.components
         ]
         incidents = [
@@ -52,7 +55,11 @@ class ServiceAPI(BaseServiceAPI):
             description=summary.status.description,
             is_ok=summary.status.is_ok,
         )
-        return Summary(status=status, components=components, incidents=incidents,)
+        return Summary(
+            status=status,
+            components=components,
+            incidents=incidents,
+        )
 
     def _get_summary(self) -> _Summary:
         url = self.base_url + "instances/status/preview"

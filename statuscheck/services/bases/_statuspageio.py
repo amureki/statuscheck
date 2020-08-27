@@ -35,7 +35,9 @@ class BaseStatusPageAPI(BaseServiceAPI):
                 status=incident.status,
                 components=[
                     Component(
-                        id=component.id, name=component.name, status=component.status,
+                        id=component.id,
+                        name=component.name,
+                        status=component.status,
                     )
                     for component in incident.components
                 ],
@@ -43,7 +45,11 @@ class BaseStatusPageAPI(BaseServiceAPI):
             for incident in summary.incidents
         ]
         components = [
-            Component(id=component.id, name=component.name, status=component.status,)
+            Component(
+                id=component.id,
+                name=component.name,
+                status=component.status,
+            )
             for component in summary.components
         ]
         status = Status(
@@ -52,7 +58,11 @@ class BaseStatusPageAPI(BaseServiceAPI):
             description=summary.status.description,
             is_ok=summary.status.is_ok,
         )
-        return Summary(status=status, components=components, incidents=incidents,)
+        return Summary(
+            status=status,
+            components=components,
+            incidents=incidents,
+        )
 
     def _get_summary(self) -> _Summary:
         url = self._get_base_url() + "summary.json"
