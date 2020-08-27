@@ -30,7 +30,10 @@ class ServiceAPI(BaseServiceAPI):
     def get_summary(self) -> Summary:
         summary = self._get_summary()
         components = [
-            Component(name=component.name, status=component.status,)
+            Component(
+                name=component.name,
+                status=component.status,
+            )
             for component in summary.components
         ]
         incidents = [
@@ -39,7 +42,10 @@ class ServiceAPI(BaseServiceAPI):
                 name=incident.title,
                 status=incident.state,
                 components=[
-                    Component(name=component.name, status=component.status,)
+                    Component(
+                        name=component.name,
+                        status=component.status,
+                    )
                     for component in incident.components
                 ],
             )
@@ -51,7 +57,11 @@ class ServiceAPI(BaseServiceAPI):
             description=summary.status.description,
             is_ok=summary.status.is_ok,
         )
-        return Summary(status=status, components=components, incidents=incidents,)
+        return Summary(
+            status=status,
+            components=components,
+            incidents=incidents,
+        )
 
     def _get_summary(self) -> _Summary:
         url = self.base_url + "current-status"
@@ -66,14 +76,20 @@ class ServiceAPI(BaseServiceAPI):
                 title=incident["title"],
                 state=incident["state"],
                 components=[
-                    _Component(name=component["system"], status=component["status"],)
+                    _Component(
+                        name=component["system"],
+                        status=component["status"],
+                    )
                     for component in status_list
                 ],
             )
             for incident in incidents_list
         ]
         components = [
-            _Component(name=component["system"], status=component["status"],)
+            _Component(
+                name=component["system"],
+                status=component["status"],
+            )
             for component in status_list
         ]
 
@@ -86,7 +102,8 @@ class ServiceAPI(BaseServiceAPI):
                 worst_status = component.status
 
         status = _Status(
-            code=worst_status, description=STATUS_TYPE_MAPPING[worst_status],
+            code=worst_status,
+            description=STATUS_TYPE_MAPPING[worst_status],
         )
 
         return _Summary(status, components, incidents)

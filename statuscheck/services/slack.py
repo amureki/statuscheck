@@ -46,7 +46,11 @@ class ServiceAPI(BaseServiceAPI):
             )
             for incident in summary.incidents
         ]
-        return Summary(status=status, components=components, incidents=incidents,)
+        return Summary(
+            status=status,
+            components=components,
+            incidents=incidents,
+        )
 
     def _get_summary(self) -> _Summary:
         url = self.base_url + "current"

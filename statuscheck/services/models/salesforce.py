@@ -57,7 +57,8 @@ class Incident:
     status: str = attr.ib(validator=attr.validators.in_(STATUS_TYPE_MAPPING.keys()))
     text: str = attr.ib(default="")
     components: List[Component] = attr.ib(
-        default=[], validator=attr.validators.instance_of(list),
+        default=[],
+        validator=attr.validators.instance_of(list),
     )
 
 
