@@ -35,6 +35,7 @@ SERVICES = [
     "trello",
     "twilio",
     "twitter",
+    "vercel",
     "zoom",
 ]
 
