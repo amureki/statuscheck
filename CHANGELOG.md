@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [3.3.0] - 2020-09-03
+### Added
+- Vercel status checker
+
+### Changed
+- [Dev] Dependencies update
+
 ## [3.2.0] - 2020-08-24
 ### Added
 - Gandi API status checker
@@ -18,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Zoom status checker
 
 ### Changed
-- [Dev] httpx bump 0.14.1
+- [Dev] httpx bump 0.14.2
 
 ## [3.1.0] - 2020-08-19
 ### Added
