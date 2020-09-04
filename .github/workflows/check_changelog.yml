@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       !contains(github.event.pull_request.body, '[skip changelog]') &&
-      (github.actor != 'dependabot[bot])
+      (github.actor != 'dependabot[bot]')
     steps:
       - uses: actions/checkout@v1
       - name: Check that CHANGELOG is updated
