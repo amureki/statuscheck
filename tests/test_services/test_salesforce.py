@@ -4,7 +4,7 @@ from statuscheck.services.models.salesforce import STATUS_CORE_INCIDENT
 from statuscheck.utils import get_statuscheck_api
 
 
-class TestGithub:
+class TestSalesforce:
     @respx.mock
     def test_ok(self):
         with open("tests/test_services/test_data/salesforce_incident.json", "rb") as f:

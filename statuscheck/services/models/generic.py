@@ -52,11 +52,11 @@ class Summary:
     status: Status
     components: List[Component] = attr.ib(
         default=[],
-        validator=attr.validators.optional(attr.validators.instance_of(list)),
+        validator=attr.validators.instance_of(list),
     )
     incidents: List[Incident] = attr.ib(
         default=[],
-        validator=attr.validators.optional(attr.validators.instance_of(list)),
+        validator=attr.validators.instance_of(list),
     )
 
     def as_dict(self) -> dict:

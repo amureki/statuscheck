@@ -4,7 +4,7 @@ from statuscheck.services.models.slack import STATUS_ACTIVE
 from statuscheck.utils import get_statuscheck_api
 
 
-class TestGithub:
+class TestSlack:
     @respx.mock
     def test_ok(self):
         with open("tests/test_services/test_data/slack_incident.json", "rb") as f:

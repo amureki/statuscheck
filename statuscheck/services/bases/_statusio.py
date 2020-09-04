@@ -19,7 +19,7 @@ class BaseStatusIOAPI(BaseServiceAPI):
     Public status API: https://kb.status.io/developers/public-status-api/
     """
 
-    domain_id: str = None
+    domain_id: str = ""
 
     def _get_base_url(self) -> str:
         if not self.domain_id:
@@ -53,7 +53,7 @@ class BaseStatusIOAPI(BaseServiceAPI):
             for component in summary.components
         ]
         status = Status(
-            code=summary.status.status_code,
+            code=str(summary.status.status_code),
             name=STATUS_TYPE_MAPPING[summary.status.status_code],
             description=summary.status.description,
             is_ok=summary.status.is_ok,

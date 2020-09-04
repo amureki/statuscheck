@@ -33,3 +33,10 @@ repos:
         require_serial: true
         types:
         - python
+    -   id: mypy
+        name: mypy
+        entry: mypy
+        language: system
+        require_serial: true
+        types:
+        - python
