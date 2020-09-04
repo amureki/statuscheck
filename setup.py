@@ -8,9 +8,9 @@ here = abspath(dirname(__file__))
 with codecs.open(join(here, "README.md"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
 
-about = {}
+about: dict = {}
 
-with open(join(here, "statuscheck", "__about__.py")) as f:
+with open(join(here, "statuscheck", "__about__.py")) as f:  # type: ignore
     exec(f.read(), about)
 
 setup(

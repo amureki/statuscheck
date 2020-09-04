@@ -1,11 +1,15 @@
+from typing import Optional
+
 import click
+
+from statuscheck.services.models.generic import Summary
 
 
 class BaseServiceAPI:
-    name: str = None
-    summary = None
-    service_url: str = None
-    status_url: str = None
+    name: str = ""
+    summary: Optional[Summary] = None
+    service_url: str = ""
+    status_url: str = ""
 
     @property
     def _module_name(self):

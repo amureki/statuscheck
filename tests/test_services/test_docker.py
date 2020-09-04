@@ -3,7 +3,7 @@ import respx
 from statuscheck.utils import get_statuscheck_api
 
 
-class TestGithub:
+class TestDocker:
     @respx.mock
     def test_ok(self):
         with open("tests/test_services/test_data/docker_partial.json", "rb") as f:
@@ -26,6 +26,6 @@ class TestGithub:
         assert service_api.summary.incidents
         assert service_api.summary.components
 
-        assert service_api.summary.status.code == 400
+        assert service_api.summary.status.code == "400"
         assert len(service_api.summary.incidents) == 1
         assert len(service_api.summary.components) == 8

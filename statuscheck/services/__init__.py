@@ -39,4 +39,4 @@ SERVICES = [
     "zoom",
 ]
 
-__all__ = [SERVICES]
+__all__ = [SERVICES]  # type: ignore

@@ -18,7 +18,7 @@ class BaseStatusPageAPI(BaseServiceAPI):
     Documentation: https://developer.statuspage.io/
     """
 
-    domain_id: str = None
+    domain_id: str = ""
 
     def _get_base_url(self) -> str:
         """Statuspage.io API URL for given service."""
