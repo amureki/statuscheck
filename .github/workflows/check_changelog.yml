@@ -12,5 +12,5 @@ jobs:
       !contains(github.event.pull_request.owner, 'dependabot')
     steps:
       - uses: actions/checkout@v1
-      - name: Check that CHANGELOG is touched
+      - name: Check that CHANGELOG is updated
         run: git diff remotes/origin/${{ github.base_ref }} --name-only | grep CHANGELOG.md
