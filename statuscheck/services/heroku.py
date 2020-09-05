@@ -7,11 +7,11 @@ from statuscheck.services.models.heroku import (
     STATUS_RED,
     STATUS_TYPE_MAPPING,
     STATUS_YELLOW,
-    Component as _Component,
-    Incident as _Incident,
-    Status as _Status,
-    Summary as _Summary,
 )
+from statuscheck.services.models.heroku import Component as _Component
+from statuscheck.services.models.heroku import Incident as _Incident
+from statuscheck.services.models.heroku import Status as _Status
+from statuscheck.services.models.heroku import Summary as _Summary
 
 
 class ServiceAPI(BaseServiceAPI):

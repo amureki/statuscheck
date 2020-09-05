@@ -1,8 +1,11 @@
-include LICENSE README.md requirements.txt
-
-include *.ini *.yml *.yaml *.toml
-
-graft .github
+global-exclude *.py[cod]
 graft tests
-
-recursive-exclude tests *.pyc
+prune __pycache__
+include CHANGELOG.md
+include LICENSE
+include README.md
+include pyproject.toml
+include requirements.txt requirements_dev.txt
+exclude .editorconfig
+exclude .pre-commit-config.yaml
+exclude tox.ini
