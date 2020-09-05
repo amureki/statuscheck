@@ -2,14 +2,11 @@ import httpx
 
 from statuscheck.services.bases._base import BaseServiceAPI
 from statuscheck.services.models.generic import Component, Incident, Status, Summary
-from statuscheck.services.models.salesforce import (
-    STATUS_OK,
-    STATUS_TYPE_MAPPING,
-    Component as _Component,
-    Incident as _Incident,
-    Status as _Status,
-    Summary as _Summary,
-)
+from statuscheck.services.models.salesforce import STATUS_OK, STATUS_TYPE_MAPPING
+from statuscheck.services.models.salesforce import Component as _Component
+from statuscheck.services.models.salesforce import Incident as _Incident
+from statuscheck.services.models.salesforce import Status as _Status
+from statuscheck.services.models.salesforce import Summary as _Summary
 
 
 class ServiceAPI(BaseServiceAPI):
