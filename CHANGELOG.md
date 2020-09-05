@@ -6,10 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Airtable status checker
 - [dev] GitHub action to ensure that changelog was updated
 - [dev] mypy typing check
 
 ### Changed
+- Status.io status checkers handle maintenance
 
 ### Removed
 

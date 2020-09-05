@@ -1,4 +1,5 @@
 SERVICES = [
+    "airtable",
     "asana",
     "atlassian",
     "bitbucket",
