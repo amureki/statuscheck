@@ -1,0 +1,322 @@
+{
+  "result": {
+    "status_overall": {
+      "updated": "2020-09-05T09:45:32.537Z",
+      "status": "Planned Maintenance",
+      "status_code": 200
+    },
+    "status": [
+      {
+        "id": "5b36dc6502d06804c0834a07",
+        "name": "Website",
+        "updated": "2020-09-05T09:45:32.537Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-09-05T09:23:23.794Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5b36e05f02d06804c0834a09",
+        "name": "API",
+        "updated": "2020-09-05T09:45:32.537Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-08-30T16:59:36.153Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5d2f74932676bc45e4927ead",
+        "name": "Git (ssh and https)",
+        "updated": "2020-09-05T09:45:32.538Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-08-30T16:59:36.165Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5b371ffc1d4f0004bf746dbf",
+        "name": "Pages",
+        "updated": "2020-09-05T09:45:32.538Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-08-30T16:59:36.455Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5b36e07afc1f0804be9d754d",
+        "name": "Registry",
+        "updated": "2020-09-05T09:45:32.538Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-08-30T16:59:36.170Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5b36e06c633e9004b3d624ad",
+        "name": "CI/CD",
+        "updated": "2020-09-05T09:45:32.538Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-08-30T16:59:36.167Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5b371ff2ab905c04b1de922e",
+        "name": "Background Processing",
+        "updated": "2020-09-05T09:45:32.538Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-08-31T21:03:56.441Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5c38362c5495bf472f8dfbae",
+        "name": "Support Services",
+        "updated": "2020-09-05T09:45:32.538Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5c3836366953ce47539ce53a",
+            "name": "Zendesk",
+            "updated": "2020-08-30T16:59:36.165Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5c7d5bb83efc3204ba5f53c3",
+        "name": "packages.gitlab.com",
+        "updated": "2020-09-05T09:45:32.538Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5c7d5baf70abc604c107381c",
+            "name": "AWS",
+            "updated": "2020-08-30T16:59:36.455Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5d02cb79b2e5f00a022b5fb4",
+        "name": "customers.gitlab.com",
+        "updated": "2020-09-05T09:45:32.538Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36dc6502d06804c0834a06",
+            "name": "Azure",
+            "updated": "2020-08-30T16:59:36.170Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5d31c2f251014050f413e808",
+        "name": "version.gitlab.com",
+        "updated": "2020-09-05T09:45:32.538Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5c7d5baf70abc604c107381c",
+            "name": "AWS",
+            "updated": "2020-08-30T16:59:36.168Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5d93c0defdc75b69cf385b1f",
+        "name": "forum.gitlab.com",
+        "updated": "2020-09-05T09:45:32.538Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36e09b17b99c04bef1f946",
+            "name": "Digital Ocean",
+            "updated": "2020-08-30T16:59:36.172Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5e29c1403f4deb04c0d7f035",
+        "name": "Windows Runners (beta)",
+        "updated": "2020-09-05T09:45:32.538Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-08-30T16:59:36.182Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5ed145987f9dc304bf8a9164",
+        "name": "Canary",
+        "updated": "2020-09-05T09:45:32.538Z",
+        "status": "Operational",
+        "status_code": 100,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-08-30T16:59:36.455Z",
+            "status": "Operational",
+            "status_code": 100
+          }
+        ]
+      },
+      {
+        "id": "5f4e8819413cdd04b6882c94",
+        "name": "dashboards.gitlab.com",
+        "updated": "2020-09-05T09:45:32.538Z",
+        "status": "Planned Maintenance",
+        "status_code": 200,
+        "containers": [
+          {
+            "id": "5b36e11140e76c04b7220a31",
+            "name": "Google Compute Engine",
+            "updated": "2020-09-05T09:38:31.563Z",
+            "status": "Planned Maintenance",
+            "status_code": 200
+          }
+        ]
+      }
+    ],
+    "incidents": [
+      {
+        "name": "500 Error - User Notification Settings ",
+        "_id": "5f52b8074ef75804bc7d2c3e",
+        "datetime_open": "2020-09-04T21:56:00.000Z",
+        "messages": [
+          {
+            "details": "The notification settings page is returning an error when the user is a member of a subgroup whose parent group no longer exists.\r\n\r\nNotification settings can still be adjusted per-project on the project's overview page.\r\n\r\nTracking in: https://gitlab.com/gitlab-com/gl-infra/production/-/issues/2664",
+            "state": 200,
+            "status": 400,
+            "datetime": "2020-09-04T21:56:00.000Z"
+          },
+          {
+            "details": "We've determined that the error when attempting to view personal notification settings only occurs when the user is a member of a subgroup whose parent group no longer exists.\r\n\r\nA fix will be deployed in the next window on 2020-09-07.\r\n\r\nTracking in: https://gitlab.com/gitlab-com/gl-infra/production/-/issues/2664",
+            "state": 200,
+            "status": 400,
+            "datetime": "2020-09-05T09:23:23.591Z"
+          }
+        ],
+        "containers_affected": [
+          {
+            "name": "Google Compute Engine",
+            "_id": "5b36e11140e76c04b7220a31"
+          }
+        ],
+        "components_affected": [
+          {
+            "name": "Website",
+            "_id": "5b36dc6502d06804c0834a07"
+          }
+        ]
+      }
+    ],
+    "maintenance": {
+      "active": [
+        {
+          "name": "Maintenance on dashboards.gitlab.com",
+          "_id": "5f4e8b7f2250a004bc3453da",
+          "datetime_open": "2020-09-01T17:57:19.597Z",
+          "datetime_planned_start": "2020-09-02T17:55:00.000Z",
+          "datetime_planned_end": "2020-09-07T17:55:00.000Z",
+          "messages": [
+            {
+              "details": "We are currently performing maintenance on dashboards.gitlab.com. It will be unavailable while in maintenance. ",
+              "state": 100,
+              "status": 200,
+              "datetime": "2020-09-01T17:57:19.641Z"
+            },
+            {
+              "details": "We are currently performing maintenance on dashboards.gitlab.com.\r\n\r\nThe public dashboards will be unavailable during this time.\r\n\r\nAll other systems are operational.\r\n",
+              "state": 200,
+              "status": 200,
+              "datetime": "2020-09-05T09:38:00.000Z"
+            }
+          ],
+          "containers_affected": [
+            {
+              "name": "Google Compute Engine",
+              "_id": "5b36e11140e76c04b7220a31"
+            }
+          ],
+          "components_affected": [
+            {
+              "name": "dashboards.gitlab.com",
+              "_id": "5f4e8819413cdd04b6882c94"
+            }
+          ]
+        }
+      ],
+      "upcoming": []
+    }
+  }
+}
