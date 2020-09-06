@@ -6,13 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Removed
+
+## [3.5.0] - 2020-09-06
+### Added
 - OwnBackup status checker
 - New Relic status checker
 
 ### Changed
 - [dev] various CI improvements
-
-### Removed
 
 ## [3.4.0] - 2020-09-05
 ### Added
