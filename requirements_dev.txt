@@ -7,7 +7,7 @@ respx==0.14.0
 
 # Linting & QA
 black==20.8b1
-check-manifest==0.44
+check-manifest==0.45
 flake8==3.8.4
 isort==5.6.4
 mypy==0.790
