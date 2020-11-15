@@ -1,4 +1,5 @@
 import respx
+from httpx import Response
 
 from statuscheck.services.models.salesforce import STATUS_CORE_INCIDENT
 from statuscheck.utils import get_statuscheck_api
@@ -11,9 +12,7 @@ class TestSalesforce:
             mock_response_body = f.read()
         respx.get(
             "https://api.status.salesforce.com/v1/instances/status/preview",
-            status_code=200,
-            content=mock_response_body,
-        )
+        ).mock(return_value=Response(200, content=mock_response_body))
 
         with open(
             "tests/test_services/test_data/salesforce_localizations.json", "rb"
@@ -21,9 +20,7 @@ class TestSalesforce:
             mock_response_body = f.read()
         respx.get(
             "https://api.status.salesforce.com/v1/localizations",
-            status_code=200,
-            content=mock_response_body,
-        )
+        ).mock(return_value=Response(200, content=mock_response_body))
 
         service_name = "salesforce"
         service_api = get_statuscheck_api(service_name)

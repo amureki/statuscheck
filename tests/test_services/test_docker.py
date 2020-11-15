@@ -1,4 +1,5 @@
 import respx
+from httpx import Response
 
 from statuscheck.utils import get_statuscheck_api
 
@@ -10,9 +11,7 @@ class TestDocker:
             mock_response_body = f.read()
         respx.get(
             "https://api.status.io/1.0/status/533c6539221ae15e3f000031",
-            status_code=200,
-            content=mock_response_body,
-        )
+        ).mock(return_value=Response(200, content=mock_response_body))
 
         service_name = "docker"
         service_api = get_statuscheck_api(service_name)

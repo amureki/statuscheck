@@ -1,4 +1,5 @@
 import respx
+from httpx import Response
 
 from statuscheck.services.models.slack import STATUS_ACTIVE
 from statuscheck.utils import get_statuscheck_api
@@ -11,9 +12,7 @@ class TestSlack:
             mock_response_body = f.read()
         respx.get(
             "https://status.slack.com/api/v2.0.0/current",
-            status_code=200,
-            content=mock_response_body,
-        )
+        ).mock(return_value=Response(200, content=mock_response_body))
 
         service_name = "slack"
         service_api = get_statuscheck_api(service_name)

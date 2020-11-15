@@ -1,4 +1,5 @@
 import respx
+from httpx import Response
 
 from statuscheck.services.models.statuspageio import STATUS_MAJOR
 from statuscheck.utils import get_statuscheck_api
@@ -11,9 +12,7 @@ class TestGithub:
             mock_response_body = f.read()
         respx.get(
             "https://kctbh9vrtdwd.statuspage.io/api/v2/summary.json",
-            status_code=200,
-            content=mock_response_body,
-        )
+        ).mock(return_value=Response(200, content=mock_response_body))
 
         service_name = "github"
         service_api = get_statuscheck_api(service_name)

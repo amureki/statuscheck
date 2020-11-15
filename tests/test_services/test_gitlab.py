@@ -1,4 +1,5 @@
 import respx
+from httpx import Response
 
 from statuscheck.utils import get_statuscheck_api
 
@@ -10,9 +11,7 @@ class TestGitlab:
             mock_response_body = f.read()
         respx.get(
             "https://api.status.io/1.0/status/5b36dc6502d06804c08349f7",
-            status_code=200,
-            content=mock_response_body,
-        )
+        ).mock(return_value=Response(200, content=mock_response_body))
 
         service_name = "gitlab"
         service_api = get_statuscheck_api(service_name)
@@ -36,9 +35,7 @@ class TestGitlab:
             mock_response_body = f.read()
         respx.get(
             "https://api.status.io/1.0/status/5b36dc6502d06804c08349f7",
-            status_code=200,
-            content=mock_response_body,
-        )
+        ).mock(return_value=Response(200, content=mock_response_body))
 
         service_name = "gitlab"
         service_api = get_statuscheck_api(service_name)
