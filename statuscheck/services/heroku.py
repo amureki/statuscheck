@@ -1,17 +1,28 @@
 import httpx
 
 from statuscheck.services.bases._base import BaseServiceAPI
-from statuscheck.services.models.generic import Component, Incident, Status, Summary
-from statuscheck.services.models.heroku import (
-    STATUS_GREEN,
-    STATUS_RED,
-    STATUS_TYPE_MAPPING,
-    STATUS_YELLOW,
+from statuscheck.services.models.generic import (
+    TYPE_GOOD,
+    TYPE_INCIDENT,
+    TYPE_MAINTENANCE,
+    TYPE_OUTAGE,
+    Component,
+    Incident,
+    Status,
+    Summary,
 )
-from statuscheck.services.models.heroku import Component as _Component
-from statuscheck.services.models.heroku import Incident as _Incident
-from statuscheck.services.models.heroku import Status as _Status
-from statuscheck.services.models.heroku import Summary as _Summary
+
+STATUS_GREEN = "green"
+STATUS_YELLOW = "yellow"
+STATUS_RED = "red"
+STATUS_BLUE = "blue"
+
+STATUS_TYPE_MAPPING = {
+    STATUS_GREEN: TYPE_GOOD,
+    STATUS_YELLOW: TYPE_INCIDENT,
+    STATUS_RED: TYPE_OUTAGE,
+    STATUS_BLUE: TYPE_MAINTENANCE,
+}
 
 
 class ServiceAPI(BaseServiceAPI):
@@ -28,42 +39,6 @@ class ServiceAPI(BaseServiceAPI):
     service_url = "https://heroku.com"
 
     def get_summary(self) -> Summary:
-        summary = self._get_summary()
-        components = [
-            Component(
-                name=component.name,
-                status=component.status,
-            )
-            for component in summary.components
-        ]
-        incidents = [
-            Incident(
-                id=incident.id,
-                name=incident.title,
-                status=incident.state,
-                components=[
-                    Component(
-                        name=component.name,
-                        status=component.status,
-                    )
-                    for component in incident.components
-                ],
-            )
-            for incident in summary.incidents
-        ]
-        status = Status(
-            code=summary.status.code,
-            name=summary.status.description,
-            description=summary.status.description,
-            is_ok=summary.status.is_ok,
-        )
-        return Summary(
-            status=status,
-            components=components,
-            incidents=incidents,
-        )
-
-    def _get_summary(self) -> _Summary:
         url = self.base_url + "current-status"
         response_json = httpx.get(url).json()
         status_list = response_json["status"]
@@ -71,12 +46,12 @@ class ServiceAPI(BaseServiceAPI):
         # scheduled_list = response_json["scheduled"]
 
         incidents = [
-            _Incident(
+            Incident(
                 id=incident["id"],
-                title=incident["title"],
-                state=incident["state"],
+                name=incident["title"],
+                status=incident["state"],
                 components=[
-                    _Component(
+                    Component(
                         name=component["system"],
                         status=component["status"],
                     )
@@ -86,7 +61,7 @@ class ServiceAPI(BaseServiceAPI):
             for incident in incidents_list
         ]
         components = [
-            _Component(
+            Component(
                 name=component["system"],
                 status=component["status"],
             )
@@ -101,9 +76,11 @@ class ServiceAPI(BaseServiceAPI):
             if component.status == STATUS_YELLOW and worst_status != STATUS_RED:
                 worst_status = component.status
 
-        status = _Status(
+        status = Status(
             code=worst_status,
+            name=STATUS_TYPE_MAPPING[worst_status],
             description=STATUS_TYPE_MAPPING[worst_status],
+            is_ok=worst_status == STATUS_GREEN,
         )
 
-        return _Summary(status, components, incidents)
+        return Summary(status, components, incidents)

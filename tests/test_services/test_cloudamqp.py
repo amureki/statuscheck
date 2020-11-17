@@ -1,7 +1,7 @@
 import respx
 from httpx import Response
 
-from statuscheck.services.models.statuspageio import STATUS_MAINTENANCE
+from statuscheck.services.bases._statuspageio import STATUS_MAINTENANCE
 from statuscheck.utils import get_statuscheck_api
 
 

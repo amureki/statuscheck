@@ -26,6 +26,7 @@ class Component:
     name: str
     status: str = attr.ib(default="")
     id: str = attr.ib(default="")
+    extra_data: dict = attr.ib(default={})
 
 
 @attr.s(auto_attribs=True)
@@ -37,6 +38,7 @@ class Incident:
         default=[],
         validator=attr.validators.instance_of(list),
     )
+    extra_data: dict = attr.ib(default={})
 
 
 @attr.s(auto_attribs=True)
