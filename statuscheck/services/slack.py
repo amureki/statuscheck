@@ -63,6 +63,7 @@ class ServiceAPI(BaseServiceAPI):
                 components=[
                     Component(name=component) for component in incident["services"]
                 ],
+                extra_data=incident,
             )
             for incident in incidents_list
         ]

@@ -57,6 +57,7 @@ class ServiceAPI(BaseServiceAPI):
                     )
                     for component in status_list
                 ],
+                extra_data=incident,
             )
             for incident in incidents_list
         ]
@@ -64,6 +65,7 @@ class ServiceAPI(BaseServiceAPI):
             Component(
                 name=component["system"],
                 status=component["status"],
+                extra_data=component,
             )
             for component in status_list
         ]

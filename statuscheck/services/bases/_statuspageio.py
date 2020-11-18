@@ -67,6 +67,7 @@ class BaseStatusPageAPI(BaseServiceAPI):
                     )
                     for component in incident.get("components", [])
                 ],
+                extra_data=incident,
             )
             for incident in response_json["incidents"]
             + response_json["scheduled_maintenances"]
@@ -77,6 +78,7 @@ class BaseStatusPageAPI(BaseServiceAPI):
                 id=component["id"],
                 name=component["name"],
                 status=component["status"],
+                extra_data=component,
             )
             for component in response_json["components"]
         ]

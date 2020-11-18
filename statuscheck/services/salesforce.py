@@ -89,7 +89,7 @@ class ServiceAPI(BaseServiceAPI):
             Component(
                 name=component["key"],
                 status=component["status"],
-                extra_data={"key": component["key"]},
+                extra_data=component,
             )
             for component in components_raw
         ]
@@ -104,7 +104,7 @@ class ServiceAPI(BaseServiceAPI):
                     for component in components
                     if component.name in incident["instanceKeys"]
                 ],
-                extra_data={"affects_all": incident["affectsAll"]},
+                extra_data=incident,
             )
             for incident in incidents_raw
         ]
@@ -117,7 +117,7 @@ class ServiceAPI(BaseServiceAPI):
         )
 
         for incident in incidents:
-            if incident.extra_data["affects_all"]:
+            if incident.extra_data["affectsAll"]:
                 status.code = incident.status
                 status.description = STATUS_TYPE_MAPPING[incident.status]
                 break

@@ -61,6 +61,7 @@ class BaseStatusIOAPI(BaseServiceAPI):
                 id=component["id"],
                 name=component["name"],
                 status=component["status"],
+                extra_data=component,
             )
             for component in response_json["result"]["status"]
         ]
@@ -79,6 +80,7 @@ class BaseStatusIOAPI(BaseServiceAPI):
                     )
                     for component in incident.get("components_affected", [])
                 ],
+                extra_data=incident,
             )
             for incident in response_json["result"]["incidents"]
         ]
