@@ -1,7 +1,7 @@
 import respx
 from httpx import Response
 
-from statuscheck.services.models.salesforce import STATUS_CORE_INCIDENT
+from statuscheck.services.salesforce import STATUS_CORE_INCIDENT
 from statuscheck.utils import get_statuscheck_api
 
 

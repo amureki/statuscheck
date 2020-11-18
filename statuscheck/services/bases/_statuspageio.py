@@ -1,12 +1,31 @@
 import httpx
 
 from statuscheck.services.bases._base import BaseServiceAPI
-from statuscheck.services.models.generic import Component, Incident, Status, Summary
-from statuscheck.services.models.statuspageio import STATUS_TYPE_MAPPING
-from statuscheck.services.models.statuspageio import Component as _Component
-from statuscheck.services.models.statuspageio import Incident as _Incident
-from statuscheck.services.models.statuspageio import Status as _Status
-from statuscheck.services.models.statuspageio import Summary as _Summary
+from statuscheck.services.models.generic import (
+    TYPE_CRITICAL,
+    TYPE_GOOD,
+    TYPE_INCIDENT,
+    TYPE_MAINTENANCE,
+    TYPE_OUTAGE,
+    Component,
+    Incident,
+    Status,
+    Summary,
+)
+
+STATUS_NONE = "none"
+STATUS_MINOR = "minor"
+STATUS_MAJOR = "major"
+STATUS_CRITICAL = "critical"
+STATUS_MAINTENANCE = "maintenance"
+
+STATUS_TYPE_MAPPING = {
+    STATUS_NONE: TYPE_GOOD,
+    STATUS_MINOR: TYPE_INCIDENT,
+    STATUS_MAJOR: TYPE_OUTAGE,
+    STATUS_CRITICAL: TYPE_CRITICAL,
+    STATUS_MAINTENANCE: TYPE_MAINTENANCE,
+}
 
 
 class BaseStatusPageAPI(BaseServiceAPI):
@@ -25,78 +44,43 @@ class BaseStatusPageAPI(BaseServiceAPI):
         return f"https://{self.domain_id}.statuspage.io/api/v2/"
 
     def get_summary(self) -> Summary:
-        summary = self._get_summary()
-        incidents = [
-            Incident(
-                id=incident.id,
-                name=incident.name,
-                status=incident.status,
-                components=[
-                    Component(
-                        id=component.id,
-                        name=component.name,
-                        status=component.status,
-                    )
-                    for component in incident.components
-                ],
-            )
-            for incident in summary.incidents
-        ]
-        components = [
-            Component(
-                id=component.id,
-                name=component.name,
-                status=component.status,
-            )
-            for component in summary.components
-        ]
-        status = Status(
-            code=summary.status.indicator,
-            name=STATUS_TYPE_MAPPING[summary.status.indicator],
-            description=summary.status.description,
-            is_ok=summary.status.is_ok,
-        )
-        return Summary(
-            status=status,
-            components=components,
-            incidents=incidents,
-        )
-
-    def _get_summary(self) -> _Summary:
         url = self._get_base_url() + "summary.json"
         response_json = httpx.get(url).json()
         status_dict = response_json["status"]
-        status = _Status(**status_dict)
+        status = Status(
+            code=status_dict["indicator"],
+            name=STATUS_TYPE_MAPPING[status_dict["indicator"]],
+            description=status_dict["description"],
+            is_ok=status_dict["indicator"] == STATUS_NONE,
+        )
+
         incidents = [
-            _Incident(
-                incident["id"],
-                incident["name"],
-                incident["status"],
-                incident["impact"],
-                incident.get("scheduled_for"),
-                incident.get("scheduled_until"),
-                [
-                    _Component(
-                        component["id"],
-                        component["description"],
-                        component["status"],
-                        component["name"],
-                        component.get("only_show_if_degraded"),
+            Incident(
+                id=incident["id"],
+                name=incident["name"],
+                status=incident["status"],
+                components=[
+                    Component(
+                        id=component["id"],
+                        name=component["name"],
+                        status=component["status"],
                     )
                     for component in incident.get("components", [])
                 ],
+                extra_data=incident,
             )
             for incident in response_json["incidents"]
             + response_json["scheduled_maintenances"]
         ]
+
         components = [
-            _Component(
-                component["id"],
-                component["description"],
-                component["status"],
-                component["name"],
-                component.get("only_show_if_degraded"),
+            Component(
+                id=component["id"],
+                name=component["name"],
+                status=component["status"],
+                extra_data=component,
             )
             for component in response_json["components"]
         ]
-        return _Summary(status, components, incidents)
+
+        return Summary(status, components, incidents)

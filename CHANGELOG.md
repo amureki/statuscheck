@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Python 3.9 support
 
 ### Changed
+- Reduce code complexity by dropping custom service models
 - [Dev] Dependencies update
 
 ### Removed

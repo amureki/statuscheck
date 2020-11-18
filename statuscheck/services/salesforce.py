@@ -1,12 +1,44 @@
 import httpx
 
 from statuscheck.services.bases._base import BaseServiceAPI
-from statuscheck.services.models.generic import Component, Incident, Status, Summary
-from statuscheck.services.models.salesforce import STATUS_OK, STATUS_TYPE_MAPPING
-from statuscheck.services.models.salesforce import Component as _Component
-from statuscheck.services.models.salesforce import Incident as _Incident
-from statuscheck.services.models.salesforce import Status as _Status
-from statuscheck.services.models.salesforce import Summary as _Summary
+from statuscheck.services.models.generic import (
+    TYPE_GOOD,
+    TYPE_INCIDENT,
+    TYPE_MAINTENANCE,
+    TYPE_OUTAGE,
+    Component,
+    Incident,
+    Status,
+    Summary,
+)
+
+STATUS_OK = "OK"
+STATUS_CORE_OUTAGE = "MAJOR_INCIDENT_CORE"
+STATUS_NONCORE_OUTAGE = "MAJOR_INCIDENT_NONCORE"
+STATUS_CORE_INCIDENT = "MINOR_INCIDENT_CORE"
+STATUS_NONCORE_INCIDENT = "MINOR_INCIDENT_NONCORE"
+STATUS_CORE_MAINTENANCE = "MAINTENANCE_CORE"
+STATUS_NONCORE_MAINTENANCE = "MAINTENANCE_NONCORE"
+
+# sorted by severity
+NOT_GOOD_STATUSES = [
+    STATUS_CORE_OUTAGE,
+    STATUS_NONCORE_OUTAGE,
+    STATUS_CORE_INCIDENT,
+    STATUS_NONCORE_INCIDENT,
+    STATUS_CORE_MAINTENANCE,
+    STATUS_NONCORE_MAINTENANCE,
+]
+
+STATUS_TYPE_MAPPING = {
+    STATUS_OK: TYPE_GOOD,
+    STATUS_CORE_INCIDENT: TYPE_INCIDENT,
+    STATUS_NONCORE_INCIDENT: TYPE_INCIDENT,
+    STATUS_CORE_OUTAGE: TYPE_OUTAGE,
+    STATUS_NONCORE_OUTAGE: TYPE_OUTAGE,
+    STATUS_CORE_MAINTENANCE: TYPE_MAINTENANCE,
+    STATUS_NONCORE_MAINTENANCE: TYPE_MAINTENANCE,
+}
 
 
 class ServiceAPI(BaseServiceAPI):
@@ -22,43 +54,6 @@ class ServiceAPI(BaseServiceAPI):
     service_url = "https://salesforce.com/"
 
     def get_summary(self) -> Summary:
-        summary = self._get_summary()
-        components = [
-            Component(
-                name=component.key,
-                status=component.status,
-            )
-            for component in summary.components
-        ]
-        incidents = [
-            Incident(
-                id=str(incident.id),
-                name=incident.text,
-                status=incident.status,
-                components=[
-                    Component(
-                        name=component.key,
-                        # we put status in the incident, so we don't need it here
-                        # status=component.status,
-                    )
-                    for component in incident.components
-                ],
-            )
-            for incident in summary.incidents
-        ]
-        status = Status(
-            code=summary.status.code,
-            name=summary.status.description,
-            description=summary.status.description,
-            is_ok=summary.status.is_ok,
-        )
-        return Summary(
-            status=status,
-            components=components,
-            incidents=incidents,
-        )
-
-    def _get_summary(self) -> _Summary:
         url = self.base_url + "instances/status/preview"
         localizations_url = self.base_url + "localizations"
         response = httpx.get(url)
@@ -91,39 +86,40 @@ class ServiceAPI(BaseServiceAPI):
                     incidents_raw.append(incident)
 
         components = [
-            _Component(
-                key=component["key"],
-                location=component["location"],
-                environment=component["environment"],
+            Component(
+                name=component["key"],
                 status=component["status"],
-                is_active=component["isActive"],
+                extra_data=component,
             )
             for component in components_raw
         ]
 
         incidents = [
-            _Incident(
-                id=incident["id"],
-                type=incident["type"],
-                text=localizations[incident["type"]],
-                affects_all=incident["affectsAll"],
-                is_core=incident["isCore"],
+            Incident(
+                id=str(incident["id"]),
+                name=localizations[incident["type"]],
                 status=incident["status"],
-                instance_keys=incident["instanceKeys"],
                 components=[
                     component
                     for component in components
-                    if component.key in incident["instanceKeys"]
+                    if component.name in incident["instanceKeys"]
                 ],
+                extra_data=incident,
             )
             for incident in incidents_raw
         ]
 
-        status = _Status(code=STATUS_OK, description=STATUS_TYPE_MAPPING[STATUS_OK])
+        status = Status(
+            code=STATUS_OK,
+            name=STATUS_TYPE_MAPPING[STATUS_OK],
+            description=STATUS_TYPE_MAPPING[STATUS_OK],
+            is_ok=True,
+        )
+
         for incident in incidents:
-            if incident.affects_all:
+            if incident.extra_data["affectsAll"]:
                 status.code = incident.status
                 status.description = STATUS_TYPE_MAPPING[incident.status]
                 break
 
-        return _Summary(status, components, incidents)
+        return Summary(status, components, incidents)

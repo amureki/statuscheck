@@ -1,7 +1,7 @@
 import respx
 from httpx import Response
 
-from statuscheck.services.models.slack import STATUS_ACTIVE
+from statuscheck.services.slack import STATUS_ACTIVE
 from statuscheck.utils import get_statuscheck_api
 
 
