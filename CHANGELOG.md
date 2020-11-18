@@ -6,13 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Removed
+
+## [3.6.0] - 2020-11-18
+### Added
 - Python 3.9 support
 
 ### Changed
 - Reduce code complexity by dropping custom service models
 - [Dev] Dependencies update
-
-### Removed
 
 ## [3.5.0] - 2020-09-06
 ### Added
