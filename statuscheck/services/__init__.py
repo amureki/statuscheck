@@ -14,6 +14,7 @@ SERVICES = [
     "discord",
     "docker",
     "gandi",
+    "geckoboard",
     "github",
     "gitlab",
     "invision",

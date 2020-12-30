@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [3.7.0] - 2020-12-30
+### Added
+- Geckoboard status checker
+
+### Changed
+- [Dev] Dependencies update
+
 ## [3.6.0] - 2020-11-18
 ### Added
 - Python 3.9 support
