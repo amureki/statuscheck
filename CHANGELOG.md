@@ -8,9 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
-- Better component status handling
 
 ### Removed
+
+## [3.8.0] - 2021-01-02
+### Changed
+- Better component status handling
 
 ## [3.7.1] - 2021-01-02
 ### Changed
@@ -78,7 +81,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.0.0] - 2020-08-09
 ### Changed
-
 - [Breaking change] Major refactoring of the library core and public APIs
 - Unified status and summary data models (using attrs)
 - Better typing hints
