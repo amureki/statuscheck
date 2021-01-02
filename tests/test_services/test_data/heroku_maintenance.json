@@ -1,0 +1,77 @@
+{
+  "status": [
+    {
+      "system": "Apps",
+      "status": "green"
+    },
+    {
+      "system": "Data",
+      "status": "blue"
+    },
+    {
+      "system": "Tools",
+      "status": "green"
+    }
+  ],
+  "incidents": [],
+  "scheduled": [
+    {
+      "id": 2120,
+      "created_at": "2020-10-30T00:55:34.418Z",
+      "updated_at": "2020-11-09T19:47:23.674Z",
+      "title": "Data Service Update on Monday, November 9 at 19:00 UTC (14:00 EST)",
+      "resolved": true,
+      "upcoming": false,
+      "status_dev": "blue",
+      "status_prod": "blue",
+      "href": "https://status.heroku.com/api/v3/issues/2120",
+      "full_url": "https://status.heroku.com/incidents/2120",
+      "updates": [
+        {
+          "id": 6692,
+          "created_at": "2020-11-09T19:47:23.669Z",
+          "updated_at": "2020-11-09T19:47:27.506Z",
+          "incident_id": 2120,
+          "update_type": "resolved",
+          "contents": "This service update has been completed. All platform functionality has returned to normal.",
+          "title": "Data Service Update on Monday, November 9 at 19:00 UTC (14:00 EST)",
+          "status_dev": "green",
+          "status_prod": "green"
+        },
+        {
+          "id": 6691,
+          "created_at": "2020-11-09T19:27:05.000Z",
+          "updated_at": "2020-11-09T19:28:19.396Z",
+          "incident_id": 2120,
+          "update_type": "maintenance",
+          "contents": "The service update is taking a bit longer than we initially expected. We're estimating that the update will complete around 19:45 UTC (2:45 EST).",
+          "title": "Data Service Update on Monday, November 9 at 19:00 UTC (14:00 EST)",
+          "status_dev": "green",
+          "status_prod": "blue"
+        },
+        {
+          "id": 6690,
+          "created_at": "2020-11-09T19:01:10.522Z",
+          "updated_at": "2020-11-09T19:01:12.307Z",
+          "incident_id": 2120,
+          "update_type": "maintenance",
+          "contents": "The scheduled service update is now underway. \r\n\r\nWe'll post more updates as necessary or when the service update is complete.\r\n",
+          "title": "Data Service Update on Monday, November 9 at 19:00 UTC (14:00 EST)",
+          "status_dev": "green",
+          "status_prod": "blue"
+        },
+        {
+          "id": 6685,
+          "created_at": "2020-10-30T00:55:34.418Z",
+          "updated_at": "2020-10-30T00:55:38.460Z",
+          "incident_id": 2120,
+          "update_type": "scheduled",
+          "contents": "On Monday, November 9, 2020, at 19:00 UTC (14:00 EST), and continuing until 19:30 UTC (30 minutes), Heroku will be performing a service update to the Heroku Data services.\r\n\r\nDuring this time, the Heroku Data Dashboard and Log Metrics for data services will be unavailable. It will not be possible to provision new Data add-ons during the service update.\r\n\r\nWe will provide an update when we begin and complete the service update.\r\n",
+          "title": "Data Service Update on Monday, November 9 at 19:00 UTC (14:00 EST)",
+          "status_dev": "green",
+          "status_prod": "blue"
+        }
+      ]
+    }
+  ]
+}

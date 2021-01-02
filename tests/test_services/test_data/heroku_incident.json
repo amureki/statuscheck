@@ -1,0 +1,55 @@
+{
+  "status": [
+    {
+      "system": "Apps",
+      "status": "yellow"
+    },
+    {
+      "system": "Data",
+      "status": "yellow"
+    },
+    {
+      "system": "Tools",
+      "status": "yellow"
+    }
+  ],
+  "incidents": [
+    {
+      "created_at": "2019-10-24T18:39:30.231Z",
+      "full_url": "https://status.heroku.com/incidents/1918",
+      "href": "https://status.heroku.com/api/v3/issues/1918",
+      "id": 1918,
+      "resolved": false,
+      "status_dev": "yellow",
+      "status_prod": "yellow",
+      "title": "Connection timeouts to applications and Heroku Postgres",
+      "upcoming": false,
+      "updated_at": "2019-10-24T18:39:30.721Z",
+      "updates": [
+        {
+          "contents": "Due to connection timeouts there is a disruption of multiple services such as releases, scaling dynos, Heroku Dashboard, etc.\r\n\r\nCustomer applications and add-on services including Heroku Postgres are also being impacted by connection timeouts.",
+          "created_at": "2019-10-24T18:49:47.743Z",
+          "id": 6091,
+          "incident_id": 1918,
+          "status_dev": "yellow",
+          "status_prod": "yellow",
+          "title": "Connection timeouts to applications and Heroku Postgres",
+          "update_type": "issue",
+          "updated_at": "2019-10-24T18:49:50.066Z"
+        },
+        {
+          "contents": "We are investigating reports of heightened levels of connection timeouts for requests to applications, as well as for Heroku Postgres requests.\r\n",
+          "created_at": "2019-10-24T18:39:30.231Z",
+          "id": 6090,
+          "incident_id": 1918,
+          "status_dev": "green",
+          "status_prod": "yellow",
+          "title": "Connection timeouts to applications and Heroku Postgres",
+          "update_type": "investigating",
+          "updated_at": "2019-10-24T18:39:30.231Z"
+        }
+      ]
+    }
+  ],
+  "scheduled": []
+}
