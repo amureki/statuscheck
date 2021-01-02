@@ -1,15 +1,14 @@
-
 # statuscheck: Tool to check PAAS/SAAS status pages
 
-![Tests](https://github.com/amureki/statuscheck/workflows/Tests/badge.svg)
+[![Tests](https://github.com/amureki/statuscheck/workflows/Tests/badge.svg)](https://github.com/amureki/statuscheck/actions)
 [![image](https://img.shields.io/pypi/v/statuscheck.svg)](https://pypi.org/project/statuscheck/)
-[![image](https://img.shields.io/pypi/l/statuscheck.svg)](https://pypi.org/project/statuscheck/)
+[![image](https://img.shields.io/pypi/l/statuscheck.svg)](https://github.com/amureki/statuscheck/blob/master/LICENSE)
 [![image](https://img.shields.io/pypi/pyversions/statuscheck.svg)](https://pypi.org/project/statuscheck/)
 [![Coverage Status](https://coveralls.io/repos/github/amureki/statuscheck/badge.svg)](https://coveralls.io/github/amureki/statuscheck)
 
 ## Usage
 
-Install the latest release:
+Install [the latest release](https://pypi.org/project/statuscheck/):
 
     $ pip install statuscheck
 
@@ -38,7 +37,7 @@ There is also an API available:
     >>> summary.incidents
     [Incident(id=879, name="We're looking into an issue with certain API calls", status='active', components=[Component(name='Apps/Integrations/APIs', status='', id='')])]
     >>> summary.as_dict()
-    {'status': {'code': 'active', 'name': 'Minor incident', 'description': 'Minor incident', 'is_ok': False}, 'components': [{'name': 'Apps/Integrations/APIs', 'status': '', 'id': ''}], 'incidents': [{'id': 879, 'name': "We're looking into an issue with certain API calls", 'status': 'active', 'components': [{'name': 'Apps/Integrations/APIs', 'status': '', 'id': ''}]}]}
+    {'status': {'code': 'active', 'name': 'Minor incident', 'description': 'Minor incident', 'is_ok': False}, 'components': [{'name': 'Apps/Integrations/APIs', 'status': 'Partial outage', 'id': ''}], 'incidents': [{'id': 879, 'name': "We're looking into an issue with certain API calls", 'status': 'active', 'components': [{'name': 'Apps/Integrations/APIs', 'status': 'Partial outage', 'id': ''}]}]}
 
 
 Currently, all services that we support are defined [here](statuscheck/services/__init__.py).

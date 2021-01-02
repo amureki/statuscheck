@@ -1,13 +1,14 @@
 import respx
 from httpx import Response
 
+from statuscheck.services.models.generic import COMPONENT_TYPE_PARTIAL_OUTAGE
 from statuscheck.services.slack import STATUS_ACTIVE
 from statuscheck.utils import get_statuscheck_api
 
 
 class TestSlack:
     @respx.mock
-    def test_ok(self):
+    def test_incident(self):
         with open("tests/test_services/test_data/slack_incident.json", "rb") as f:
             mock_response_body = f.read()
         respx.get(
@@ -29,3 +30,6 @@ class TestSlack:
         assert service_api.summary.status.code == STATUS_ACTIVE
         assert len(service_api.summary.incidents) == 2
         assert len(service_api.summary.components) == 2
+
+        component = service_api.summary.components[0]
+        assert component.status == COMPONENT_TYPE_PARTIAL_OUTAGE

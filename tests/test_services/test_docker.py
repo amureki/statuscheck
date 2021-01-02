@@ -1,12 +1,13 @@
 import respx
 from httpx import Response
 
+from statuscheck.services.models.generic import COMPONENT_TYPE_PARTIAL_OUTAGE
 from statuscheck.utils import get_statuscheck_api
 
 
 class TestDocker:
     @respx.mock
-    def test_ok(self):
+    def test_incident(self):
         with open("tests/test_services/test_data/docker_partial.json", "rb") as f:
             mock_response_body = f.read()
         respx.get(
@@ -28,3 +29,6 @@ class TestDocker:
         assert service_api.summary.status.code == "400"
         assert len(service_api.summary.incidents) == 1
         assert len(service_api.summary.components) == 8
+
+        component = service_api.summary.components[3]
+        assert component.status == COMPONENT_TYPE_PARTIAL_OUTAGE

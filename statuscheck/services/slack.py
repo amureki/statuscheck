@@ -2,6 +2,9 @@ import httpx
 
 from statuscheck.services.bases._base import BaseServiceAPI
 from statuscheck.services.models.generic import (
+    COMPONENT_TYPE_GOOD,
+    COMPONENT_TYPE_MAINTENANCE,
+    COMPONENT_TYPE_PARTIAL_OUTAGE,
     TYPE_GOOD,
     TYPE_INCIDENT,
     TYPE_MAINTENANCE,
@@ -27,6 +30,16 @@ STATUS_TYPE_MAPPING = {
     STATUS_CANCELED: TYPE_MAINTENANCE,
 }
 
+COMPONENT_STATUS_MAPPING = {
+    STATUS_OK: COMPONENT_TYPE_GOOD,
+    STATUS_ACTIVE: COMPONENT_TYPE_PARTIAL_OUTAGE,
+    STATUS_RESOLVED: COMPONENT_TYPE_PARTIAL_OUTAGE,
+    STATUS_SCHEDULED: COMPONENT_TYPE_MAINTENANCE,
+    STATUS_COMPLETED: COMPONENT_TYPE_MAINTENANCE,
+    # TODO: sure about canceled?
+    STATUS_CANCELED: COMPONENT_TYPE_MAINTENANCE,
+}
+
 
 class ServiceAPI(BaseServiceAPI):
     """
@@ -48,6 +61,7 @@ class ServiceAPI(BaseServiceAPI):
 
         status_code = response_json["status"]
 
+        # TODO: use both type and status for finding out severity.
         status = Status(
             code=status_code,
             name=STATUS_TYPE_MAPPING[response_json["status"]],
@@ -61,7 +75,11 @@ class ServiceAPI(BaseServiceAPI):
                 name=incident["title"],
                 status=incident["status"],
                 components=[
-                    Component(name=component) for component in incident["services"]
+                    Component(
+                        name=component,
+                        status=COMPONENT_STATUS_MAPPING[incident["status"]],
+                    )
+                    for component in incident["services"]
                 ],
                 extra_data=incident,
             )
