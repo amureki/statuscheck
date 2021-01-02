@@ -49,7 +49,7 @@ class ServiceAPI(BaseServiceAPI):
             Incident(
                 id=incident["id"],
                 name=incident["title"],
-                status=incident["state"],
+                status=incident["status_prod"],
                 components=[
                     Component(
                         name=component["system"],
@@ -76,6 +76,8 @@ class ServiceAPI(BaseServiceAPI):
             if component.status == STATUS_RED:
                 worst_status = component.status
             if component.status == STATUS_YELLOW and worst_status != STATUS_RED:
+                worst_status = component.status
+            if component.status == STATUS_BLUE and worst_status == STATUS_GREEN:
                 worst_status = component.status
 
         status = Status(
