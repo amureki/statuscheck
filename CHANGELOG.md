@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [3.7.1] - 2021-01-2
+### Changed
+- Heroku logic fix (plus data tests)
+- [Dev] Dependencies update
+
 ## [3.7.0] - 2020-12-30
 ### Added
 - Geckoboard status checker
