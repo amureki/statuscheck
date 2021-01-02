@@ -2,6 +2,12 @@ import httpx
 
 from statuscheck.services.bases._base import BaseServiceAPI
 from statuscheck.services.models.generic import (
+    COMPONENT_TYPE_DEGRADED,
+    COMPONENT_TYPE_GOOD,
+    COMPONENT_TYPE_MAINTENANCE,
+    COMPONENT_TYPE_MAJOR_OUTAGE,
+    COMPONENT_TYPE_PARTIAL_OUTAGE,
+    COMPONENT_TYPE_UNKNOWN,
     TYPE_CRITICAL,
     TYPE_GOOD,
     TYPE_INCIDENT,
@@ -25,6 +31,22 @@ STATUS_TYPE_MAPPING = {
     STATUS_MAJOR: TYPE_OUTAGE,
     STATUS_CRITICAL: TYPE_CRITICAL,
     STATUS_MAINTENANCE: TYPE_MAINTENANCE,
+}
+
+COMPONENT_STATUS_GOOD = "operational"
+COMPONENT_STATUS_MAINTENANCE = "under_maintenance"
+COMPONENT_STATUS_DEGRADED = "degraded_performance"
+COMPONENT_STATUS_PARTIAL_OUTAGE = "partial_outage"
+COMPONENT_STATUS_MAJOR_OUTAGE = "major_outage"
+COMPONENT_STATUS_UNKNOWN = ""
+
+COMPONENT_STATUS_MAPPING = {
+    COMPONENT_STATUS_GOOD: COMPONENT_TYPE_GOOD,
+    COMPONENT_STATUS_MAINTENANCE: COMPONENT_TYPE_MAINTENANCE,
+    COMPONENT_STATUS_DEGRADED: COMPONENT_TYPE_DEGRADED,
+    COMPONENT_STATUS_PARTIAL_OUTAGE: COMPONENT_TYPE_PARTIAL_OUTAGE,
+    COMPONENT_STATUS_MAJOR_OUTAGE: COMPONENT_TYPE_MAJOR_OUTAGE,
+    COMPONENT_STATUS_UNKNOWN: COMPONENT_TYPE_UNKNOWN,
 }
 
 
@@ -63,7 +85,7 @@ class BaseStatusPageAPI(BaseServiceAPI):
                     Component(
                         id=component["id"],
                         name=component["name"],
-                        status=component["status"],
+                        status=COMPONENT_STATUS_MAPPING[component["status"]],
                     )
                     for component in incident.get("components", [])
                 ],
@@ -77,7 +99,7 @@ class BaseStatusPageAPI(BaseServiceAPI):
             Component(
                 id=component["id"],
                 name=component["name"],
-                status=component["status"],
+                status=COMPONENT_STATUS_MAPPING[component["status"]],
                 extra_data=component,
             )
             for component in response_json["components"]

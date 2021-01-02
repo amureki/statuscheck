@@ -2,6 +2,10 @@ import httpx
 
 from statuscheck.services.bases._base import BaseServiceAPI
 from statuscheck.services.models.generic import (
+    COMPONENT_TYPE_GOOD,
+    COMPONENT_TYPE_MAINTENANCE,
+    COMPONENT_TYPE_MAJOR_OUTAGE,
+    COMPONENT_TYPE_PARTIAL_OUTAGE,
     TYPE_GOOD,
     TYPE_INCIDENT,
     TYPE_MAINTENANCE,
@@ -22,6 +26,18 @@ STATUS_TYPE_MAPPING = {
     STATUS_YELLOW: TYPE_INCIDENT,
     STATUS_RED: TYPE_OUTAGE,
     STATUS_BLUE: TYPE_MAINTENANCE,
+}
+
+COMPONENT_STATUS_GOOD = "green"
+COMPONENT_STATUS_MAINTENANCE = "blue"
+COMPONENT_STATUS_PARTIAL_OUTAGE = "yellow"
+COMPONENT_STATUS_MAJOR_OUTAGE = "red"
+
+COMPONENT_STATUS_MAPPING = {
+    COMPONENT_STATUS_GOOD: COMPONENT_TYPE_GOOD,
+    COMPONENT_STATUS_MAINTENANCE: COMPONENT_TYPE_MAINTENANCE,
+    COMPONENT_STATUS_PARTIAL_OUTAGE: COMPONENT_TYPE_PARTIAL_OUTAGE,
+    COMPONENT_STATUS_MAJOR_OUTAGE: COMPONENT_TYPE_MAJOR_OUTAGE,
 }
 
 
@@ -53,7 +69,7 @@ class ServiceAPI(BaseServiceAPI):
                 components=[
                     Component(
                         name=component["system"],
-                        status=component["status"],
+                        status=COMPONENT_STATUS_MAPPING[component["status"]],
                     )
                     for component in status_list
                 ],
@@ -64,7 +80,7 @@ class ServiceAPI(BaseServiceAPI):
         components = [
             Component(
                 name=component["system"],
-                status=component["status"],
+                status=COMPONENT_STATUS_MAPPING[component["status"]],
                 extra_data=component,
             )
             for component in status_list
@@ -73,18 +89,24 @@ class ServiceAPI(BaseServiceAPI):
         worst_status = STATUS_GREEN
 
         for component in components:
-            if component.status == STATUS_RED:
-                worst_status = component.status
-            if component.status == STATUS_YELLOW and worst_status != STATUS_RED:
-                worst_status = component.status
-            if component.status == STATUS_BLUE and worst_status == STATUS_GREEN:
-                worst_status = component.status
+            if component.status == COMPONENT_TYPE_MAJOR_OUTAGE:
+                worst_status = STATUS_RED
+            if (
+                component.status == COMPONENT_TYPE_PARTIAL_OUTAGE
+                and worst_status != COMPONENT_TYPE_MAJOR_OUTAGE
+            ):
+                worst_status = STATUS_YELLOW
+            if (
+                component.status == COMPONENT_TYPE_MAINTENANCE
+                and worst_status == STATUS_GREEN
+            ):
+                worst_status = STATUS_BLUE
 
         status = Status(
             code=worst_status,
             name=STATUS_TYPE_MAPPING[worst_status],
             description=STATUS_TYPE_MAPPING[worst_status],
-            is_ok=worst_status == STATUS_GREEN,
+            is_ok=worst_status in (STATUS_GREEN, STATUS_BLUE),
         )
 
         return Summary(status, components, incidents)

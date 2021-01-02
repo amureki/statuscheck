@@ -8,10 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- Better component status handling
 
 ### Removed
 
-## [3.7.1] - 2021-01-2
+## [3.7.1] - 2021-01-02
 ### Changed
 - Heroku logic fix (plus data tests)
 - [Dev] Dependencies update

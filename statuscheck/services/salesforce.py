@@ -2,6 +2,10 @@ import httpx
 
 from statuscheck.services.bases._base import BaseServiceAPI
 from statuscheck.services.models.generic import (
+    COMPONENT_TYPE_GOOD,
+    COMPONENT_TYPE_MAINTENANCE,
+    COMPONENT_TYPE_MAJOR_OUTAGE,
+    COMPONENT_TYPE_PARTIAL_OUTAGE,
     TYPE_GOOD,
     TYPE_INCIDENT,
     TYPE_MAINTENANCE,
@@ -38,6 +42,16 @@ STATUS_TYPE_MAPPING = {
     STATUS_NONCORE_OUTAGE: TYPE_OUTAGE,
     STATUS_CORE_MAINTENANCE: TYPE_MAINTENANCE,
     STATUS_NONCORE_MAINTENANCE: TYPE_MAINTENANCE,
+}
+
+COMPONENT_STATUS_MAPPING = {
+    STATUS_OK: COMPONENT_TYPE_GOOD,
+    STATUS_CORE_INCIDENT: COMPONENT_TYPE_PARTIAL_OUTAGE,
+    STATUS_NONCORE_INCIDENT: COMPONENT_TYPE_PARTIAL_OUTAGE,
+    STATUS_CORE_OUTAGE: COMPONENT_TYPE_MAJOR_OUTAGE,
+    STATUS_NONCORE_OUTAGE: COMPONENT_TYPE_MAJOR_OUTAGE,
+    STATUS_CORE_MAINTENANCE: COMPONENT_TYPE_MAINTENANCE,
+    STATUS_NONCORE_MAINTENANCE: COMPONENT_TYPE_MAINTENANCE,
 }
 
 
@@ -88,7 +102,7 @@ class ServiceAPI(BaseServiceAPI):
         components = [
             Component(
                 name=component["key"],
-                status=component["status"],
+                status=COMPONENT_STATUS_MAPPING[component["status"]],
                 extra_data=component,
             )
             for component in components_raw

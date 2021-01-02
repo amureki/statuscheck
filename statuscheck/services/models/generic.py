@@ -20,11 +20,29 @@ STATUS_TYPES = (
     TYPE_UNKNOWN,
 )
 
+COMPONENT_TYPE_GOOD = "Operational"
+COMPONENT_TYPE_MAINTENANCE = "Under maintenance"
+COMPONENT_TYPE_DEGRADED = "Degraded performance"
+COMPONENT_TYPE_PARTIAL_OUTAGE = "Partial outage"
+COMPONENT_TYPE_MAJOR_OUTAGE = "Major outage"
+COMPONENT_TYPE_SECURITY = "Security event"
+COMPONENT_TYPE_UNKNOWN = ""
+
+COMPONENT_STATUS_TYPES = (
+    COMPONENT_TYPE_GOOD,
+    COMPONENT_TYPE_MAINTENANCE,
+    COMPONENT_TYPE_DEGRADED,
+    COMPONENT_TYPE_PARTIAL_OUTAGE,
+    COMPONENT_TYPE_MAJOR_OUTAGE,
+    COMPONENT_TYPE_SECURITY,
+    COMPONENT_TYPE_UNKNOWN,
+)
+
 
 @attr.s(auto_attribs=True)
 class Component:
     name: str
-    status: str = attr.ib(default="")
+    status: str = attr.ib(validator=attr.validators.in_(COMPONENT_STATUS_TYPES))
     id: str = attr.ib(default="")
     extra_data: dict = attr.ib(default={})
 

@@ -17,10 +17,6 @@ def test_get_available_services():
     excluded_files = (
         "__pycache__",
         "__init__.py",
-        "_base.py",
-        "_custompage.py",
-        "_statuspage.py",
-        "_statusio.py",
     )
     service_files = [
         f[:-3]

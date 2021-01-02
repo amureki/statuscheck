@@ -1,12 +1,16 @@
 import respx
 from httpx import Response
 
+from statuscheck.services.models.generic import (
+    COMPONENT_TYPE_MAINTENANCE,
+    COMPONENT_TYPE_SECURITY,
+)
 from statuscheck.utils import get_statuscheck_api
 
 
 class TestGitlab:
     @respx.mock
-    def test_ok_security(self):
+    def test_security(self):
         with open("tests/test_services/test_data/gitlab_security.json", "rb") as f:
             mock_response_body = f.read()
         respx.get(
@@ -29,8 +33,11 @@ class TestGitlab:
         assert len(service_api.summary.incidents) == 1
         assert len(service_api.summary.components) == 13
 
+        component = service_api.summary.components[0]
+        assert component.status == COMPONENT_TYPE_SECURITY
+
     @respx.mock
-    def test_ok_maintenance(self):
+    def test_maintenance(self):
         with open("tests/test_services/test_data/gitlab_maintenance.json", "rb") as f:
             mock_response_body = f.read()
         respx.get(
@@ -52,3 +59,6 @@ class TestGitlab:
         assert service_api.summary.status.code == "200"
         assert len(service_api.summary.incidents) == 1
         assert len(service_api.summary.components) == 15
+
+        component = service_api.summary.components[14]
+        assert component.status == COMPONENT_TYPE_MAINTENANCE

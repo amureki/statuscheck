@@ -2,12 +2,13 @@ import respx
 from httpx import Response
 
 from statuscheck.services.bases._statuspageio import STATUS_MINOR
+from statuscheck.services.models.generic import COMPONENT_TYPE_DEGRADED
 from statuscheck.utils import get_statuscheck_api
 
 
 class TestTwilio:
     @respx.mock
-    def test_ok(self):
+    def test_incident(self):
         with open("tests/test_services/test_data/twilio_incident.json", "rb") as f:
             mock_response_body = f.read()
         respx.get(
@@ -29,3 +30,6 @@ class TestTwilio:
         assert service_api.summary.status.code == STATUS_MINOR
         assert len(service_api.summary.incidents) == 11
         assert len(service_api.summary.components) == 73
+
+        component = service_api.summary.components[0]
+        assert component.status == COMPONENT_TYPE_DEGRADED
