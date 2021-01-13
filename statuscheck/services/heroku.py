@@ -65,7 +65,7 @@ class ServiceAPI(BaseServiceAPI):
             Incident(
                 id=incident["id"],
                 name=incident["title"],
-                status=incident["status_prod"],
+                status=incident["state"],
                 components=[
                     Component(
                         name=component["system"],
