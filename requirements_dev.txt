@@ -1,5 +1,5 @@
 pip==20.3.3
-tox==3.21.0
+tox==3.21.1
 coverage==5.3.1
 coveralls==3.0.0
 pytest==6.2.1
