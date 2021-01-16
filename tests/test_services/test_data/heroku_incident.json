@@ -16,14 +16,14 @@
   "incidents": [
     {
       "created_at": "2019-10-24T18:39:30.231Z",
+      "duration": 3795,
       "full_url": "https://status.heroku.com/incidents/1918",
       "href": "https://status.heroku.com/api/v3/issues/1918",
       "id": 1918,
       "resolved": false,
-      "status_dev": "yellow",
-      "status_prod": "yellow",
+      "resolved_at": null,
+      "state": "open",
       "title": "Connection timeouts to applications and Heroku Postgres",
-      "upcoming": false,
       "updated_at": "2019-10-24T18:39:30.721Z",
       "updates": [
         {
