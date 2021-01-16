@@ -8,11 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+
+### Removed
+
+## [3.9.0] - 2021-01-16
+### Changed
 - Fix Signal incident status parsing
 - Fix Heroku incident payload parsing
 - [Dev] Rename "base" git branch to "main"
-
-### Removed
 
 ## [3.8.0] - 2021-01-02
 ### Changed
