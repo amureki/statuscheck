@@ -2,7 +2,7 @@
 
 [![Tests](https://github.com/amureki/statuscheck/workflows/Tests/badge.svg)](https://github.com/amureki/statuscheck/actions)
 [![image](https://img.shields.io/pypi/v/statuscheck.svg)](https://pypi.org/project/statuscheck/)
-[![image](https://img.shields.io/pypi/l/statuscheck.svg)](https://github.com/amureki/statuscheck/blob/master/LICENSE)
+[![image](https://img.shields.io/pypi/l/statuscheck.svg)](https://github.com/amureki/statuscheck/blob/main/LICENSE)
 [![image](https://img.shields.io/pypi/pyversions/statuscheck.svg)](https://pypi.org/project/statuscheck/)
 [![Coverage Status](https://coveralls.io/repos/github/amureki/statuscheck/badge.svg)](https://coveralls.io/github/amureki/statuscheck)
 

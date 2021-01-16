@@ -8,8 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
-- fix Signal incident status parsing
+- Fix Signal incident status parsing
 - Fix Heroku incident payload parsing
+- [Dev] Rename "base" git branch to "main"
 
 ### Removed
 
