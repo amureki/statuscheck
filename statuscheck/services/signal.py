@@ -1,13 +1,38 @@
+from html.parser import HTMLParser
+
 import httpx
 
 from statuscheck.services.bases._base import BaseServiceAPI
-from statuscheck.services.models.generic import TYPE_GOOD, Status, Summary
+from statuscheck.services.models.generic import (
+    TYPE_GOOD,
+    TYPE_INCIDENT,
+    Status,
+    Summary,
+)
 
 STATUS_OK = "Signal is up and running."
 
 STATUS_TYPE_MAPPING = {
     STATUS_OK: TYPE_GOOD,
 }
+
+
+class ParseSignalStatusPage(HTMLParser):
+    is_relevant: bool = False
+    data: list = []
+
+    def handle_data(self, data):
+        if self.is_relevant:
+            self.data.append(data)
+
+    def handle_starttag(self, tag, attrs):
+        # Only parse the 'div' tag.
+        if tag == "div":
+            self.is_relevant = True
+
+    def handle_endtag(self, tag):
+        if tag == "div":
+            self.is_relevant = False
 
 
 class ServiceAPI(BaseServiceAPI):
@@ -31,4 +56,17 @@ class ServiceAPI(BaseServiceAPI):
             )
             return Summary(status=status, components=[], incidents=[])
         else:
-            raise NotImplementedError("Signal status not implemented: %s", text)
+            html_parser = ParseSignalStatusPage()
+            html_parser.feed(response.text)
+            parsed_data = html_parser.data
+            # usual structure is:
+            # div (0), then span (1), then text status (2)
+            raw_status = parsed_data[2]
+            status_text = raw_status.strip()
+            status = Status(
+                code=status_text,
+                name=TYPE_INCIDENT,
+                description=status_text,
+                is_ok=False,
+            )
+            return Summary(status=status, components=[], incidents=[])
