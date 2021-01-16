@@ -33,4 +33,4 @@ jobs:
       - name: Upload coverage
         run: |
           coverage combine
-          coveralls --rcfile=setup.cfg
+          coveralls --rcfile=setup.cfg --service=github
