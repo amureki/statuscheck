@@ -1,4 +1,4 @@
-pip==21.0
+pip==21.0.1
 tox==3.21.3
 coverage==5.4
 coveralls==3.0.0
