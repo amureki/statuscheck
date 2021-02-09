@@ -8,6 +8,7 @@ SERVICES = [
     "close",
     "cloudamqp",
     "cloudflare",
+    "clubhouse",
     "codecov",
     "confluence",
     "coveralls",
