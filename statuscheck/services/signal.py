@@ -54,7 +54,6 @@ class ServiceAPI(BaseServiceAPI):
                 description=STATUS_TYPE_MAPPING[STATUS_OK],
                 is_ok=True,
             )
-            return Summary(status=status, components=[], incidents=[])
         else:
             html_parser = ParseSignalStatusPage()
             html_parser.feed(response.text)
@@ -69,4 +68,5 @@ class ServiceAPI(BaseServiceAPI):
                 description=status_text,
                 is_ok=False,
             )
-            return Summary(status=status, components=[], incidents=[])
+        self.summary = Summary(status=status, components=[], incidents=[])
+        return self.summary

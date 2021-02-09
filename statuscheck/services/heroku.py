@@ -109,4 +109,5 @@ class ServiceAPI(BaseServiceAPI):
             is_ok=worst_status in (STATUS_GREEN, STATUS_BLUE),
         )
 
-        return Summary(status, components, incidents)
+        self.summary = Summary(status, components, incidents)
+        return self.summary

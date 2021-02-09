@@ -136,4 +136,5 @@ class ServiceAPI(BaseServiceAPI):
                 status.description = STATUS_TYPE_MAPPING[incident.status]
                 break
 
-        return Summary(status, components, incidents)
+        self.summary = Summary(status, components, incidents)
+        return self.summary
