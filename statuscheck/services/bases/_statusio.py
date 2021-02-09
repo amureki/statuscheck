@@ -110,4 +110,5 @@ class BaseStatusIOAPI(BaseServiceAPI):
             for incident in response_json["result"]["incidents"]
         ]
 
-        return Summary(status, components, incidents)
+        self.summary = Summary(status, components, incidents)
+        return self.summary

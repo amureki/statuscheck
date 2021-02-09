@@ -104,5 +104,5 @@ class BaseStatusPageAPI(BaseServiceAPI):
             )
             for component in response_json["components"]
         ]
-
-        return Summary(status, components, incidents)
+        self.summary = Summary(status, components, incidents)
+        return self.summary

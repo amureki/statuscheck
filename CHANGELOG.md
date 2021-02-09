@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Epic Games status checker
 
 ### Changed
+- Make a network request only when `get_summary` is called, not on a new API instance
 
 ### Removed
 

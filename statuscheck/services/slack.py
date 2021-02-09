@@ -90,4 +90,5 @@ class ServiceAPI(BaseServiceAPI):
         for incident in incidents:
             components.extend(incident.components)
 
-        return Summary(status, components, incidents)
+        self.summary = Summary(status, components, incidents)
+        return self.summary

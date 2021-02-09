@@ -17,6 +17,7 @@ class TestGithub:
 
         service_name = "github"
         service_api = get_statuscheck_api(service_name)
+        service_api.get_summary()
 
         assert service_api._module_name == service_name
         assert service_api.status_url
