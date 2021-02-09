@@ -6,14 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Removed
+
+## [3.10.0] - 2021-02-09
+### Added
 - Basecamp status checker
 - Clubhouse.io status checker
 - Epic Games status checker
 
 ### Changed
-- Make a network request only when `get_summary` is called, not on a new API instance
-
-### Removed
+- Make a network request only when `get_summary()` is called, not on a new API instance
 
 ## [3.9.0] - 2021-01-16
 ### Changed
