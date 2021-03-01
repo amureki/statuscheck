@@ -1,6 +1,6 @@
 pip==21.0.1
 tox==3.22.0
-coverage==5.4
+coverage==5.5
 coveralls==3.0.0
 pytest==6.2.2
 respx==0.16.3
