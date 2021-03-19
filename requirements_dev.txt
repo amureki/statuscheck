@@ -12,4 +12,4 @@ flake8==3.8.4
 isort==5.7.0
 mypy==0.812
 pre-commit==2.10.1
-pydocstyle==5.1.1
+pydocstyle==6.0.0
