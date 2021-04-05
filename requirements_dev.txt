@@ -11,5 +11,5 @@ check-manifest==0.46
 flake8==3.8.4
 isort==5.8.0
 mypy==0.812
-pre-commit==2.10.1
+pre-commit==2.11.1
 pydocstyle==6.0.0
