@@ -1,6 +1,7 @@
 from typing import Optional
 
 import click
+from httpx import TransportError
 
 from statuscheck.services.models.generic import Summary
 
@@ -20,7 +21,13 @@ class BaseServiceAPI:
         raise NotImplementedError
 
     def _print_summary(self, verbose=False):
-        summary = self.get_summary()
+        try:
+            summary = self.get_summary()
+        except TransportError as e:
+            click.echo(f"Cannot fetch {self.name} status due to {type(e)}:")
+            click.echo(str(e))
+            click.echo("\nPlease, try again.")
+            return
         click.echo(f"Current {self.name} status: {summary.status.name}")
 
         incidents = summary.incidents
@@ -43,5 +50,4 @@ class BaseServiceAPI:
                             click.echo(f"    - {component.name}")
 
         if incidents or not summary.status.is_ok:
-            click.echo()
-            click.echo(f"More: {self.status_url}")
+            click.echo(f"\nMore: {self.status_url}")
