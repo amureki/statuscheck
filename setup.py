@@ -27,6 +27,7 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
     ],
+    options={"bdist_wheel": {"universal": "1"}},
     description="Tool to check PaaS/SaaS status pages",
     entry_points={"console_scripts": ["statuscheck=statuscheck.cli:main"]},
     install_requires=open(join(here, "requirements.txt")).readlines(),
