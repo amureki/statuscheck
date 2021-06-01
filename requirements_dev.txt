@@ -6,7 +6,7 @@ pytest==6.2.3
 respx==0.16.3
 
 # Linting & QA
-black==20.8b1
+black==21.5b2
 check-manifest==0.46
 flake8==3.9.0
 isort==5.8.0
