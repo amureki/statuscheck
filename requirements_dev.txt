@@ -10,6 +10,6 @@ black==22.6.0
 check-manifest==0.48
 flake8==4.0.1
 isort==5.9.3
-mypy==0.910
+mypy==0.961
 pre-commit==2.13.0
 pydocstyle==6.1.1
