@@ -3,7 +3,7 @@ tox==3.25.0
 coverage==6.4.1
 coveralls==3.3.1
 pytest==7.1.2
-respx==0.17.1
+respx==0.19.2
 
 # Linting & QA
 black==22.6.0
