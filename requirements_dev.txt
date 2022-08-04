@@ -8,7 +8,7 @@ respx==0.19.2
 # Linting & QA
 black==22.6.0
 check-manifest==0.48
-flake8==4.0.1
+flake8==5.0.4
 isort==5.10.1
 mypy==0.961
 pre-commit==2.20.0
